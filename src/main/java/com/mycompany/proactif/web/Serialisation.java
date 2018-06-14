@@ -19,7 +19,33 @@ import java.io.PrintWriter;
  */
 public class Serialisation {
     
-    public static void EcrireUtilisateur(PrintWriter out, Utilisateur utilisateur) {
+    public static void EcrireConnexionUtilisateur(PrintWriter out, Utilisateur utilisateur) {
+        String retour = (utilisateur != null)? "ok": "nok";
+  
+        JsonObject reponseJson = new JsonObject();
+        reponseJson.addProperty("retourConnexion", retour);
+        
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        String json = gson.toJson(reponseJson);
+        
+        out.println(json);
+        System.out.println("Json : " + json);
+    }
+    
+    public static void EcrireInscriptionUtilisateur(PrintWriter out, Utilisateur utilisateur) {
+        String retour = (utilisateur != null)? "ok": "nok";
+  
+        JsonObject reponseJson = new JsonObject();
+        reponseJson.addProperty("retourConnexion", retour);
+        
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        String json = gson.toJson(reponseJson);
+        
+        out.println(json);
+        System.out.println("Json : " + json);
+    }
+    
+    public static void EcrireModificationUtilisateur(PrintWriter out, Utilisateur utilisateur) {
         String retour = (utilisateur != null)? "ok": "nok";
   
         JsonObject reponseJson = new JsonObject();

@@ -22,8 +22,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Jean
  */
-@WebServlet(name = "InscriptionAction", urlPatterns = {"/InscriptionAction"})
-public class InscriptionAction extends HttpServlet {
+@WebServlet(name = "InscriptionAction", urlPatterns = {"/modificationInformationClient"})
+public class modificationInformationClient extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -55,11 +55,11 @@ public class InscriptionAction extends HttpServlet {
         
         
         Adresse adresseUitilisateur = new Adresse(numero, rue, codePostal, ville, infosSuppAddresse);
-        Client nouveauClient = new Client(civilite,prenom, nom,format.parse(dateNaissance),telephone,mail,mdp);
-        nouveauClient.setAdresse(adresseUitilisateur);
-        nouveauClient = (Client) Services.creerUtilisateur(nouveauClient);
+        Client clientCourant = new Client(civilite,prenom, nom,format.parse(dateNaissance),telephone,mail,mdp);
+        clientCourant.setAdresse(adresseUitilisateur);
+        clientCourant = (Client) Services.creerUtilisateur(clientCourant);
         
-        request.setAttribute("utilisateur", nouveauClient);
+        request.setAttribute("utilisateur", clientCourant);
     }
 
 }

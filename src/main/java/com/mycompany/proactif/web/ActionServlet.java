@@ -7,10 +7,12 @@ package com.mycompany.proactif.web;
 
 import com.mycompany.proactif.actions.ConnexionAction;
 import com.mycompany.proactif.actions.InscriptionAction;
+import com.mycompany.proactif.actions.modificationInformationClient;
 import com.mycompany.proactif.dao.JpaUtil;
 import com.mycompany.proactif.entites.Utilisateur;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.ParseException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -34,7 +36,7 @@ public class ActionServlet extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException, ParseException {
         response.setContentType("application/json;charset=UTF-8");
         String action = request.getParameter("action");
         
@@ -42,13 +44,24 @@ public class ActionServlet extends HttpServlet {
         {
             case "connecter" :
                 ConnexionAction cnxAction = new ConnexionAction();
-                cnxAction.processRequest(request,null);
+                cnxAction.processRequest(request,response);
                 try (PrintWriter out = response.getWriter()) {
-                    Serialisation.EcrireUtilisateur(out, (Utilisateur)request.getAttribute("utilisateur"));
+                    Serialisation.EcrireInscriptionUtilisateur(out, (Utilisateur)request.getAttribute("utilisateur"));
                 }
-            case "creer" :
+            case "creerUtilisateur" :
                 InscriptionAction inscAction = new InscriptionAction();
-                inscAction.processRequest(request,null);
+                inscAction.processRequest(request,response);
+                try (PrintWriter out = response.getWriter()) {
+                    Serialisation.EcrireInscriptionUtilisateur(out, (Utilisateur)request.getAttribute("utilisateur"));
+                }
+                break;
+                
+            case "modifierUtilisateur" :
+                modificationInformationClient modifUtilAction = new modificationInformationClient();
+                modifUtilAction.processRequest(request,response);
+                try (PrintWriter out = response.getWriter()) {
+                    Serialisation.EcrireModificationUtilisateur(out, (Utilisateur)request.getAttribute("utilisateur"));
+                }
                 break;
         }    
 
