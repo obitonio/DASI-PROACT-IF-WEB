@@ -5,6 +5,8 @@
  */
 package com.mycompany.proactif.web;
 
+import com.mycompany.proactif.actions.ConnexionAction;
+import com.mycompany.proactif.actions.InscriptionAction;
 import com.mycompany.proactif.dao.JpaUtil;
 import com.mycompany.proactif.entites.Utilisateur;
 import java.io.IOException;
@@ -40,11 +42,13 @@ public class ActionServlet extends HttpServlet {
         {
             case "connecter" :
                 ConnexionAction cnxAction = new ConnexionAction();
-                cnxAction.execute(request);
+                cnxAction.processRequest(request,null);
                 try (PrintWriter out = response.getWriter()) {
                     Serialisation.EcrireUtilisateur(out, (Utilisateur)request.getAttribute("utilisateur"));
                 }
-
+            case "creer" :
+                InscriptionAction inscAction = new InscriptionAction();
+                inscAction.processRequest(request,null);
                 break;
         }    
 
