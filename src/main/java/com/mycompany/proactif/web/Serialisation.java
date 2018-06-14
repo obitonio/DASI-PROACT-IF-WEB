@@ -5,9 +5,12 @@
  */
 package com.mycompany.proactif.web;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.mycompany.proactif.entites.Utilisateur;
+import com.mycompany.proactif.util.DebugLogger;
 import java.io.PrintWriter;
 
 /**
@@ -18,11 +21,14 @@ public class Serialisation {
     
     public static void EcrireUtilisateur(PrintWriter out, Utilisateur utilisateur) {
         String retour = (utilisateur != null)? "ok": "nok";
-        //JsonElement retourJson = new JsonObject(retour);
   
-        JsonObject jsonObjet = new JsonObject();
-        //jsonObjet.add("retourConnexion", retourJson);
+        JsonObject reponseJson = new JsonObject();
+        reponseJson.addProperty("retourConnexion", retour);
         
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        String json = gson.toJson(reponseJson);
         
+        out.println(json);
+        System.out.println("Json : " + json);
     }
 }

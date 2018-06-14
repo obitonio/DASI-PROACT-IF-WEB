@@ -30,10 +30,11 @@
                     },
                     dataType: 'json'
                 }).done(function (data) {
+                    console.log(data);
                     // ici votre code...
                     // 
                     // si connexion ok, aller sur la page suivante :
-                    window.location = "maPageSuivante.html";
+                    //window.location = "maPageSuivante.html";
                     // si connexion pas ok afficher un texte dans la div message :
                     $('#message').html('Echec de la connexion');
                 });

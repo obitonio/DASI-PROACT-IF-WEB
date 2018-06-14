@@ -5,6 +5,7 @@
  */
 package com.mycompany.proactif.web;
 
+import com.mycompany.proactif.dao.JpaUtil;
 import com.mycompany.proactif.entites.Utilisateur;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -40,9 +41,12 @@ public class ActionServlet extends HttpServlet {
             case "connecter" :
                 ConnexionAction cnxAction = new ConnexionAction();
                 cnxAction.execute(request);
+                try (PrintWriter out = response.getWriter()) {
+                    Serialisation.EcrireUtilisateur(out, (Utilisateur)request.getAttribute("utilisateur"));
+                }
+
                 break;
-        }
-        
+        }    
 
 //        try (PrintWriter out = response.getWriter()) {
 //            /* TODO output your page here. You may use following sample code. */
@@ -57,6 +61,18 @@ public class ActionServlet extends HttpServlet {
 //            out.println("</body>");
 //            out.println("</html>");
 //        }
+    }
+
+    @Override
+    public void init() throws ServletException {
+        super.init(); //To change body of generated methods, choose Tools | Templates.
+        JpaUtil.init();
+    }
+
+    @Override
+    public void destroy() {
+        super.destroy(); //To change body of generated methods, choose Tools | Templates.
+        JpaUtil.destroy();
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

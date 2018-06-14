@@ -26,5 +26,4 @@ public class ConnexionAction extends HttpServlet {
         
         request.setAttribute("utilisateur", utilisateur);
     }
-    
 }
