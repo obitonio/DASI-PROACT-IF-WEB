@@ -48,7 +48,7 @@ public class ActionServlet extends HttpServlet {
                 try (PrintWriter out = response.getWriter()) {
                     Serialisation.EcrireInscriptionUtilisateur(out, (Utilisateur)request.getAttribute("utilisateur"));
                 }
-            case "creerUtilisateur" :
+            case "inscrire" :
                 InscriptionAction inscAction = new InscriptionAction();
                 inscAction.processRequest(request,response);
                 try (PrintWriter out = response.getWriter()) {
