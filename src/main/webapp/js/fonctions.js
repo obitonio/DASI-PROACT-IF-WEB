@@ -113,6 +113,29 @@ function obtenirInterventions() {
         console.log("Retour");
         console.log(data);
 
+        var interventions = data.interventions;
+        var i;
+        var contenuHtml;
+
+        for (i=0; i<interventions.length; i++) {
+          var inter = interventions[i];
+          var etat = 'En cours';
+          if (inter.etat == 1)
+            etat = 'Terminé';
+          else if (inter.etat == -1)
+            etat = 'Non résolue';
+
+          contenuHtml += '<tr>';
+          contenuHtml += '<td>' + inter.date + '</td>';
+          contenuHtml += '<td>' + inter.intitule + '</td>';
+          contenuHtml += '<td>' + inter.type + '</td>';
+          contenuHtml += '<td>' + inter.employe + '</td>';
+          contenuHtml += '<td>' + etat + '</td>';
+          contenuHtml += '<td><button id="' + inter.id + '" class="btn btn-info btn-sm" data-toggle="modal" data-target=".consulter-intervention">Consulter</button></td>';
+          contenuHtml += '</tr>';
+        }
+
+        $('#lesInterventions').html(contenuHtml);
 
         // si connexion ok, aller sur la page suivante :
       /*  if (retour.localeCompare('ok') == 0) {

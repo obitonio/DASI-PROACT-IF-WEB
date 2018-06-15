@@ -70,7 +70,7 @@ public class Serialisation {
     
     public static void EcrireListeDesInterventions(PrintWriter out, Utilisateur utilisateur){
         
-        DateFormat formatDate = new SimpleDateFormat("dd MM yyyy");
+        DateFormat formatDate = new SimpleDateFormat("dd/MM/yyyy");
         JsonArray jsonListeInterventions = new JsonArray();
         
         if(utilisateur instanceof Client){  
@@ -83,7 +83,7 @@ public class Serialisation {
                     JsonObject jsonIntervention = new JsonObject();
                     
                     jsonIntervention.addProperty("id",i.getId());
-                    //jsonIntervention.addProperty("date",formatDate.format(i.getDateDebut()));
+                    jsonIntervention.addProperty("date",formatDate.format(i.getDateDebut()));
                     jsonIntervention.addProperty("intitule",i.getIntitule());
                     jsonIntervention.addProperty("employe", i.getEmploye().getPrenom() + " " + i.getEmploye().getNom());
                     jsonIntervention.addProperty("etat", i.getEtat());
