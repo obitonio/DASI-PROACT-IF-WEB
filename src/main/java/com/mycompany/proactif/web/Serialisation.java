@@ -17,9 +17,11 @@ import com.mycompany.proactif.entites.Incident;
 import com.mycompany.proactif.entites.Intervention;
 import com.mycompany.proactif.entites.Livraison;
 import com.mycompany.proactif.entites.Utilisateur;
+import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  *
@@ -99,6 +101,7 @@ public class Serialisation {
                     
                     jsonListeInterventions.add(jsonIntervention);
             }
+            
         }
         else if(utilisateur instanceof Employe){
             
@@ -124,8 +127,24 @@ public class Serialisation {
                     jsonListeInterventions.add(jsonIntervention);
             }
         }
-        JsonObject reponseJson = new JsonObject();
+        JsonObject jsonInfosClient = new JsonObject();
+        
+        jsonInfosClient.addProperty("civilite", utilisateur.getCivilite());
+        jsonInfosClient.addProperty("nom", utilisateur.getNom());
+        jsonInfosClient.addProperty("prenom", utilisateur.getPrenom());
+        jsonInfosClient.addProperty("telephone", utilisateur.getTelephone());
+        
+        jsonInfosClient.addProperty("numeroRue", utilisateur.getAdresse().getNumero());
+        jsonInfosClient.addProperty("rue", utilisateur.getAdresse().getRue());
+        jsonInfosClient.addProperty("codePostal", utilisateur.getAdresse().getCodePostal());
+        jsonInfosClient.addProperty("ville", utilisateur.getAdresse().getVille());
+        jsonInfosClient.addProperty("colmplementAdresse", utilisateur.getAdresse().getInformations());
+        
+        
+        JsonObject reponseJson = new JsonObject();     
+        
         reponseJson.add("interventions",jsonListeInterventions);
+        reponseJson.add("infoClient",jsonInfosClient);
         
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         String json = gson.toJson(reponseJson);
@@ -133,4 +152,6 @@ public class Serialisation {
         out.println(json);
         System.out.println("Json : " + json);
     }
+    
+    
 }
