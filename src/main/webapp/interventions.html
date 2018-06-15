@@ -49,14 +49,6 @@ and open the template in the editor.
             </tr>
           </thead>
           <tbody id="lesInterventions">
-            <tr>
-              <td>24 mai 2018</td>
-              <td>Test</td>
-              <td>Animal</td>
-              <td>Jean Hameau</td>
-              <td><span class="label label-info">En cours</span></td>
-              <td><button class="btn btn-info btn-sm" data-toggle="modal" data-target=".consulter-intervention">Consulter l'intervention</button></td>
-            </tr>
           </tbody>
         </table>
 
@@ -161,6 +153,42 @@ and open the template in the editor.
                 </select>
               </div>
 
+              <div id="consulter-champs-animal" class="invisible">
+                <div class="form-group">
+                  <label for="champ-nom">Nom</label>
+                  <input  id="champ-nom" type="text" class="form-control" placeholder="Le nom de votre animal">
+                </div>
+                <div class="form-group">
+                  <label for="champ-type">Type (Chat, Chien ...)</label>
+                  <input  id="champ-type" type="text" class="form-control" placeholder="Le type de votre animal">
+                </div>
+              </div>
+
+              <div id="consulter-champs-livraison" class="invisible">
+                <div class="row">
+                  <div class="col-lg-4 col-md-4">
+                    <div class="form-group">
+                      <label for="champ-livraison-heure">Heure</label>
+                      <input  id="champ-livraison-heure" type="number" class="form-control" placeholder="Heure de livraison">
+                    </div>
+                  </div>
+                  <div class="col-lg-8 col-md-8">
+                    <div class="form-group">
+                      <label for="champ-livraison-type">Type (Colis, lettre recommandée ...)</label>
+                      <input  id="champ-livraison-type" type="text" class="form-control" placeholder="Type de livraison">
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="champ-code-suivi">Code suivi</label>
+                  <input  id="champ-code-suivi" type="text" class="form-control" placeholder="Code suivi">
+                </div>
+                <div class="form-group">
+                  <label for="champ-entreprise">Entreprise</label>
+                  <input  id="champ-entreprise" type="text" class="form-control" placeholder="Entreprise de livraison">
+                </div>
+              </div>
+
               <div class="form-group">
                 <label for="champ-description">Description</label>
                 <textarea id="champ-description"class="form-control" rows="3"></textarea>
@@ -248,7 +276,7 @@ and open the template in the editor.
                   </div>
                 </div>
               </div>
-              
+
               <div class="form-group">
                 <label for="champ-complement">Complément d'adresse</label>
                 <textarea id="champ-complement" class="form-control" rows="3" disabled></textarea>
@@ -301,6 +329,21 @@ and open the template in the editor.
     <script>
         $(document).ready(function () {
             obtenirInterventions();
+
+            $( "#champ-type" ).change(function() {
+              var type = $(this).val();
+              console.log(type);
+
+              $('#consulter-champs-animal').addClass('invisible');
+              $('#consulter-champs-livraison').addClass('invisible');
+
+              if (type.localeCompare('Animal') == 0) {
+                  $('#consulter-champs-animal').removeClass('invisible');
+              }
+              else if (type.localeCompare('Livraison') == 0) {
+                $('#consulter-champs-livraison').removeClass('invisible');
+              }
+            });
         });
     </script>
 </html>

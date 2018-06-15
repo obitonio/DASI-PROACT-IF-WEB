@@ -61,6 +61,12 @@ footer
 
 /* Utils */
 
+.invisible
+{
+  display: none;
+  visibility: hidden;
+}
+
 .text-center
 {
   text-align: center;
