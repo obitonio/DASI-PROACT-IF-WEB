@@ -79,7 +79,7 @@ function inscription() {
     }).done(function (data) {
         console.log(data);
 
-        var retour = data.retourConnexion;
+        var retour = data.retourInscription;
         console.log(retour);
 
         // si connexion ok, aller sur la page suivante :
@@ -101,7 +101,7 @@ function inscription() {
   Fonction pour obtenir les interventions
 */
 function obtenirInterventions() {
-
+  console.log("Obtenir interventions");
     $.ajax({
         url: './ActionServlet',
         method: 'POST',
@@ -110,6 +110,7 @@ function obtenirInterventions() {
         },
         dataType: 'json'
     }).done(function (data) {
+        console.log("Retour");
         console.log(data);
 
 
