@@ -36,7 +36,7 @@ public class Serialisation {
         String retour = (utilisateur != null)? "ok": "nok";
   
         JsonObject reponseJson = new JsonObject();
-        reponseJson.addProperty("retourConnexion", retour);
+        reponseJson.addProperty("retourInscription", retour);
         
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         String json = gson.toJson(reponseJson);
@@ -49,7 +49,7 @@ public class Serialisation {
         String retour = (utilisateur != null)? "ok": "nok";
   
         JsonObject reponseJson = new JsonObject();
-        reponseJson.addProperty("retourConnexion", retour);
+        reponseJson.addProperty("retourModification", retour);
         
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         String json = gson.toJson(reponseJson);
