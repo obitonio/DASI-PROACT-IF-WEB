@@ -36,7 +36,7 @@ public class InscriptionAction extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
         public void processRequest(HttpServletRequest request, HttpServletResponse response) throws ParseException {
-            
+        System.out.println("=== InscriptionAction ===");
             
        SimpleDateFormat format = new SimpleDateFormat("yyyy-mm-dd");
         

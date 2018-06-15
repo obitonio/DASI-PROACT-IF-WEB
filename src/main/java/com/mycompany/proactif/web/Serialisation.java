@@ -28,6 +28,7 @@ import java.text.SimpleDateFormat;
 public class Serialisation {
     
     public static void EcrireConnexionUtilisateur(PrintWriter out, Utilisateur utilisateur) {
+        System.out.println("=== EcrireConnexionUtilisateur ===");
         String retour = (utilisateur != null)? "ok": "nok";
   
         JsonObject reponseJson = new JsonObject();
@@ -41,6 +42,7 @@ public class Serialisation {
     }
     
     public static void EcrireInscriptionUtilisateur(PrintWriter out, Utilisateur utilisateur) {
+        System.out.println("=== EcrireInscriptionUtilisateur ===");
         String retour = (utilisateur != null)? "ok": "nok";
   
         JsonObject reponseJson = new JsonObject();

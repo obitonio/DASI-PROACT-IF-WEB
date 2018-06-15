@@ -19,6 +19,7 @@ import javax.servlet.http.HttpSession;
 public class ConnexionAction extends HttpServlet {
     
     public void processRequest(HttpServletRequest request, HttpServletResponse response) {
+        System.out.println("=== ConnexionAction ===");
         Utilisateur utilisateur = null;
         
         String mail = request.getParameter("mail");
