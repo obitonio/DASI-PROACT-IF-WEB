@@ -13,6 +13,8 @@ import com.mycompany.proactif.entites.Utilisateur;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.ParseException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -39,7 +41,7 @@ public class ActionServlet extends HttpServlet {
             throws ServletException, IOException, ParseException {
         response.setContentType("application/json;charset=UTF-8");
         String action = request.getParameter("action");
-        
+        System.out.println("action = " + action);
         switch (action)
         {
             case "connecter" :
@@ -48,7 +50,9 @@ public class ActionServlet extends HttpServlet {
                 try (PrintWriter out = response.getWriter()) {
                     Serialisation.EcrireInscriptionUtilisateur(out, (Utilisateur)request.getAttribute("utilisateur"));
                 }
+                break;
             case "inscrire" :
+                System.out.println("Insription");
                 InscriptionAction inscAction = new InscriptionAction();
                 inscAction.processRequest(request,response);
                 try (PrintWriter out = response.getWriter()) {
@@ -64,20 +68,6 @@ public class ActionServlet extends HttpServlet {
                 }
                 break;
         }    
-
-//        try (PrintWriter out = response.getWriter()) {
-//            /* TODO output your page here. You may use following sample code. */
-//            out.println("<!DOCTYPE html>");
-//            out.println("<html>");
-//            out.println("<head>");
-//            out.println("<title>Servlet ActionServlet</title>");            
-//            out.println("</head>");
-//            out.println("<body>");
-//            out.println("<h1>Servlet ActionServlet at " + request.getContextPath() + "</h1>");
-//            out.println("<h2>DASI</h2>");
-//            out.println("</body>");
-//            out.println("</html>");
-//        }
     }
 
     @Override
@@ -104,7 +94,11 @@ public class ActionServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (ParseException ex) {
+            Logger.getLogger(ActionServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -118,7 +112,11 @@ public class ActionServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (ParseException ex) {
+            Logger.getLogger(ActionServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**

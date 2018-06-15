@@ -1,3 +1,5 @@
-com/mycompany/proactif/web/ConnexionAction.class
+com/mycompany/proactif/actions/ConnexionAction.class
+com/mycompany/proactif/actions/modificationInformationClient.class
 com/mycompany/proactif/web/ActionServlet.class
 com/mycompany/proactif/web/Serialisation.class
+com/mycompany/proactif/actions/InscriptionAction.class

@@ -9,6 +9,7 @@ and open the template in the editor.
         <title>PROACT'IF - Inscription</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
         <link rel="stylesheet" href="css/bootstrap.min.css" />
         <link rel="stylesheet" href="css/styles.css" />
     </head>
@@ -109,6 +110,7 @@ and open the template in the editor.
               <textarea id="champ-complement"class="form-control" rows="3"></textarea>
             </div>
           </section>
+          <button id="bouton-inscription" class="btn btn-primary">Valider</button>
         </form>
     </body>
 
@@ -129,6 +131,7 @@ and open the template in the editor.
             var champComplement = $('#champ-complement').val();
 
             $('#message').html('Connexion en cours...');
+            console.log(champDateNaissance);
 
             $.ajax({
                 url: './ActionServlet',
@@ -140,7 +143,7 @@ and open the template in the editor.
                     nom: champNom,
                     dateNaissance: champDateNaissance,
                     telephone: champTelephone,
-                    login: champLogin,
+                    mail: champLogin,
                     mdp: champPassword,
                     numero: champNumero,
                     rue: champRue,
@@ -152,8 +155,8 @@ and open the template in the editor.
             }).done(function (data) {
                 console.log(data);
 
-                //var retour = data.retourConnexion;
-                //console.log(retour);
+                var retour = data.retourConnexion;
+                console.log(retour);
 
                 // si connexion ok, aller sur la page suivante :
                 if (retour.localeCompare('ok') == 0) {
@@ -172,12 +175,12 @@ and open the template in the editor.
 
         $(document).ready(function () {
             // ajout d'un "handler" sur le clic du bouton de connexion
-            $('#bouton-connexion').on('click', function (e) {
+            $('#bouton-inscription').on('click', function (e) {
                 e.preventDefault();
                 // affichage pour debugage dans la console javascript du navigateur
                 console.log('Click sur le bouton "Se Connecter"');
                 // appel de la fonction connexion
-                connexion();
+                inscription();
             });
         });
 

@@ -5,6 +5,7 @@
  */
 package com.mycompany.proactif.actions;
 
+import java.util.Date;
 import com.mycompany.proactif.entites.Adresse;
 import com.mycompany.proactif.entites.Client;
 import com.mycompany.proactif.entites.Utilisateur;
@@ -37,7 +38,7 @@ public class InscriptionAction extends HttpServlet {
         public void processRequest(HttpServletRequest request, HttpServletResponse response) throws ParseException {
             
             
-       SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+       SimpleDateFormat format = new SimpleDateFormat("yyyy-mm-dd");
         
         String mail = request.getParameter("mail");
         String mdp = request.getParameter("mdp");
@@ -51,13 +52,16 @@ public class InscriptionAction extends HttpServlet {
         String rue = request.getParameter("rue");
         String codePostal = request.getParameter("codePostal");
         String ville = request.getParameter("ville");
-        String infosSuppAddresse = request.getParameter("infosSuppAddresse");
+        String infosSuppAddresse = request.getParameter("infosSuppAdresse");
+            
+        System.out.println("Date naissance : " + dateNaissance);
         
-        
-        Adresse adresseUitilisateur = new Adresse(numero, rue, codePostal, ville, infosSuppAddresse);
+        Adresse adresseUtilisateur = new Adresse(numero, rue, codePostal, ville, infosSuppAddresse);
         Client nouveauClient = new Client(civilite,prenom, nom,format.parse(dateNaissance),telephone,mail,mdp);
-        nouveauClient.setAdresse(adresseUitilisateur);
+        nouveauClient.setAdresse(adresseUtilisateur);
         nouveauClient = (Client) Services.creerUtilisateur(nouveauClient);
+           
+        System.out.println(nouveauClient.toString());
         
         request.setAttribute("utilisateur", nouveauClient);
     }
