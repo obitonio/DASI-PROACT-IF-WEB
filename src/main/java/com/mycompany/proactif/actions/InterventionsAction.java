@@ -41,17 +41,13 @@ public class InterventionsAction extends HttpServlet {
             
             Client clientCourant = (Client) utilisateurCourant;
             Services.recupererToutesLesIntervention(clientCourant);
-            request.setAttribute("utilisateurCourant", clientCourant);
+            request.setAttribute("utilisateur", clientCourant);
         }
         else if(utilisateurCourant instanceof Employe){
             Employe employeCourant = (Employe) utilisateurCourant;
             Services.recupererToutesLesIntervention(employeCourant);
-            request.setAttribute("utilisateurCourant", employeCourant);
-        }
-        else{
-            return;
-        }
-  
+            request.setAttribute("utilisateur", employeCourant);
+        }  
     }
 
 }

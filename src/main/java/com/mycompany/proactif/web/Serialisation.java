@@ -73,13 +73,17 @@ public class Serialisation {
         DateFormat formatDate = new SimpleDateFormat("dd MM yyyy");
         JsonArray jsonListeInterventions = new JsonArray();
         
-        if(utilisateur instanceof Client){       
+        if(utilisateur instanceof Client){  
+            
             Client clientCourant = (Client) utilisateur;
+            
             for(Intervention i : clientCourant.getListeDesInterventions()){
+                    System.out.println(i.toString());
+                
                     JsonObject jsonIntervention = new JsonObject();
                     
                     jsonIntervention.addProperty("id",i.getId());
-                    jsonIntervention.addProperty("date",formatDate.format(i.getDateDebut()));
+                    //jsonIntervention.addProperty("date",formatDate.format(i.getDateDebut()));
                     jsonIntervention.addProperty("intitule",i.getIntitule());
                     jsonIntervention.addProperty("employe", i.getEmploye().getPrenom() + " " + i.getEmploye().getNom());
                     jsonIntervention.addProperty("etat", i.getEtat());
@@ -92,10 +96,14 @@ public class Serialisation {
                     else if(i instanceof Livraison)
                         type = "Livraison";
                     jsonIntervention.addProperty("type", type);
+                    
+                    jsonListeInterventions.add(jsonIntervention);
             }
         }
         else if(utilisateur instanceof Employe){
+            
             Employe employeCourant = (Employe) utilisateur;
+            
             for(Intervention i : employeCourant.getListeDesInterventions()){
                 JsonObject jsonIntervention = new JsonObject();
                     
@@ -113,6 +121,7 @@ public class Serialisation {
                     else if(i instanceof Livraison)
                         type = "Livraison";
                     jsonIntervention.addProperty("type", type);
+                    jsonListeInterventions.add(jsonIntervention);
             }
         }
         JsonObject reponseJson = new JsonObject();
