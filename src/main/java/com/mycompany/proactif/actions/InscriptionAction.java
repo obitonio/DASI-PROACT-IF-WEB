@@ -53,15 +53,11 @@ public class InscriptionAction extends HttpServlet {
         String codePostal = request.getParameter("codePostal");
         String ville = request.getParameter("ville");
         String infosSuppAddresse = request.getParameter("infosSuppAdresse");
-            
-        System.out.println("Date naissance : " + dateNaissance);
         
         Adresse adresseUtilisateur = new Adresse(numero, rue, codePostal, ville, infosSuppAddresse);
         Client nouveauClient = new Client(civilite,prenom, nom,format.parse(dateNaissance),telephone,mail,mdp);
         nouveauClient.setAdresse(adresseUtilisateur);
         nouveauClient = (Client) Services.creerUtilisateur(nouveauClient);
-           
-        System.out.println(nouveauClient.toString());
         
         request.setAttribute("utilisateur", nouveauClient);
     }

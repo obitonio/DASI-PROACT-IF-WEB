@@ -10,6 +10,7 @@ import com.mycompany.proactif.services.Services;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -25,6 +26,10 @@ public class ConnexionAction extends HttpServlet {
         
         utilisateur = Services.authentifier(mail, mdp);
         
+        if(utilisateur!=null){
+            HttpSession session = request.getSession();
+            session.setAttribute("utilisateurCourant", utilisateur);
+        }
         request.setAttribute("utilisateur", utilisateur);
     }
 }

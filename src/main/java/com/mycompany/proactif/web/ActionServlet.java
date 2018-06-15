@@ -7,6 +7,7 @@ package com.mycompany.proactif.web;
 
 import com.mycompany.proactif.actions.ConnexionAction;
 import com.mycompany.proactif.actions.InscriptionAction;
+import com.mycompany.proactif.actions.InterventionsAction;
 import com.mycompany.proactif.actions.modificationInformationClient;
 import com.mycompany.proactif.dao.JpaUtil;
 import com.mycompany.proactif.entites.Utilisateur;
@@ -65,6 +66,14 @@ public class ActionServlet extends HttpServlet {
                 modifUtilAction.processRequest(request,response);
                 try (PrintWriter out = response.getWriter()) {
                     Serialisation.EcrireModificationUtilisateur(out, (Utilisateur)request.getAttribute("utilisateur"));
+                }
+                break;
+                
+            case "obtenirInterventions" :
+                InterventionsAction intervAction = new InterventionsAction();
+                intervAction.processRequest(request,response);
+                try (PrintWriter out = response.getWriter()) {
+                    Serialisation.EcrireListeDesInterventions(out, (Utilisateur)request.getAttribute("utilisateur"));
                 }
                 break;
         }    
