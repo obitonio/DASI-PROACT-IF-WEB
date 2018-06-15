@@ -127,24 +127,24 @@ public class Serialisation {
                     jsonListeInterventions.add(jsonIntervention);
             }
         }
-        JsonObject jsonInfosClient = new JsonObject();
+        JsonObject jsonInfosUtilisateur = new JsonObject();
         
-        jsonInfosClient.addProperty("civilite", utilisateur.getCivilite());
-        jsonInfosClient.addProperty("nom", utilisateur.getNom());
-        jsonInfosClient.addProperty("prenom", utilisateur.getPrenom());
-        jsonInfosClient.addProperty("telephone", utilisateur.getTelephone());
+        jsonInfosUtilisateur.addProperty("civilite", utilisateur.getCivilite());
+        jsonInfosUtilisateur.addProperty("nom", utilisateur.getNom());
+        jsonInfosUtilisateur.addProperty("prenom", utilisateur.getPrenom());
+        jsonInfosUtilisateur.addProperty("telephone", utilisateur.getTelephone());
         
-        jsonInfosClient.addProperty("numeroRue", utilisateur.getAdresse().getNumero());
-        jsonInfosClient.addProperty("rue", utilisateur.getAdresse().getRue());
-        jsonInfosClient.addProperty("codePostal", utilisateur.getAdresse().getCodePostal());
-        jsonInfosClient.addProperty("ville", utilisateur.getAdresse().getVille());
-        jsonInfosClient.addProperty("colmplementAdresse", utilisateur.getAdresse().getInformations());
+        jsonInfosUtilisateur.addProperty("numeroRue", utilisateur.getAdresse().getNumero());
+        jsonInfosUtilisateur.addProperty("rue", utilisateur.getAdresse().getRue());
+        jsonInfosUtilisateur.addProperty("codePostal", utilisateur.getAdresse().getCodePostal());
+        jsonInfosUtilisateur.addProperty("ville", utilisateur.getAdresse().getVille());
+        jsonInfosUtilisateur.addProperty("colmplementAdresse", utilisateur.getAdresse().getInformations());
         
         
         JsonObject reponseJson = new JsonObject();     
         
         reponseJson.add("interventions",jsonListeInterventions);
-        reponseJson.add("infoClient",jsonInfosClient);
+        reponseJson.add("infoUtilisateur",jsonInfosUtilisateur);
         
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         String json = gson.toJson(reponseJson);
