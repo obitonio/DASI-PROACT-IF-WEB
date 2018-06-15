@@ -49,7 +49,7 @@ public class ActionServlet extends HttpServlet {
                 ConnexionAction cnxAction = new ConnexionAction();
                 cnxAction.processRequest(request,response);
                 try (PrintWriter out = response.getWriter()) {
-                    Serialisation.EcrireInscriptionUtilisateur(out, (Utilisateur)request.getAttribute("utilisateur"));
+                    Serialisation.EcrireConnexionUtilisateur(out, (Utilisateur)request.getAttribute("utilisateur"));
                 }
                 break;
             case "inscrire" :
