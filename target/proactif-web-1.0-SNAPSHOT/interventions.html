@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>PROACT'IF - Demande d'intervention</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="css/bootstrap.min.css" />
+        <link rel="stylesheet" href="css/styles.css" />
+    </head>
+    <body>
+      <nav class="navbar navbar-light bg-light justify-content-between">
+        <a class="navbar-brand">PROACT'IF</a>
+        <form class="form-inline nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+           Connecté en tant que
+         </a>
+         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+           <a class="dropdown-item" href="interventions.html">Mes interventions</a>
+           <a class="dropdown-item" href="#">Mes données personnelles</a>
+           <a class="dropdown-item" href="#">Se déconnecter</a>
+         </div>
+        </form>
+      </nav>
+
+        <img class="img-width-100prct" src="images/banniere.jpeg">
+        <div class="text-center entete-page">
+            <h1>Mes interventions</h1>
+            <p class="margin-top-15">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vitae lorem odio.</p>
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".demander-intervention">Demander une intervention</button>
+        </div>
+
+        <table class="table table-interventions" class="table">
+          <thead class="thead-dark">
+            <tr>
+              <th scope="col">Date</th>
+              <th scope="col">Intitulé</th>
+              <th scope="col">Type</th>
+              <th scope="col">Employé</th>
+              <th scope="col">Etat</th>
+              <th scope="col"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>24 mai 2018</td>
+              <td>Test</td>
+              <td>Animal</td>
+              <td>Jean Hameau</td>
+              <td><span class="label label-info">En cours</span></td>
+              <td><button class="btn btn-info btn-sm" data-toggle="modal" data-target=".consulter-intervention">Consulter l'intervention</button></td>
+            </tr>
+          </tbody>
+        </table>
+
+
+        <footer>
+          <div id="footer-text" class="text-center">
+            <span>PROACT'IF 2018 Copyright</span>
+          </div>
+        </footer>
+    </body>
+
+    <!-- Fenêtre modal pour demander l'intervention -->
+    <div class="modal fade demander-intervention" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Demander une intervention</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <!-- Client -->
+            <section class="margin-top-30">
+              <h2 class="text-center">Client</h2>
+
+              <div class="row">
+                <div class="col-lg-2 col-md-2">
+                  <div class="form-group">
+                    <label for="champ-civilite">Civilité</label>
+                    <select id="champ-civilite" class="form-control" disabled>
+                      <option>Monsieur</option>
+                      <option>Madame</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-lg-5 col-md-5">
+                  <div class="form-group">
+                    <label for="champ-prenom">Prénom</label>
+                    <input  id="champ-prenom" type="text" class="form-control" placeholder="Votre prénom" disabled>
+                  </div>
+                </div>
+                <div class="col-lg-5 col-md-5">
+                  <div class="form-group">
+                    <label for="champ-nom">Nom</label>
+                    <input  id="champ-nom" type="text" class="form-control" placeholder="Votre nom" disabled>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="champ-telephone">Numéro de téléphone</label>
+                <input  id="champ-telephone" type="text" class="form-control" placeholder="Votre numéro de téléphone" disabled>
+              </div>
+
+              <div class="row">
+                <div class="col-lg-2 col-md-2">
+                  <div class="form-group">
+                    <label for="champ-num">Numéro</label>
+                    <input  id="champ-num" type="number" class="form-control" placeholder="Numero" disabled>
+                  </div>
+                </div>
+                <div class="col-lg-10 col-md-10">
+                  <div class="form-group">
+                    <label for="champ-rue">Rue</label>
+                    <input  id="champ-rue" type="text" class="form-control" placeholder="Votre rue" disabled>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-lg-4 col-md-4">
+                  <div class="form-group">
+                    <label for="champ-cp">Code postal</label>
+                    <input  id="champ-cp" type="text" class="form-control" placeholder="Votre code postal" disabled>
+                  </div>
+                </div>
+                <div class="col-lg-8 col-md-8">
+                  <div class="form-group">
+                    <label for="champ-ville">Ville</label>
+                    <input  id="champ-ville" type="text" class="form-control" placeholder="Votre ville" disabled>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <!-- Informations -->
+            <section class="margin-top-30">
+              <h2 class="text-center">Informations</h2>
+
+              <div class="form-group">
+                <label for="champ-type">Type</label>
+                <select id="champ-type" class="form-control">
+                  <option>Incident</option>
+                  <option>Animal</option>
+                  <option>Livraison</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="champ-description">Description</label>
+                <textarea id="champ-description"class="form-control" rows="3"></textarea>
+              </div>
+            </section>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+            <button type="button" class="btn btn-primary">Enregistrer</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Fenêtre modal pour consulter l'intervention -->
+    <div class="modal fade consulter-intervention" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Consulter une intervention</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <!-- Client -->
+            <section class="margin-top-30">
+              <h2 class="text-center">Client</h2>
+
+              <div class="row">
+                <div class="col-lg-2 col-md-2">
+                  <div class="form-group">
+                    <label for="champ-civilite">Civilité</label>
+                    <select id="champ-civilite" class="form-control" disabled>
+                      <option>Monsieur</option>
+                      <option>Madame</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-lg-5 col-md-5">
+                  <div class="form-group">
+                    <label for="champ-prenom">Prénom</label>
+                    <input  id="champ-prenom" type="text" class="form-control" placeholder="Votre prénom" disabled>
+                  </div>
+                </div>
+                <div class="col-lg-5 col-md-5">
+                  <div class="form-group">
+                    <label for="champ-nom">Nom</label>
+                    <input  id="champ-nom" type="text" class="form-control" placeholder="Votre nom" disabled>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="champ-telephone">Numéro de téléphone</label>
+                <input  id="champ-telephone" type="text" class="form-control" placeholder="Votre numéro de téléphone" disabled>
+              </div>
+
+              <div class="row">
+                <div class="col-lg-2 col-md-2">
+                  <div class="form-group">
+                    <label for="champ-num">Numéro</label>
+                    <input  id="champ-num" type="number" class="form-control" placeholder="Numero" disabled>
+                  </div>
+                </div>
+                <div class="col-lg-10 col-md-10">
+                  <div class="form-group">
+                    <label for="champ-rue">Rue</label>
+                    <input  id="champ-rue" type="text" class="form-control" placeholder="Votre rue" disabled>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-lg-4 col-md-4">
+                  <div class="form-group">
+                    <label for="champ-cp">Code postal</label>
+                    <input  id="champ-cp" type="text" class="form-control" placeholder="Votre code postal" disabled>
+                  </div>
+                </div>
+                <div class="col-lg-8 col-md-8">
+                  <div class="form-group">
+                    <label for="champ-ville">Ville</label>
+                    <input  id="champ-ville" type="text" class="form-control" placeholder="Votre ville" disabled>
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            <!-- Informations -->
+            <section class="margin-top-30">
+              <h2 class="text-center">Informations</h2>
+
+              <div class="form-group">
+                <label for="champ-type">Type</label>
+                <select id="champ-type" class="form-control" disabled>
+                  <option>Animal</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="champ-description">Description</label>
+                <textarea id="champ-description"class="form-control" rows="3" disabled></textarea>
+              </div>
+            </section>
+
+            <!-- Retour intervention -->
+            <section class="margin-top-30">
+              <h2 class="text-center">Retour intervention</h2>
+
+              <div class="form-group">
+                <label for="champ-etat">Etat</label>
+                <select id="champ-etat" class="form-control" disabled>
+                  <option>Terminé</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="champ-commentaire">Commentaire</label>
+                <textarea id="champ-commentaire"class="form-control" rows="3" disabled></textarea>
+              </div>
+
+
+            </section>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+          </div>
+        </div>
+      </div>
+    </div>
+</html>

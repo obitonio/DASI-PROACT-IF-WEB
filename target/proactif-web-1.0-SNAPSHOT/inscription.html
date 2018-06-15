@@ -10,6 +10,7 @@ and open the template in the editor.
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
         <link rel="stylesheet" href="css/bootstrap.min.css" />
         <link rel="stylesheet" href="css/styles.css" />
     </head>
@@ -107,7 +108,7 @@ and open the template in the editor.
 
             <div class="form-group">
               <label for="champ-complement">Complément d'adresse</label>
-              <textarea id="champ-complement"class="form-control" rows="3"></textarea>
+              <textarea id="champ-complement" class="form-control" rows="3"></textarea>
             </div>
           </section>
           <button id="bouton-inscription" class="btn btn-primary">Valider</button>
@@ -115,64 +116,6 @@ and open the template in the editor.
     </body>
 
     <script>
-
-        function inscription() {
-            var champCivilite = $('#champ-civilite').val();
-            var champPrenom = $('#champ-prenom').val();
-            var champNom = $('#champ-nom').val();
-            var champDateNaissance = $('#champ-datenaissance').val();
-            var champTelephone = $('#champ-telephone').val();
-            var champLogin = $('#champ-login').val();
-            var champPassword = $('#champ-pass1').val();
-            var champNumero = $('#champ-num').val();
-            var champRue = $('#champ-rue').val();
-            var champCodePostal = $('#champ-cp').val();
-            var champVille = $('#champ-ville').val();
-            var champComplement = $('#champ-complement').val();
-
-            $('#message').html('Connexion en cours...');
-            console.log(champDateNaissance);
-
-            $.ajax({
-                url: './ActionServlet',
-                method: 'POST',
-                data: {
-                    action: 'inscrire',
-                    civilite: champCivilite,
-                    prenom: champPrenom,
-                    nom: champNom,
-                    dateNaissance: champDateNaissance,
-                    telephone: champTelephone,
-                    mail: champLogin,
-                    mdp: champPassword,
-                    numero: champNumero,
-                    rue: champRue,
-                    codePostal: champCodePostal,
-                    ville: champVille,
-                    infosSuppAdresse: champComplement
-                },
-                dataType: 'json'
-            }).done(function (data) {
-                console.log(data);
-
-                var retour = data.retourConnexion;
-                console.log(retour);
-
-                // si connexion ok, aller sur la page suivante :
-                if (retour.localeCompare('ok') == 0) {
-                    //window.location = "maPageSuivante.html";
-                }
-                else if (retour.localeCompare('nok') == 0) {
-                  $('#message').html('Echec de la connexion, votre adresse email ou mot de passe est incorrect.');
-                  $('#message').css('display', 'block');
-                  $('#champ-login').addClass('is-invalid');
-                  $('#champ-password').addClass('is-invalid');
-                }
-
-
-            });
-        }
-
         $(document).ready(function () {
             // ajout d'un "handler" sur le clic du bouton de connexion
             $('#bouton-inscription').on('click', function (e) {
