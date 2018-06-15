@@ -95,7 +95,22 @@ public class Serialisation {
         else if(utilisateur instanceof Employe){
             Employe employeCourant = (Employe) utilisateur;
             for(Intervention i : employeCourant.getListeDesInterventions()){
-
+                JsonObject jsonIntervention = new JsonObject();
+                    
+                    jsonIntervention.addProperty("id",i.getId());
+                    jsonIntervention.addProperty("date",formatDate.format(i.getDateDebut()));
+                    jsonIntervention.addProperty("intitule",i.getIntitule());
+                    jsonIntervention.addProperty("client", i.getClient().getPrenom() + " " + i.getClient().getNom());
+                    jsonIntervention.addProperty("etat", i.getEtat());
+                    
+                    String type = "";
+                    if(i instanceof Animal)
+                        type = "Animal";
+                    else if(i instanceof Incident)
+                        type = "Incident";
+                    else if(i instanceof Livraison)
+                        type = "Livraison";
+                    jsonIntervention.addProperty("type", type);
             }
         }
         JsonObject reponseJson = new JsonObject();
