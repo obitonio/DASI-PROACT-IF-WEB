@@ -4,10 +4,15 @@
         <title>PROACT'IF - Connexion</title>
         <meta charset="UTF-8">
         <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <script src="js/fonctions.js"></script>
         <link rel="stylesheet" href="css/bootstrap.min.css" />
         <link rel="stylesheet" href="css/styles.css" />
     </head>
     <body>
+      <nav class="navbar navbar-light bg-light justify-content-between">
+        <a class="navbar-brand">PROACT'IF</a>
+      </nav>
 
       <img class="img-width-100prct" src="images/fond-login.jpeg">
 
@@ -35,43 +40,6 @@
         </form>
 
         <script>
-
-            function connexion() {
-                var champLogin = $('#champ-login').val();
-                var champPassword = $('#champ-password').val();
-
-                $('#message').html('Connexion en cours...');
-
-                $.ajax({
-                    url: './ActionServlet',
-                    method: 'POST',
-                    data: {
-                        action: 'connecter',
-                        mail: champLogin,
-                        mdp: champPassword
-                    },
-                    dataType: 'json'
-                }).done(function (data) {
-                    console.log(data);
-
-                    var retour = data.retourConnexion;
-                    console.log(retour);
-
-                    // si connexion ok, aller sur la page suivante :
-                    if (retour.localeCompare('ok') == 0) {
-                        //window.location = "maPageSuivante.html";
-                    }
-                    else if (retour.localeCompare('nok') == 0) {
-                      $('#message').html('Echec de la connexion, votre adresse email ou mot de passe est incorrect.');
-                      $('#message').css('display', 'block');
-                      $('#champ-login').addClass('is-invalid');
-                      $('#champ-password').addClass('is-invalid');
-                    }
-
-
-                });
-            }
-
             $(document).ready(function () {
                 // ajout d'un "handler" sur le clic du bouton de connexion
                 $('#bouton-connexion').on('click', function (e) {
