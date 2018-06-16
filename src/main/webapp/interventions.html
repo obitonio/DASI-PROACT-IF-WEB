@@ -24,7 +24,7 @@ and open the template in the editor.
          </a>
          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
            <a class="dropdown-item" href="interventions.html">Mes interventions</a>
-           <a class="dropdown-item" href="#">Mes données personnelles</a>
+           <a class="dropdown-item" href="modification.html">Mes données personnelles</a>
            <a class="dropdown-item" href="#">Se déconnecter</a>
          </div>
         </form>
@@ -73,7 +73,7 @@ and open the template in the editor.
           <div class="modal-body">
             <!-- Client -->
             <section class="margin-top-30">
-              <h2 class="text-center">Client</h2>
+              <h2 class="text-center">Informations personnelles</h2>
 
               <div class="row">
                 <div class="col-lg-2 col-md-2">
@@ -138,11 +138,15 @@ and open the template in the editor.
                 <label for="champ-complement">Complément d'adresse</label>
                 <textarea id="champ-complement" class="form-control" rows="3" disabled></textarea>
               </div>
+
+              <div class="text-center">
+                <a href="modification.html" class="btn btn-secondary">Modifier mes informations</a>
+              </div>
             </section>
 
             <!-- Informations -->
             <section class="margin-top-30">
-              <h2 class="text-center">Informations</h2>
+              <h2 class="text-center">Intervention</h2>
 
               <div class="form-group">
                 <label for="champ-intitule">Intitulé</label>
@@ -160,12 +164,12 @@ and open the template in the editor.
 
               <div id="consulter-champs-animal" class="invisible">
                 <div class="form-group">
-                  <label for="champ-nom">Nom</label>
-                  <input  id="champ-nom" type="text" class="form-control" placeholder="Le nom de votre animal">
+                  <label for="champ-nom-animal">Nom</label>
+                  <input  id="champ-nom-animal" type="text" class="form-control" placeholder="Le nom de votre animal">
                 </div>
                 <div class="form-group">
-                  <label for="champ-type">Type (Chat, Chien ...)</label>
-                  <input  id="champ-type" type="text" class="form-control" placeholder="Le type de votre animal">
+                  <label for="champ-type-animal">Type (Chat, Chien ...)</label>
+                  <input  id="champ-type-animal" type="text" class="form-control" placeholder="Le type de votre animal">
                 </div>
               </div>
 
@@ -202,7 +206,7 @@ and open the template in the editor.
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
-            <button type="button" class="btn btn-primary">Enregistrer</button>
+            <button id='bouton-demander-intervention' type="button" class="btn btn-primary">Enregistrer</button>
           </div>
         </div>
       </div>
@@ -210,132 +214,14 @@ and open the template in the editor.
 
     <div id="modals-consultation"></div>
 
-    <!-- Fenêtre modal pour consulter l'intervention -->
-    <div class="modal fade consulter-intervention" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">Consulter une intervention</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <!-- Client -->
-            <section class="margin-top-30">
-              <h2 class="text-center">Utilisateur</h2>
-
-              <div class="row">
-                <div class="col-lg-2 col-md-2">
-                  <div class="form-group">
-                    <label for="champ-civilite">Civilité</label>
-                    <select id="champ-civilite" class="form-control" disabled>
-                      <option>Monsieur</option>
-                      <option>Madame</option>
-                    </select>
-                  </div>
-                </div>
-                <div class="col-lg-5 col-md-5">
-                  <div class="form-group">
-                    <label for="champ-prenom">Prénom</label>
-                    <input  id="champ-prenom" type="text" class="form-control" placeholder="Votre prénom" disabled>
-                  </div>
-                </div>
-                <div class="col-lg-5 col-md-5">
-                  <div class="form-group">
-                    <label for="champ-nom">Nom</label>
-                    <input  id="champ-nom" type="text" class="form-control" placeholder="Votre nom" disabled>
-                  </div>
-                </div>
-              </div>
-
-              <div class="form-group">
-                <label for="champ-telephone">Numéro de téléphone</label>
-                <input  id="champ-telephone" type="text" class="form-control" placeholder="Votre numéro de téléphone" disabled>
-              </div>
-
-              <div class="row">
-                <div class="col-lg-2 col-md-2">
-                  <div class="form-group">
-                    <label for="champ-num">Numéro</label>
-                    <input  id="champ-num" type="number" class="form-control" placeholder="Numero" disabled>
-                  </div>
-                </div>
-                <div class="col-lg-10 col-md-10">
-                  <div class="form-group">
-                    <label for="champ-rue">Rue</label>
-                    <input  id="champ-rue" type="text" class="form-control" placeholder="Votre rue" disabled>
-                  </div>
-                </div>
-              </div>
-
-              <div class="row">
-                <div class="col-lg-4 col-md-4">
-                  <div class="form-group">
-                    <label for="champ-cp">Code postal</label>
-                    <input  id="champ-cp" type="text" class="form-control" placeholder="Votre code postal" disabled>
-                  </div>
-                </div>
-                <div class="col-lg-8 col-md-8">
-                  <div class="form-group">
-                    <label for="champ-ville">Ville</label>
-                    <input  id="champ-ville" type="text" class="form-control" placeholder="Votre ville" disabled>
-                  </div>
-                </div>
-              </div>
-
-              <div class="form-group">
-                <label for="champ-complement">Complément d'adresse</label>
-                <textarea id="champ-complement" class="form-control" rows="3" disabled></textarea>
-              </div>
-            </section>
-
-            <!-- Informations -->
-            <section class="margin-top-30">
-              <h2 class="text-center">Informations</h2>
-
-              <div class="form-group">
-                <label for="champ-type">Type</label>
-                <select id="champ-type" class="form-control" disabled>
-                  <option>Animal</option>
-                </select>
-              </div>
-
-              <div class="form-group">
-                <label for="champ-description">Description</label>
-                <textarea id="champ-description"class="form-control" rows="3" disabled></textarea>
-              </div>
-            </section>
-
-            <!-- Retour intervention -->
-            <section class="margin-top-30">
-              <h2 class="text-center">Retour intervention</h2>
-
-              <div class="form-group">
-                <label for="champ-etat">Etat</label>
-                <select id="champ-etat" class="form-control" disabled>
-                  <option>Terminé</option>
-                </select>
-              </div>
-
-              <div class="form-group">
-                <label for="champ-commentaire">Commentaire</label>
-                <textarea id="champ-commentaire"class="form-control" rows="3" disabled></textarea>
-              </div>
-
-
-            </section>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
     <script>
         $(document).ready(function () {
             obtenirInterventions();
+
+            $('#bouton-demander-intervention').click(function() {
+                //TODO vérifier champ remplit
+                demanderIntervention();
+            });
 
             $( "#champ-type" ).change(function() {
               var type = $(this).val();

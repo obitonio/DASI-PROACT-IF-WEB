@@ -39,7 +39,7 @@ function connexion() {
 
 /**
   Fonction d'inscription
-  */
+*/
 function inscription() {
     var champCivilite = $('#champ-civilite').val();
     var champPrenom = $('#champ-prenom').val();
@@ -98,6 +98,52 @@ function inscription() {
 }
 
 /**
+  Effectuer une demande d'intervention
+*/
+function demanderIntervention() {
+  console.log('Demander intervention');
+  var champIntitule = $('#champ-intitule').val();
+  var champType = $('#champ-type').val();
+  var champDescription = $('#champ-description').val();
+  var champType1 = '';
+  var champType2 = '';
+  var champType3 = '';
+  var champType4 = '';
+
+  if (champType.localeCompare('Animal') == 0) {
+    champType1 = $('#champ-nom-animal').val();
+    champType2 = $('#champ-type-animal').val();
+  }
+  else if (champType.localeCompare('Livraison') == 0) {
+    champType1 = $('#champ-livraison-heure').val();
+    champType2 = $('#champ-livraison-type').val();
+    champType3 = $('#champ-code-suivi').val();
+    champType4 = $('#champ-entreprise').val();
+  }
+
+  $.ajax({
+      url: './ActionServlet',
+      method: 'POST',
+      data: {
+          action: 'demanderIntervention',
+          intitule: champIntitule,
+          type: champType,
+          description: champDescription,
+          attributType1: champType1,
+          attributType2: champType2,
+          attributType3: champType3,
+          attributType4: champType4
+      },
+      dataType: 'json'
+  }).done(function (data) {
+      console.log(data);
+
+      // var retour = data.retourConnexion;
+      // console.log(retour);
+  });
+}
+
+/**
   Fonction pour obtenir les interventions
 */
 function obtenirInterventions() {
@@ -115,9 +161,10 @@ function obtenirInterventions() {
 
         var interventions = data.interventions;
         var i;
-        var contenuHtml;
-        var lesModalHtml;
+        var contenuHtml = '';
+        var lesModalHtml = '';
 
+        // Lister les interventions et leur modal de consultation
         for (i=0; i<interventions.length; i++) {
           var inter = interventions[i];
           var etat = 'En cours';
@@ -135,9 +182,11 @@ function obtenirInterventions() {
           contenuHtml += '<td><button id="' + inter.id + '" class="btn btn-info btn-sm" data-toggle="modal" data-target=".consulter-intervention-' + inter.id + '">Consulter</button></td>';
           contenuHtml += '</tr>';
 
+          // Création du modal pour l'intervention
           lesModalHtml += creerModalConsulterIntervention(inter, data.infoUtilisateur, etat);
         }
 
+        // Mettre le nom de l'utilisateur sur la barre de navigation à droite
         $('#lesInterventions').html(contenuHtml);
         $('#modals-consultation').html(lesModalHtml);
 
@@ -147,12 +196,34 @@ function obtenirInterventions() {
 
         $('#utilisateur-connecte').html(civiliteUtilisateur + ' ' + prenomUtilisateur + ' ' + nomUtilisateur);
 
+        // Remplir les infos utilisateurs pour le formulaire de demande d'intervention
+        chargerUtilisateurDemandeIntervention(data.infoUtilisateur);
     });
 }
 
+/**
+  Charge les informations utilisateur dans le formulaire de demande d'intervention
+*/
+function chargerUtilisateurDemandeIntervention(unUtilisateur) {
+
+  $('#champ-civilite').attr('placeholder', (unUtilisateur.civilite == 'M') ? 'Monsieur' : 'Madame');
+  $('#champ-prenom').attr('placeholder', unUtilisateur.prenom);
+  $('#champ-nom').attr('placeholder', unUtilisateur.nom);
+  $('#champ-telephone').attr('placeholder', unUtilisateur.telephone);
+  $('#champ-num').attr('placeholder', unUtilisateur.numeroRue);
+  $('#champ-rue').attr('placeholder', unUtilisateur.rue);
+  $('#champ-cp').attr('placeholder', unUtilisateur.codePostal);
+  $('#champ-ville').attr('placeholder', unUtilisateur.ville);
+  $('#champ-complement').attr('placeholder', unUtilisateur.complementAdresse);
+}
+
+/**
+  Créer une fenêtre modale de consultation pour une intervention
+*/
 function creerModalConsulterIntervention(uneIntervention, unUtilisateur, unEtat) {
 
   // TODO Enlever les undefined
+  var complementAdresse = (unUtilisateur.complementAdresse === undefined)? '' : unUtilisateur.complementAdresse;
 
     var contenuHtml = '<div class="modal fade consulter-intervention-' + uneIntervention.id + '" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">\
       <div class="modal-dialog modal-lg">\
@@ -166,14 +237,13 @@ function creerModalConsulterIntervention(uneIntervention, unUtilisateur, unEtat)
           <div class="modal-body">\
             <!-- Client -->\
             <section class="margin-top-30">\
-              <h2 class="text-center">Utilisateur</h2>\
+              <h2 class="text-center">Informations personnelles</h2>\
               <div class="row">\
                 <div class="col-lg-2 col-md-2">\
                   <div class="form-group">\
                     <label>Civilité</label>\
                     <select class="form-control" disabled>\
-                      <option>Monsieur</option>\
-                      <option>Madame</option>\
+                      <option>' + ((unUtilisateur.civilite == 'M') ? 'Monsieur' : 'Madame') + '</option>\
                     </select>\
                   </div>\
                 </div>\
@@ -224,12 +294,12 @@ function creerModalConsulterIntervention(uneIntervention, unUtilisateur, unEtat)
               </div>\
               <div class="form-group">\
                 <label>Complément d\'adresse</label>\
-                <textarea class="form-control" rows="3" disabled>' + unUtilisateur.complementAdresse + '</textarea>\
+                <textarea class="form-control" rows="3" disabled>' + complementAdresse + '</textarea>\
               </div>\
             </section>\
             <!-- Informations -->\
             <section class="margin-top-30">\
-              <h2 class="text-center">Informations</h2>\
+              <h2 class="text-center">Intervention</h2>\
               <div class="form-group">\
                 <label>Intitulé</label>\
                 <select class="form-control" disabled>\
