@@ -138,7 +138,7 @@ public class Serialisation {
         jsonInfosUtilisateur.addProperty("rue", utilisateur.getAdresse().getRue());
         jsonInfosUtilisateur.addProperty("codePostal", utilisateur.getAdresse().getCodePostal());
         jsonInfosUtilisateur.addProperty("ville", utilisateur.getAdresse().getVille());
-        jsonInfosUtilisateur.addProperty("colmplementAdresse", utilisateur.getAdresse().getInformations());
+        jsonInfosUtilisateur.addProperty("complementAdresse", utilisateur.getAdresse().getInformations());
         
         
         JsonObject reponseJson = new JsonObject();     

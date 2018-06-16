@@ -7,13 +7,8 @@ package com.mycompany.proactif.actions;
 
 import com.mycompany.proactif.entites.Client;
 import com.mycompany.proactif.entites.Employe;
-import com.mycompany.proactif.entites.Intervention;
 import com.mycompany.proactif.entites.Utilisateur;
 import com.mycompany.proactif.services.Services;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.List;
-import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
