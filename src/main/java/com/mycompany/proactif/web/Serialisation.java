@@ -17,6 +17,8 @@ import com.mycompany.proactif.entites.Incident;
 import com.mycompany.proactif.entites.Intervention;
 import com.mycompany.proactif.entites.Livraison;
 import com.mycompany.proactif.entites.Utilisateur;
+import com.mycompany.proactif.services.Services;
+import com.mycompany.proactif.services.Services.RetourCreationIntervention;
 import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.text.DateFormat;
@@ -115,14 +117,25 @@ public class Serialisation {
                     jsonIntervention.addProperty("intitule",i.getIntitule());
                     jsonIntervention.addProperty("client", i.getClient().getPrenom() + " " + i.getClient().getNom());
                     jsonIntervention.addProperty("etat", i.getEtat());
+                    jsonIntervention.addProperty("descriptionClient", i.getDescriptionClient());
                     
                     String type = "";
-                    if(i instanceof Animal)
-                        type = "Animal";
-                    else if(i instanceof Incident)
-                        type = "Incident";
-                    else if(i instanceof Livraison)
+                    if (i instanceof Animal) {
+                       type = "Animal";
+                       jsonIntervention.addProperty("nomAnimal", ((Animal) i).getNom());
+                       jsonIntervention.addProperty("typeAnimal", ((Animal) i).getType());
+                    }
+                    else if(i instanceof Incident) {
+                        type = "Incident";  
+                    }
+                    else if(i instanceof Livraison) {
                         type = "Livraison";
+                        jsonIntervention.addProperty("heureLivraison", ((Livraison) i).getHeurePassage().toString());
+                        jsonIntervention.addProperty("typeLivraison", ((Livraison) i).getType());
+                        jsonIntervention.addProperty("codeLivraison", ((Livraison) i).getCodeSuivi());
+                        jsonIntervention.addProperty("entrepriseLivraison", ((Livraison) i).getEntreprise());
+                    }
+
                     jsonIntervention.addProperty("type", type);
                     jsonListeInterventions.add(jsonIntervention);
             }
@@ -153,5 +166,22 @@ public class Serialisation {
         System.out.println("Json : " + json);
     }
     
-    
+     public static void EcrireRetourDemandeIntervention(PrintWriter out, RetourCreationIntervention retour){
+        System.out.println("=== EcrireRetourDemandeIntervention ===");
+        String codeRetour = "-1"; // ErreurBase
+        
+        if (retour == RetourCreationIntervention.AucunEmployeDisponible)
+            codeRetour = "0";
+        else if (retour == RetourCreationIntervention.Succes)
+            codeRetour = "1";
+  
+        JsonObject reponseJson = new JsonObject();
+        reponseJson.addProperty("retourDemandeIntervention", codeRetour);
+        
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        String json = gson.toJson(reponseJson);
+        
+        out.println(json);
+        System.out.println("Json : " + json); 
+     }
 }

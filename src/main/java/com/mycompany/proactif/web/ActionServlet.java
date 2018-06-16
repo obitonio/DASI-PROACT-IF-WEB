@@ -6,11 +6,14 @@
 package com.mycompany.proactif.web;
 
 import com.mycompany.proactif.actions.ConnexionAction;
+import com.mycompany.proactif.actions.DemanderInterventionAction;
 import com.mycompany.proactif.actions.InscriptionAction;
 import com.mycompany.proactif.actions.InterventionsAction;
 import com.mycompany.proactif.actions.modificationInformationClient;
 import com.mycompany.proactif.dao.JpaUtil;
 import com.mycompany.proactif.entites.Utilisateur;
+import com.mycompany.proactif.services.Services;
+import com.mycompany.proactif.services.Services.RetourCreationIntervention;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.ParseException;
@@ -74,6 +77,14 @@ public class ActionServlet extends HttpServlet {
                 intervAction.processRequest(request,response);
                 try (PrintWriter out = response.getWriter()) {
                     Serialisation.EcrireListeDesInterventions(out, (Utilisateur)request.getAttribute("utilisateur"));
+                }
+                break;
+                
+            case "demanderIntervention" :
+                DemanderInterventionAction demanderIntervention = new DemanderInterventionAction();
+                demanderIntervention.processRequest(request,response);
+                try (PrintWriter out = response.getWriter()) {
+                    Serialisation.EcrireRetourDemandeIntervention(out, (RetourCreationIntervention)request.getAttribute("RetourCreerDemandeIntervention"));
                 }
                 break;
         }    

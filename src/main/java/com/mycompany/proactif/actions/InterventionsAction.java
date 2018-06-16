@@ -9,6 +9,7 @@ import com.mycompany.proactif.entites.Client;
 import com.mycompany.proactif.entites.Employe;
 import com.mycompany.proactif.entites.Utilisateur;
 import com.mycompany.proactif.services.Services;
+import com.mycompany.proactif.util.DebugLogger;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -30,7 +31,7 @@ public class InterventionsAction extends HttpServlet {
             utilisateurCourant = (Utilisateur) session.getAttribute("utilisateurCourant");
         }
         catch(Exception e){
-            
+            DebugLogger.log("[InterventionsAction]", e);
         }
         if(utilisateurCourant instanceof Client){
             
