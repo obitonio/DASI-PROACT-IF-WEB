@@ -181,26 +181,24 @@ function obtenirInterventions() {
         var lesModalHtml = '';
 
         // Lister les interventions et leur modal de consultation
-        for (i=0; i<interventions.length; i++) {
-          var inter = interventions[i];
+        console.log(interventions);
+        interventions.forEach(function(inter) {
+          console.log(inter.type);
           var etat = 'En cours';
-          if (inter.etat == 1)
+          if (inter.etat === 1)
             etat = 'Terminé';
-          else if (inter.etat == -1)
+          else if (inter.etat === -1)
             etat = 'Non résolue';
-
-          contenuHtml += '<tr>';
-          contenuHtml += '<td>' + inter.date + '</td>';
-          contenuHtml += '<td>' + inter.intitule + '</td>';
-          contenuHtml += '<td>' + inter.type + '</td>';
-          contenuHtml += '<td>' + inter.employe + '</td>';
-          contenuHtml += '<td>' + etat + '</td>';
-          contenuHtml += '<td><button id="' + inter.id + '" class="btn btn-info btn-sm" data-toggle="modal" data-target=".consulter-intervention-' + inter.id + '">Consulter</button></td>';
-          contenuHtml += '</tr>';
-
+        
+            if(data.infoUtilisateur.typeUtilisateur === 'client'){
+                contenuHtml += affichageListeInterventionsClients(inter, etat);
+            }      
+            else if(data.infoUtilisateur.typeUtilisateur === 'employe'){
+                contenuHtml += affichageListeInterventionsEmployes(inter, etat);
+            }
           // Création du modal pour l'intervention
           lesModalHtml += creerModalConsulterIntervention(inter, data.infoUtilisateur, etat);
-        }
+        });
 
         // Mettre le nom de l'utilisateur sur la barre de navigation à droite
         $('#lesInterventions').html(contenuHtml);
@@ -215,6 +213,32 @@ function obtenirInterventions() {
         // Remplir les infos utilisateurs pour le formulaire de demande d'intervention
         chargerUtilisateurDemandeIntervention(data.infoUtilisateur);
     });
+}
+
+function affichageListeInterventionsClients(intervention,etat) {
+    var contenuHtml = '';
+    contenuHtml += '<tr>';
+    contenuHtml += '<td>' + intervention.date + '</td>';
+    contenuHtml += '<td>' + intervention.intitule + '</td>';
+    contenuHtml += '<td>' + intervention.type + '</td>';
+    contenuHtml += '<td>' + intervention.employe + '</td>';
+    contenuHtml += '<td>' + etat + '</td>';
+    contenuHtml += '<td><button id="' + intervention.id + '" class="btn btn-info btn-sm" data-toggle="modal" data-target=".consulter-intervention-' + intervention.id + '">Consulter</button></td>';
+    contenuHtml += '</tr>';
+    return contenuHtml;
+}
+
+function affichageListeInterventionsEmployes(intervention,etat) {
+    var contenuHtml = '';
+    contenuHtml += '<tr>';
+    contenuHtml += '<td>' + intervention.date + '</td>';
+    contenuHtml += '<td>' + intervention.intitule + '</td>';
+    contenuHtml += '<td>' + intervention.type + '</td>';
+    contenuHtml += '<td>' + intervention.client + '</td>';
+    contenuHtml += '<td>' + etat + '</td>';
+    contenuHtml += '<td><button id="' + intervention.id + '" class="btn btn-info btn-sm" data-toggle="modal" data-target=".consulter-intervention-' + intervention.id + '">Terminer</button></td>';
+    contenuHtml += '</tr>';
+    return contenuHtml;
 }
 
 /**

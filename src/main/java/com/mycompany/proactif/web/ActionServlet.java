@@ -89,6 +89,14 @@ public class ActionServlet extends HttpServlet {
                 else if(maSession.getAttribute("utilisateurCourant") instanceof Employe){
 
                     switch(action){
+                        
+                        case "obtenirInterventions" :
+                            InterventionsAction intervAction = new InterventionsAction();
+                            intervAction.processRequest(request,response);
+                            try (PrintWriter out = response.getWriter()) {
+                                Serialisation.EcrireListeDesInterventions(out, (Utilisateur)request.getAttribute("utilisateur"));
+                            }
+                            break;
 
                         default :
                             try (PrintWriter out = response.getWriter()) {
