@@ -243,6 +243,10 @@ function obtenirInterventions() {
         },
         dataType: 'json'
     }).done(function (data) {
+        if (data.redirection !== null) {
+          window.location = data.redirection;
+        }
+
         console.log("==== Retour obtenirInterventions:");
         console.log(data);
 
@@ -260,10 +264,10 @@ function obtenirInterventions() {
             etat = 'Terminé';
           else if (inter.etat === -1)
             etat = 'Non résolue';
-        
+
             if(data.infoUtilisateur.typeUtilisateur === 'client'){
                 contenuHtml += affichageListeInterventionsClients(inter, etat);
-            }      
+            }
             else if(data.infoUtilisateur.typeUtilisateur === 'employe'){
                 contenuHtml += affichageListeInterventionsEmployes(inter, etat);
             }
