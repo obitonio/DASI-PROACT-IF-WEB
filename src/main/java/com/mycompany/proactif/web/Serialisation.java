@@ -84,6 +84,20 @@ public class Serialisation {
     
     public static void EcrireListeDesInterventions(PrintWriter out, Utilisateur utilisateur){
         
+        JsonObject jsonInfosUtilisateur = new JsonObject();
+        
+        jsonInfosUtilisateur.addProperty("civilite", utilisateur.getCivilite());
+        jsonInfosUtilisateur.addProperty("nom", utilisateur.getNom());
+        jsonInfosUtilisateur.addProperty("prenom", utilisateur.getPrenom());
+        jsonInfosUtilisateur.addProperty("telephone", utilisateur.getTelephone());
+        
+        jsonInfosUtilisateur.addProperty("numeroRue", utilisateur.getAdresse().getNumero());
+        jsonInfosUtilisateur.addProperty("rue", utilisateur.getAdresse().getRue());
+        jsonInfosUtilisateur.addProperty("codePostal", utilisateur.getAdresse().getCodePostal());
+        jsonInfosUtilisateur.addProperty("ville", utilisateur.getAdresse().getVille());
+        jsonInfosUtilisateur.addProperty("complementAdresse", utilisateur.getAdresse().getInformations());
+        
+        
         DateFormat formatDate = new SimpleDateFormat("dd/MM/yyyy");
         DateFormat formatDateHeurePassage = new SimpleDateFormat("dd/MM/yyyy - hh:mm");
         JsonArray jsonListeInterventions = new JsonArray();
@@ -91,6 +105,8 @@ public class Serialisation {
         if(utilisateur instanceof Client){  
             
             Client clientCourant = (Client) utilisateur;
+            
+            jsonInfosUtilisateur.addProperty("typeUtilisateur", "client");
             
             for(Intervention i : clientCourant.getListeDesInterventions()){
                     System.out.println(i.toString());
@@ -103,6 +119,7 @@ public class Serialisation {
                     jsonIntervention.addProperty("employe", i.getEmploye().getPrenom() + " " + i.getEmploye().getNom());
                     jsonIntervention.addProperty("etat", i.getEtat());
                     jsonIntervention.addProperty("descriptionClient", i.getDescriptionClient());
+                    
                     
                     String type = "";
                     if (i instanceof Animal) {
@@ -128,6 +145,8 @@ public class Serialisation {
         else if(utilisateur instanceof Employe){
             
             Employe employeCourant = (Employe) utilisateur;
+            
+            jsonInfosUtilisateur.addProperty("typeUtilisateur", "employe");
             
             for(Intervention i : employeCourant.getListeDesInterventions()){
                 JsonObject jsonIntervention = new JsonObject();
@@ -160,18 +179,7 @@ public class Serialisation {
                     jsonListeInterventions.add(jsonIntervention);
             }
         }
-        JsonObject jsonInfosUtilisateur = new JsonObject();
         
-        jsonInfosUtilisateur.addProperty("civilite", utilisateur.getCivilite());
-        jsonInfosUtilisateur.addProperty("nom", utilisateur.getNom());
-        jsonInfosUtilisateur.addProperty("prenom", utilisateur.getPrenom());
-        jsonInfosUtilisateur.addProperty("telephone", utilisateur.getTelephone());
-        
-        jsonInfosUtilisateur.addProperty("numeroRue", utilisateur.getAdresse().getNumero());
-        jsonInfosUtilisateur.addProperty("rue", utilisateur.getAdresse().getRue());
-        jsonInfosUtilisateur.addProperty("codePostal", utilisateur.getAdresse().getCodePostal());
-        jsonInfosUtilisateur.addProperty("ville", utilisateur.getAdresse().getVille());
-        jsonInfosUtilisateur.addProperty("complementAdresse", utilisateur.getAdresse().getInformations());
         
         
         JsonObject reponseJson = new JsonObject();     
