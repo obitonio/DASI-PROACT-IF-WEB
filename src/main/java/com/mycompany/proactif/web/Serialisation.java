@@ -85,6 +85,7 @@ public class Serialisation {
     public static void EcrireListeDesInterventions(PrintWriter out, Utilisateur utilisateur){
         
         DateFormat formatDate = new SimpleDateFormat("dd/MM/yyyy");
+        DateFormat formatDateHeurePassage = new SimpleDateFormat("dd/MM/yyyy - hh:mm");
         JsonArray jsonListeInterventions = new JsonArray();
         
         if(utilisateur instanceof Client){  
@@ -114,7 +115,7 @@ public class Serialisation {
                     }
                     else if(i instanceof Livraison) {
                         type = "Livraison";
-                        jsonIntervention.addProperty("heureLivraison", ((Livraison) i).getHeurePassage().toString());
+                        jsonIntervention.addProperty("heureLivraison", (formatDateHeurePassage.format( ((Livraison) i).getHeurePassage() )));
                         jsonIntervention.addProperty("typeLivraison", ((Livraison) i).getType());
                         jsonIntervention.addProperty("codeLivraison", ((Livraison) i).getCodeSuivi());
                         jsonIntervention.addProperty("entrepriseLivraison", ((Livraison) i).getEntreprise());
@@ -149,7 +150,7 @@ public class Serialisation {
                     }
                     else if(i instanceof Livraison) {
                         type = "Livraison";
-                        jsonIntervention.addProperty("heureLivraison", ((Livraison) i).getHeurePassage().toString());
+                        jsonIntervention.addProperty("heureLivraison", (formatDateHeurePassage.format( ((Livraison) i).getHeurePassage() )));
                         jsonIntervention.addProperty("typeLivraison", ((Livraison) i).getType());
                         jsonIntervention.addProperty("codeLivraison", ((Livraison) i).getCodeSuivi());
                         jsonIntervention.addProperty("entrepriseLivraison", ((Livraison) i).getEntreprise());

@@ -156,6 +156,7 @@ function demanderIntervention() {
       }
 
       obtenirInterventions();
+      viderChampDemandeIntervention();
   });
 }
 
@@ -258,11 +259,7 @@ function creerModalConsulterIntervention(uneIntervention, unUtilisateur, unEtat)
     ';
   }
   else if (uneIntervention.type.localeCompare('Livraison') == 0) {
-    var heureLivraison = '';
-    if (uneIntervention.heureLivraison !== undefined) {
-      heureLivraison = uneIntervention.heureLivraison;
-    }
-
+    var heureLivraison = (uneIntervention.heureLivraison === undefined)? '' : uneIntervention.heureLivraison;
     var typeLivraison = (uneIntervention.typeLivraison === undefined)? '' : uneIntervention.typeLivraison;
     var codeLivraison = (uneIntervention.codeLivraison === undefined)? '' : uneIntervention.codeLivraison;
     var entrepriseLivraison = (uneIntervention.entrepriseLivraison === undefined)? '' : uneIntervention.entrepriseLivraison;
@@ -409,4 +406,23 @@ function creerModalConsulterIntervention(uneIntervention, unUtilisateur, unEtat)
     ';
 
     return contenuHtml;
+}
+
+/**
+  Vide les champs de saisie d'une demande d'intervention
+*/
+function viderChampDemandeIntervention() {
+
+  $('#champ-intitule').val('');
+  $('#champ-type').val('Incident');
+  $('#champ-description').val('');
+  $('#champ-nom-animal').val('');
+  $('#champ-type-animal').val('');
+  $('#champ-livraison-heure').val('');
+  $('#champ-livraison-type').val('');
+  $('#champ-code-suivi').val('');
+  $('#champ-entreprise').val('');
+
+  $('#consulter-champs-animal').addClass('invisible');
+  $('#consulter-champs-livraison').addClass('invisible');
 }
