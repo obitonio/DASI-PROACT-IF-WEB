@@ -203,4 +203,17 @@ public class Serialisation {
         out.println(json);
         System.out.println("Json : " + json); 
      }
+
+     public static void Redirection(PrintWriter out, String redirection){
+        System.out.println("=== Redirection ===");
+  
+        JsonObject reponseJson = new JsonObject();
+        reponseJson.addProperty("redirection", redirection);
+        
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        String json = gson.toJson(reponseJson);
+        
+        out.println(json);
+        System.out.println("Json : " + json);
+    }
 }

@@ -11,6 +11,8 @@ import com.mycompany.proactif.actions.InscriptionAction;
 import com.mycompany.proactif.actions.InterventionsAction;
 import com.mycompany.proactif.actions.modificationInformationClient;
 import com.mycompany.proactif.dao.JpaUtil;
+import com.mycompany.proactif.entites.Client;
+import com.mycompany.proactif.entites.Employe;
 import com.mycompany.proactif.entites.Utilisateur;
 import com.mycompany.proactif.services.Services;
 import com.mycompany.proactif.services.Services.RetourCreationIntervention;
@@ -24,6 +26,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -46,49 +49,94 @@ public class ActionServlet extends HttpServlet {
         response.setContentType("application/json;charset=UTF-8");
         String action = request.getParameter("action");
         System.out.println("action = " + action);
-        switch (action)
-        {
-            case "connecter" :
-                ConnexionAction cnxAction = new ConnexionAction();
-                cnxAction.processRequest(request,response);
-                try (PrintWriter out = response.getWriter()) {
-                    Serialisation.EcrireConnexionUtilisateur(out, (Utilisateur)request.getAttribute("utilisateur"));
+        
+        HttpSession maSession = request.getSession();
+            if(maSession.getAttribute("utilisateurCourant")!=null){
+                if(maSession.getAttribute("utilisateurCourant") instanceof Client){
+                    switch (action) {
+
+                        case "modifierUtilisateur" :
+                            modificationInformationClient modifUtilAction = new modificationInformationClient();
+                            modifUtilAction.processRequest(request,response);
+                            try (PrintWriter out = response.getWriter()) {
+                                Serialisation.EcrireModificationUtilisateur(out, (Utilisateur)request.getAttribute("utilisateur"));
+                            }
+                            break;
+
+                        case "obtenirInterventions" :
+                            InterventionsAction intervAction = new InterventionsAction();
+                            intervAction.processRequest(request,response);
+                            try (PrintWriter out = response.getWriter()) {
+                                Serialisation.EcrireListeDesInterventions(out, (Utilisateur)request.getAttribute("utilisateur"));
+                            }
+                            break;
+
+                        case "demanderIntervention" :
+                            DemanderInterventionAction demanderIntervention = new DemanderInterventionAction();
+                            demanderIntervention.processRequest(request,response);
+                            try (PrintWriter out = response.getWriter()) {
+                                Serialisation.EcrireRetourDemandeIntervention(out, (RetourCreationIntervention)request.getAttribute("RetourCreerDemandeIntervention"));
+                            }
+                            break;
+
+                        default :
+                            try (PrintWriter out = response.getWriter()) {
+                                Serialisation.Redirection(out, "interventions.html");
+                            }
+                            break;
+                    }
                 }
-                break;
-            case "inscrire" :
-                System.out.println("Insription");
-                InscriptionAction inscAction = new InscriptionAction();
-                inscAction.processRequest(request,response);
-                try (PrintWriter out = response.getWriter()) {
-                    Serialisation.EcrireInscriptionUtilisateur(out, (Utilisateur)request.getAttribute("utilisateur"));
+                else if(maSession.getAttribute("utilisateurCourant") instanceof Employe){
+
+                    switch(action){
+
+                        default :
+                            try (PrintWriter out = response.getWriter()) {
+                                Serialisation.Redirection(out, "employe.html");
+                            }
+                            break;
+                    }
+
                 }
-                break;
-                
-            case "modifierUtilisateur" :
-                modificationInformationClient modifUtilAction = new modificationInformationClient();
-                modifUtilAction.processRequest(request,response);
-                try (PrintWriter out = response.getWriter()) {
-                    Serialisation.EcrireModificationUtilisateur(out, (Utilisateur)request.getAttribute("utilisateur"));
+                else{
+                    if(action== "deconnecter"){
+                        maSession.invalidate();
+                        try (PrintWriter out = response.getWriter()) {
+                                Serialisation.Redirection(out, "login.html");
+                            }
+                    }
                 }
-                break;
-                
-            case "obtenirInterventions" :
-                InterventionsAction intervAction = new InterventionsAction();
-                intervAction.processRequest(request,response);
-                try (PrintWriter out = response.getWriter()) {
-                    Serialisation.EcrireListeDesInterventions(out, (Utilisateur)request.getAttribute("utilisateur"));
-                }
-                break;
-                
-            case "demanderIntervention" :
-                DemanderInterventionAction demanderIntervention = new DemanderInterventionAction();
-                demanderIntervention.processRequest(request,response);
-                try (PrintWriter out = response.getWriter()) {
-                    Serialisation.EcrireRetourDemandeIntervention(out, (RetourCreationIntervention)request.getAttribute("RetourCreerDemandeIntervention"));
-                }
-                break;
-        }    
-    }
+            }
+            else{
+                switch (action) {
+                    case "inscrire" :
+
+                       System.out.println("Insription");
+                        InscriptionAction inscAction = new InscriptionAction();
+                        inscAction.processRequest(request,response);
+                        try (PrintWriter out = response.getWriter()) {
+                            Serialisation.EcrireInscriptionUtilisateur(out, (Utilisateur)request.getAttribute("utilisateur"));
+                        }
+
+                        break;
+                    case "connecter" :
+
+                        ConnexionAction cnxAction = new ConnexionAction();
+                        cnxAction.processRequest(request,response);
+                        try (PrintWriter out = response.getWriter()) {
+                            Serialisation.EcrireConnexionUtilisateur(out, (Utilisateur)request.getAttribute("utilisateur"));
+                        }
+                        break;
+
+                    default :
+                            try (PrintWriter out = response.getWriter()) {
+                                Serialisation.Redirection(out, "login.html");
+                            }
+                            break;
+                }                 
+            }                       
+        }   
+   
 
     @Override
     public void init() throws ServletException {
