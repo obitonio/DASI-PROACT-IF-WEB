@@ -23,10 +23,13 @@ function connexion() {
         console.log(retour);
 
         // si connexion ok, aller sur la page suivante :
-        if (retour.localeCompare('ok') == 0) {
+        if (retour.localeCompare('ok_cli') == 0) {
             window.location = "interventions.html";
         }
-        else if (retour.localeCompare('nok') == 0) {
+        else if (retour.localeCompare('ok_emp') == 0) {
+            window.location = "employe.html";
+        }
+        else {
           $('#message').html('Echec de la connexion, votre adresse email ou mot de passe est incorrect.');
           $('#message').css('display', 'block');
           $('#champ-login').addClass('is-invalid');

@@ -33,16 +33,17 @@ public class Serialisation {
     
     public static void EcrireConnexionUtilisateur(PrintWriter out, Utilisateur utilisateur) {
         System.out.println("=== EcrireConnexionUtilisateur ===");
-        String retour = null;
+        String retour = "nok";
         
-        if(utilisateur instanceof Client){
-            retour = (utilisateur != null)? "ok_cli": "nok";
-        }
-        
-        if(utilisateur instanceof Employe){
-            retour = (utilisateur != null)? "ok_emp": "nok";
-        }
-        
+        if (utilisateur != null) {
+            if(utilisateur instanceof Client){
+             retour = "ok_cli";
+            }
+
+            if(utilisateur instanceof Employe){
+                retour = "ok_emp";
+            }
+        }    
   
         JsonObject reponseJson = new JsonObject();
         reponseJson.addProperty("retourConnexion", retour);
