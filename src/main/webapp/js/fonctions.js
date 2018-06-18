@@ -30,6 +30,7 @@ function connexion() {
             window.location = "employe.html";
         }
         else {
+          $("#lien-inscription").addClass('invisible');
           $('#message').html('Echec de la connexion, votre adresse email ou mot de passe est incorrect.');
           $('#message').css('display', 'block');
           $('#champ-login').addClass('is-invalid');
@@ -38,10 +39,62 @@ function connexion() {
     });
 }
 
+function verifChampsVide(champ) {
+  var retour = 1;
+
+  if ($(champ).val() === '') {
+    $(champ + '-message').html('Le champ est vide.');
+    $(champ + '-message').css('display', 'block');
+    $(champ).addClass('is-invalid');
+    retourCorrect = 0;
+  }
+  else {
+    $(champ + '-message').css('display', 'none');
+    $(champ).removeClass('is-invalid');
+  }
+
+  return retour;
+}
+
+function verifChampsInscription() {
+  console.log("Verification champs");
+  var retourCorrect = 1;
+
+  // Vérification champ vide
+  if ($('#champ-civilite').val() === '') {
+    retourCorrect = 0;
+  }
+
+  retourCorrect = verifChampsVide('#champ-prenom');
+  retourCorrect = verifChampsVide('#champ-nom');
+  retourCorrect = verifChampsVide('#champ-datenaissance');
+  retourCorrect = verifChampsVide('#champ-telephone');
+  retourCorrect = verifChampsVide('#champ-login');
+  retourCorrect = verifChampsVide('#champ-pass1');
+  retourCorrect = verifChampsVide('#champ-pass2');
+  retourCorrect = verifChampsVide('#champ-num');
+  retourCorrect = verifChampsVide('#champ-rue');
+  retourCorrect = verifChampsVide('#champ-cp');
+  retourCorrect = verifChampsVide('#champ-ville');
+
+  // Verif si mots de passe correspondent
+  if ($('#champ-pass1').val() !== '' && $('#champ-pass2').val() !== '' && $('#champ-pass1').val() !== $('#champ-pass2').val()) {
+    $('#champ-pass1-message').html('Les mots de passes ne correspondent pas.');
+    $('#champ-pass1-message').css('display', 'block');
+    $('#champ-pass1').addClass('is-invalid');
+    $('#champ-pass2-message').html('Les mots de passes ne correspondent pas.');
+    $('#champ-pass2-message').css('display', 'block');
+    $('#champ-pass2').addClass('is-invalid');
+    retourCorrect = 0;
+  }
+
+  return retourCorrect;
+}
 /**
   Fonction d'inscription
 */
 function inscription() {
+    console.log("=== Inscription ===");
     var champCivilite = $('#champ-civilite').val();
     var champPrenom = $('#champ-prenom').val();
     var champNom = $('#champ-nom').val();
@@ -55,7 +108,6 @@ function inscription() {
     var champVille = $('#champ-ville').val();
     var champComplement = $('#champ-complement').val();
 
-    $('#message').html('Connexion en cours...');
     console.log(champDateNaissance);
 
     $.ajax({

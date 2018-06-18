@@ -12,6 +12,9 @@
     <body>
       <nav class="navbar navbar-light bg-light justify-content-between">
         <a class="navbar-brand">PROACT'IF</a>
+        <div class="form-inline my-2 my-lg-0">
+          <a href="inscription.html" class="btn btn-outline-primary my-2 my-sm-0">S'inscrire</a>
+        </div>
       </nav>
 
       <img class="img-width-100prct" src="images/fond-login-flou.jpeg">
@@ -34,10 +37,17 @@
               <button id="bouton-connexion" class="btn btn-primary">Se connecter</button>
             </div>
             <div class="col-lg-8 col-md-8">
+              <a id="lien-inscription" href="inscription.html">S'inscrire</a>
               <div id="message" class="invalid-feedback"></div>
             </div>
           </div>
         </form>
+
+        <footer>
+          <div id="footer-text" class="text-center">
+            <span>PROACT'IF 2018 Copyright</span>
+          </div>
+        </footer>
 
         <script>
             $(document).ready(function () {
