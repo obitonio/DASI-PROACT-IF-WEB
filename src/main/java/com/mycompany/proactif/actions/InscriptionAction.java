@@ -18,6 +18,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -58,6 +59,9 @@ public class InscriptionAction extends HttpServlet {
         Client nouveauClient = new Client(civilite,prenom, nom,format.parse(dateNaissance),telephone,mail,mdp);
         nouveauClient.setAdresse(adresseUtilisateur);
         nouveauClient = (Client) Services.creerUtilisateur(nouveauClient);
+        
+        HttpSession session = request.getSession();
+        session.setAttribute("utilisateurCourant", nouveauClient);
         
         request.setAttribute("utilisateur", nouveauClient);
     }
