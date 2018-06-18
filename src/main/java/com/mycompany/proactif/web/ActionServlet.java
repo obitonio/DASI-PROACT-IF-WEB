@@ -50,8 +50,6 @@ public class ActionServlet extends HttpServlet {
         String action = request.getParameter("action");
         System.out.println("action = " + action);
         
-        
-        
         HttpSession maSession = request.getSession();
             if(maSession.getAttribute("utilisateurCourant")!=null){
                 if(maSession.getAttribute("utilisateurCourant") instanceof Client){
@@ -99,6 +97,14 @@ public class ActionServlet extends HttpServlet {
                             break;
                     }
 
+                }
+                else{
+                    if(action== "deconnecter"){
+                        maSession.invalidate();
+                        try (PrintWriter out = response.getWriter()) {
+                                Serialisation.Redirection(out, "login.html");
+                            }
+                    }
                 }
             }
             else{
