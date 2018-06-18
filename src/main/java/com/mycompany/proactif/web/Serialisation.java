@@ -101,19 +101,28 @@ public class Serialisation {
                     jsonIntervention.addProperty("intitule",i.getIntitule());
                     jsonIntervention.addProperty("employe", i.getEmploye().getPrenom() + " " + i.getEmploye().getNom());
                     jsonIntervention.addProperty("etat", i.getEtat());
+                    jsonIntervention.addProperty("descriptionClient", i.getDescriptionClient());
                     
                     String type = "";
-                    if(i instanceof Animal)
-                        type = "Animal";
-                    else if(i instanceof Incident)
-                        type = "Incident";
-                    else if(i instanceof Livraison)
+                    if (i instanceof Animal) {
+                       type = "Animal";
+                       jsonIntervention.addProperty("nomAnimal", ((Animal) i).getNom());
+                       jsonIntervention.addProperty("typeAnimal", ((Animal) i).getType());
+                    }
+                    else if(i instanceof Incident) {
+                        type = "Incident";  
+                    }
+                    else if(i instanceof Livraison) {
                         type = "Livraison";
-                    jsonIntervention.addProperty("type", type);
+                        jsonIntervention.addProperty("heureLivraison", ((Livraison) i).getHeurePassage().toString());
+                        jsonIntervention.addProperty("typeLivraison", ((Livraison) i).getType());
+                        jsonIntervention.addProperty("codeLivraison", ((Livraison) i).getCodeSuivi());
+                        jsonIntervention.addProperty("entrepriseLivraison", ((Livraison) i).getEntreprise());
+                    }
                     
+                    jsonIntervention.addProperty("type", type);
                     jsonListeInterventions.add(jsonIntervention);
-            }
-            
+            }    
         }
         else if(utilisateur instanceof Employe){
             

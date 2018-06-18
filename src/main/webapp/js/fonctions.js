@@ -238,46 +238,57 @@ function chargerUtilisateurDemandeIntervention(unUtilisateur) {
 */
 function creerModalConsulterIntervention(uneIntervention, unUtilisateur, unEtat) {
 
-  // TODO Enlever les undefined
   var complementAdresse = (unUtilisateur.complementAdresse === undefined)? '' : unUtilisateur.complementAdresse;
   var descriptionClient = (uneIntervention.descriptionClient === undefined)? '' : uneIntervention.descriptionClient;
 
-  var detailsType;
+  var detailsType = '';
   if (uneIntervention.type.localeCompare('Animal') == 0) {
+    var nomAnimal = (uneIntervention.nomAnimal === undefined)? '' : uneIntervention.nomAnimal;
+    var typeAnimal = (uneIntervention.typeAnimal === undefined)? '' : uneIntervention.typeAnimal;
+
     detailsType = '\
     <div class="form-group">\
       <label for="champ-nom-animal">Nom</label>\
-      <input  id="champ-nom-animal" type="text" class="form-control" placeholder="' + uneIntervention.nomAnimal + '">\
+      <input  id="champ-nom-animal" type="text" class="form-control" placeholder="' + nomAnimal + '" disabled>\
     </div>\
     <div class="form-group">\
       <label for="champ-type-animal">Type (Chat, Chien ...)</label>\
-      <input  id="champ-type-animal" type="text" class="form-control" placeholder="' + uneIntervention.typeAnimal + '">\
+      <input  id="champ-type-animal" type="text" class="form-control" placeholder="' + typeAnimal + '" disabled>\
     </div>\
     ';
   }
   else if (uneIntervention.type.localeCompare('Livraison') == 0) {
+    var heureLivraison = '';
+    if (uneIntervention.heureLivraison !== undefined) {
+      heureLivraison = uneIntervention.heureLivraison;
+    }
+
+    var typeLivraison = (uneIntervention.typeLivraison === undefined)? '' : uneIntervention.typeLivraison;
+    var codeLivraison = (uneIntervention.codeLivraison === undefined)? '' : uneIntervention.codeLivraison;
+    var entrepriseLivraison = (uneIntervention.entrepriseLivraison === undefined)? '' : uneIntervention.entrepriseLivraison;
+
     detailsType = '\
     <div class="row">\
       <div class="col-lg-4 col-md-4">\
         <div class="form-group">\
-          <label for="champ-livraison-heure">Heure</label>\
-          <input  id="champ-livraison-heure" type="number" class="form-control" placeholder="' + uneIntervention.heureLivraison + '">\
+          <label for="champ-livraison-heure">Date et heure</label>\
+          <input  id="champ-livraison-heure" type="text" class="form-control" placeholder="' + heureLivraison + '" disabled>\
         </div>\
       </div>\
       <div class="col-lg-8 col-md-8">\
         <div class="form-group">\
           <label for="champ-livraison-type">Type (Colis, lettre recommandée ...)</label>\
-          <input  id="champ-livraison-type" type="text" class="form-control" placeholder="' + uneIntervention.typeLivraison + '">\
+          <input  id="champ-livraison-type" type="text" class="form-control" placeholder="' + typeLivraison + '" disabled>\
         </div>\
       </div>\
     </div>\
     <div class="form-group">\
       <label for="champ-code-suivi">Code suivi</label>\
-      <input  id="champ-code-suivi" type="text" class="form-control" placeholder="' + uneIntervention.codeLivraison + '">\
+      <input  id="champ-code-suivi" type="text" class="form-control" placeholder="' + codeLivraison + '" disabled>\
     </div>\
     <div class="form-group">\
       <label for="champ-entreprise">Entreprise</label>\
-      <input  id="champ-entreprise" type="text" class="form-control" placeholder="' + uneIntervention.entrepriseLivraison + '">\
+      <input  id="champ-entreprise" type="text" class="form-control" placeholder="' + entrepriseLivraison + '" disabled>\
     </div>\
     ';
   }

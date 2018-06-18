@@ -13,6 +13,9 @@ import com.mycompany.proactif.entites.Livraison;
 import com.mycompany.proactif.services.Services;
 import com.mycompany.proactif.util.DebugLogger;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -66,7 +69,16 @@ public class DemanderInterventionAction extends HttpServlet {
                  demandeIntervention = new Animal(intitule, description, attributType1, attributType2);
                  break;
              case "Livraison":
+                 Date dateNavigateur = null;
+                 try {
+                     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm");
+                     dateNavigateur = sdf.parse(attributType1);
+                 }
+                 catch (ParseException e){
+                    DebugLogger.log("[DemanderInterventionAction]", e);
+                 }
                  demandeIntervention = new Livraison(intitule, description, attributType1, attributType3, attributType2, attributType4);
+                 ((Livraison)demandeIntervention).setHeurePassage(dateNavigateur);
                  break;
              case "Incident":
                  demandeIntervention = new Incident(intitule, description);
