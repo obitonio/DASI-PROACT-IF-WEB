@@ -239,17 +239,16 @@ function obtenirInterventions() {
         url: './ActionServlet',
         method: 'POST',
         data: {
-            action: 'obtenirInterventions',
+            action: 'obtenirInterventions'
         },
         dataType: 'json'
     }).done(function (data) {
-        if (data.redirection !== null) {
-          window.location = data.redirection;
-        }
+        //if (data.redirection !== null) {
+        //  window.location = data.redirection;
+        //}
 
         console.log("==== Retour obtenirInterventions:");
         console.log(data);
-
         var interventions = data.interventions;
         var i;
         var contenuHtml = '';
@@ -272,7 +271,7 @@ function obtenirInterventions() {
                 contenuHtml += affichageListeInterventionsEmployes(inter, etat);
             }
           // Création du modal pour l'intervention
-          lesModalHtml += creerModalConsulterIntervention(inter, data.infoUtilisateur, etat);
+          lesModalHtml += creerModalConsulterIntervention(inter, inter.infosClient, etat);
         });
 
         // Mettre le nom de l'utilisateur sur la barre de navigation à droite
