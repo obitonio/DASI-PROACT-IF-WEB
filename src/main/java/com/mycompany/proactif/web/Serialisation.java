@@ -157,6 +157,8 @@ public class Serialisation {
                     jsonIntervention.addProperty("client", i.getClient().getPrenom() + " " + i.getClient().getNom());
                     jsonIntervention.addProperty("etat", i.getEtat());
                     jsonIntervention.addProperty("descriptionClient", i.getDescriptionClient());
+                    jsonIntervention.addProperty("coordonneesLat", i.getClient().getAdresse().getCoordonneesGPS().lat);
+                    jsonIntervention.addProperty("coordonneesLng", i.getClient().getAdresse().getCoordonneesGPS().lng);
                     
                     String type = "";
                     if (i instanceof Animal) {
