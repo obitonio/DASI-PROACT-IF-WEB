@@ -17,10 +17,10 @@ function connexion() {
         },
         dataType: 'json'
     }).done(function (data) {
-        console.log(data);
+        //console.log(data);
 
         var retour = data.retourConnexion;
-        console.log(retour);
+        //console.log(retour);
 
         // si connexion ok, aller sur la page suivante :
         if (retour.localeCompare('ok_cli') == 0) {
@@ -234,12 +234,12 @@ function demanderIntervention() {
   Fonction pour obtenir les interventions
 */
 function obtenirInterventions() {
-  console.log("Obtenir interventions");
+  //console.log("Obtenir interventions");
     $.ajax({
         url: './ActionServlet',
         method: 'POST',
         data: {
-            action: 'obtenirInterventions',
+            action: 'obtenirInterventions'
         },
         dataType: 'json'
     }).done(function (data) {
@@ -250,15 +250,15 @@ function obtenirInterventions() {
         console.log("==== Retour obtenirInterventions:");
         console.log(data);
 
+        //console.log("==== Retour obtenirInterventions:");
+        //console.log(data);
         var interventions = data.interventions;
-        var i;
         var contenuHtml = '';
         var lesModalHtml = '';
 
         // Lister les interventions et leur modal de consultation
-        console.log(interventions);
+        //console.log(interventions);
         interventions.forEach(function(inter) {
-          console.log(inter.type);
           var etat = 'En cours';
           if (inter.etat === 1)
             etat = 'Terminé';
@@ -272,7 +272,7 @@ function obtenirInterventions() {
                 contenuHtml += affichageListeInterventionsEmployes(inter, etat);
             }
           // Création du modal pour l'intervention
-          lesModalHtml += creerModalConsulterIntervention(inter, data.infoUtilisateur, etat);
+          lesModalHtml += creerModalConsulterIntervention(inter, inter.infosClient, etat);
         });
 
         // Mettre le nom de l'utilisateur sur la barre de navigation à droite
@@ -523,4 +523,57 @@ function viderChampDemandeIntervention() {
 
   $('#consulter-champs-animal').addClass('invisible');
   $('#consulter-champs-livraison').addClass('invisible');
+}
+
+// Initialize and add the map
+function initMap() {
+    console.log("Init Map Maggle");
+
+    $.ajax({
+        url: './ActionServlet',
+        method: 'POST',
+        data: {
+            action: 'obtenirInterventions'
+        },
+        dataType: 'json'
+    }).done(function (data){
+
+              // The location of Uluru
+        var map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 12,
+        center: new google.maps.LatLng(45.7772738, 4.8729806)
+        });
+
+        var interventions = data.interventions;
+        interventions.forEach(function(inter) {
+           console.log(inter);
+           var dateTab = inter.date.split('/');
+           var dateDeLIntervention = new Date(dateTab[2]+"-"+dateTab[0]+"-"+dateTab[1]);
+           var dateDuJour = new Date();
+
+           if((dateDeLIntervention.getDay() === dateDuJour.getDay() && dateDeLIntervention.getYear() === dateDuJour.getYear() && dateDeLIntervention.getMonth() === dateDuJour.getMonth()) && inter.etat===1){
+               var marker = new google.maps.Marker({
+                position: new google.maps.LatLng(inter.coordonneesLat, inter.coordonneesLng),
+                map: map,
+                icon: './images/greenmarker.png',
+                title: inter.client});
+           }
+           else if (dateDeLIntervention.getDay() === dateDuJour.getDay() && dateDeLIntervention.getYear() === dateDuJour.getYear() && dateDeLIntervention.getMonth() === dateDuJour.getMonth()){
+               var marker = new google.maps.Marker({
+                position: new google.maps.LatLng(inter.coordonneesLat, inter.coordonneesLng),
+                map: map,
+                title: inter.client});
+           }
+           else{
+               var marker = new google.maps.Marker({
+                position: new google.maps.LatLng(inter.coordonneesLat, inter.coordonneesLng),
+                map: map,
+                icon: './images/greymarker.png',
+                title: inter.client});
+           }
+
+
+        });
+        });
+
 }

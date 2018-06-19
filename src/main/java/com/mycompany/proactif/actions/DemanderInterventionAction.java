@@ -85,9 +85,9 @@ public class DemanderInterventionAction extends HttpServlet {
                  break;
          }
          
-         Services.RetourCreationIntervention retour = Services.creerDemandeIntervention(clientCourant, demandeIntervention);
+        Services.RetourCreationIntervention retour = Services.creerDemandeIntervention(clientCourant, demandeIntervention);
          
-         request.setAttribute("RetourCreerDemandeIntervention", retour);
+        request.setAttribute("RetourCreerDemandeIntervention", retour);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

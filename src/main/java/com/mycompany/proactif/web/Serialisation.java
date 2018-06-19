@@ -98,6 +98,7 @@ public class Serialisation {
         jsonInfosUtilisateur.addProperty("complementAdresse", utilisateur.getAdresse().getInformations());
         
         
+        
         DateFormat formatDate = new SimpleDateFormat("dd/MM/yyyy");
         DateFormat formatDateHeurePassage = new SimpleDateFormat("dd/MM/yyyy - hh:mm");
         JsonArray jsonListeInterventions = new JsonArray();
@@ -112,6 +113,7 @@ public class Serialisation {
                     System.out.println(i.toString());
                 
                     JsonObject jsonIntervention = new JsonObject();
+                    JsonObject jsonClient = new JsonObject();
                     
                     jsonIntervention.addProperty("id",i.getId());
                     jsonIntervention.addProperty("date",formatDate.format(i.getDateDebut()));
@@ -138,7 +140,21 @@ public class Serialisation {
                         jsonIntervention.addProperty("entrepriseLivraison", ((Livraison) i).getEntreprise());
                     }
                     
+                    
                     jsonIntervention.addProperty("type", type);
+                    
+                    jsonClient.addProperty("civilite",i.getClient().getCivilite());
+                    jsonClient.addProperty("nom",i.getClient().getNom());
+                    jsonClient.addProperty("prenom",i.getClient().getPrenom());
+                    jsonClient.addProperty("telephone", i.getClient().getTelephone());
+                    
+                    jsonClient.addProperty("numeroRue", utilisateur.getAdresse().getNumero());
+                    jsonClient.addProperty("rue", utilisateur.getAdresse().getRue());
+                    jsonClient.addProperty("codePostal", utilisateur.getAdresse().getCodePostal());
+                    jsonClient.addProperty("ville", utilisateur.getAdresse().getVille());
+                    jsonClient.addProperty("complementAdresse", utilisateur.getAdresse().getInformations());
+                    
+                    jsonIntervention.add("infosClient", jsonClient);
                     jsonListeInterventions.add(jsonIntervention);
             }    
         }
@@ -150,6 +166,7 @@ public class Serialisation {
             
             for(Intervention i : employeCourant.getListeDesInterventions()){
                 JsonObject jsonIntervention = new JsonObject();
+                JsonObject jsonClient = new JsonObject();
                     
                     jsonIntervention.addProperty("id",i.getId());
                     jsonIntervention.addProperty("date",formatDate.format(i.getDateDebut()));
@@ -157,6 +174,24 @@ public class Serialisation {
                     jsonIntervention.addProperty("client", i.getClient().getPrenom() + " " + i.getClient().getNom());
                     jsonIntervention.addProperty("etat", i.getEtat());
                     jsonIntervention.addProperty("descriptionClient", i.getDescriptionClient());
+                    jsonIntervention.addProperty("coordonneesLat", i.getClient().getAdresse().getCoordonneesGPS().lat);
+                    jsonIntervention.addProperty("coordonneesLng", i.getClient().getAdresse().getCoordonneesGPS().lng);
+                    
+                    jsonClient.addProperty("civilite",i.getClient().getCivilite());
+                    jsonClient.addProperty("nom",i.getClient().getNom());
+                    jsonClient.addProperty("prenom",i.getClient().getPrenom());
+                    jsonClient.addProperty("telephone", i.getClient().getTelephone());
+                    
+                    jsonClient.addProperty("numeroRue", utilisateur.getAdresse().getNumero());
+                    jsonClient.addProperty("rue", utilisateur.getAdresse().getRue());
+                    jsonClient.addProperty("codePostal", utilisateur.getAdresse().getCodePostal());
+                    jsonClient.addProperty("ville", utilisateur.getAdresse().getVille());
+                    jsonClient.addProperty("complementAdresse", utilisateur.getAdresse().getInformations());
+                    
+                    
+                    
+                    
+                    jsonIntervention.add("infosClient", jsonClient);
                     
                     String type = "";
                     if (i instanceof Animal) {
@@ -194,7 +229,7 @@ public class Serialisation {
         System.out.println("Json : " + json);
     }
     
-     public static void EcrireRetourDemandeIntervention(PrintWriter out, RetourCreationIntervention retour){
+    public static void EcrireRetourDemandeIntervention(PrintWriter out, RetourCreationIntervention retour){
         System.out.println("=== EcrireRetourDemandeIntervention ===");
         String codeRetour = "-1"; // ErreurBase
         
@@ -213,11 +248,25 @@ public class Serialisation {
         System.out.println("Json : " + json); 
      }
 
-     public static void Redirection(PrintWriter out, String redirection){
+    public static void Redirection(PrintWriter out, String redirection){
         System.out.println("=== Redirection ===");
   
         JsonObject reponseJson = new JsonObject();
         reponseJson.addProperty("redirection", redirection);
+        
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        String json = gson.toJson(reponseJson);
+        
+        out.println(json);
+        System.out.println("Json : " + json);
+    }
+
+    public static void EcrireTerminerIntervention(PrintWriter out, String retour){
+        
+        System.out.println("=== TERMINER INTERVENTION ===");
+  
+        JsonObject reponseJson = new JsonObject();
+        reponseJson.addProperty("retour", retour);
         
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         String json = gson.toJson(reponseJson);
