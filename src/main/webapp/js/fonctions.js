@@ -17,10 +17,10 @@ function connexion() {
         },
         dataType: 'json'
     }).done(function (data) {
-        console.log(data);
+        //console.log(data);
 
         var retour = data.retourConnexion;
-        console.log(retour);
+        //console.log(retour);
 
         // si connexion ok, aller sur la page suivante :
         if (retour.localeCompare('ok_cli') == 0) {
@@ -234,7 +234,7 @@ function demanderIntervention() {
   Fonction pour obtenir les interventions
 */
 function obtenirInterventions() {
-  console.log("Obtenir interventions");
+  //console.log("Obtenir interventions");
     $.ajax({
         url: './ActionServlet',
         method: 'POST',
@@ -247,17 +247,16 @@ function obtenirInterventions() {
         //  window.location = data.redirection;
         //}
 
-        console.log("==== Retour obtenirInterventions:");
-        console.log(data);
+        //console.log("==== Retour obtenirInterventions:");
+        //console.log(data);
         var interventions = data.interventions;
         var i;
         var contenuHtml = '';
         var lesModalHtml = '';
 
         // Lister les interventions et leur modal de consultation
-        console.log(interventions);
+        //console.log(interventions);
         interventions.forEach(function(inter) {
-          console.log(inter.type);
           var etat = 'En cours';
           if (inter.etat === 1)
             etat = 'Terminé';
@@ -526,12 +525,33 @@ function viderChampDemandeIntervention() {
 
 // Initialize and add the map
 function initMap() {
-  // The location of Uluru
-  var uluru = {lat: -25.344, lng: 131.036};
-  // The map, centered at Uluru
-  var map = new google.maps.Map(
-      document.getElementById('map'), {zoom: 4, center: uluru});
-  // The marker, positioned at Uluru
-  var marker = new google.maps.Marker({position: uluru, map: map});
+    console.log("Init Map Maggle");
+     
+    $.ajax({
+        url: './ActionServlet',
+        method: 'POST',
+        data: {
+            action: 'obtenirInterventions'
+        },
+        dataType: 'json'
+    }).done(function (data){
+        
+              // The location of Uluru
+        var map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 12,
+        center: new google.maps.LatLng(45.7772738, 4.8729806)
+        });
+        
+        var interventions = data.interventions;
+        interventions.forEach(function(inter) {
+           
+            var marker = new google.maps.Marker({
+                position: new google.maps.LatLng(inter.coordonneesLat, inter.coordonneesLng),
+                map: map,
+                title: inter.client});
+
+        });
+        });
+       
 }
    
