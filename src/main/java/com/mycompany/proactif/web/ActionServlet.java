@@ -103,7 +103,7 @@ public class ActionServlet extends HttpServlet {
                             TerminerInterventionAction terminIntervAction = new TerminerInterventionAction();
                             terminIntervAction.processRequest(request,response);
                             try (PrintWriter out = response.getWriter()) {
-                                Serialisation.EcrireTerminerIntervention(out, request.getAttribute("RetourTerminerIntervention"));
+                                Serialisation.EcrireTerminerIntervention(out, request.getAttribute("RetourTerminerIntervention").toString());
                             }
                             break;  
                             
