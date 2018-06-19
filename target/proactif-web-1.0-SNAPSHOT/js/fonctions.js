@@ -243,7 +243,7 @@ function obtenirInterventions() {
         },
         dataType: 'json'
     }).done(function (data) {
-        if (data.redirection !== null) {
+        if (data.redirection !== undefined) {
           window.location = data.redirection;
         }
 
