@@ -99,7 +99,6 @@ public class Serialisation {
         
         
         
-        
         DateFormat formatDate = new SimpleDateFormat("dd/MM/yyyy");
         DateFormat formatDateHeurePassage = new SimpleDateFormat("dd/MM/yyyy - hh:mm");
         JsonArray jsonListeInterventions = new JsonArray();

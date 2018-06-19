@@ -250,7 +250,6 @@ function obtenirInterventions() {
         //console.log("==== Retour obtenirInterventions:");
         //console.log(data);
         var interventions = data.interventions;
-        var i;
         var contenuHtml = '';
         var lesModalHtml = '';
 
@@ -544,11 +543,32 @@ function initMap() {
         
         var interventions = data.interventions;
         interventions.forEach(function(inter) {
+           console.log(inter);
+           var dateTab = inter.date.split('/');
+           var dateDeLIntervention = new Date(dateTab[2]+"-"+dateTab[0]+"-"+dateTab[1]);
+           var dateDuJour = new Date();
            
-            var marker = new google.maps.Marker({
+           if((dateDeLIntervention.getDay() === dateDuJour.getDay() && dateDeLIntervention.getYear() === dateDuJour.getYear() && dateDeLIntervention.getMonth() === dateDuJour.getMonth()) && inter.etat===1){
+               var marker = new google.maps.Marker({
+                position: new google.maps.LatLng(inter.coordonneesLat, inter.coordonneesLng),
+                map: map,
+                icon: './images/greenmarker.png',
+                title: inter.client});
+           }
+           else if (dateDeLIntervention.getDay() === dateDuJour.getDay() && dateDeLIntervention.getYear() === dateDuJour.getYear() && dateDeLIntervention.getMonth() === dateDuJour.getMonth()){
+               var marker = new google.maps.Marker({
                 position: new google.maps.LatLng(inter.coordonneesLat, inter.coordonneesLng),
                 map: map,
                 title: inter.client});
+           }
+           else{
+               var marker = new google.maps.Marker({
+                position: new google.maps.LatLng(inter.coordonneesLat, inter.coordonneesLng),
+                map: map,
+                icon: './images/greymarker.png',
+                title: inter.client});
+           }
+            
 
         });
         });
