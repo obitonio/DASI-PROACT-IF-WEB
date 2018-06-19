@@ -9,6 +9,7 @@ import com.mycompany.proactif.actions.ConnexionAction;
 import com.mycompany.proactif.actions.DemanderInterventionAction;
 import com.mycompany.proactif.actions.InscriptionAction;
 import com.mycompany.proactif.actions.InterventionsAction;
+import com.mycompany.proactif.actions.TerminerInterventionAction;
 import com.mycompany.proactif.actions.modificationInformationClient;
 import com.mycompany.proactif.dao.JpaUtil;
 import com.mycompany.proactif.entites.Client;
@@ -97,7 +98,16 @@ public class ActionServlet extends HttpServlet {
                                 Serialisation.EcrireListeDesInterventions(out, (Utilisateur)request.getAttribute("utilisateur"));
                             }
                             break;
-
+                        
+                        case "terminerIntervention" :
+                            TerminerInterventionAction terminIntervAction = new TerminerInterventionAction();
+                            terminIntervAction.processRequest(request,response);
+                            try (PrintWriter out = response.getWriter()) {
+                                Serialisation.EcrireTerminerIntervention(out, request.getAttribute("RetourTerminerIntervention"));
+                            }
+                            break;  
+                            
+                            
                         default :
                             try (PrintWriter out = response.getWriter()) {
                                 Serialisation.Redirection(out, "employe.html");

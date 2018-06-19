@@ -229,7 +229,7 @@ public class Serialisation {
         System.out.println("Json : " + json);
     }
     
-     public static void EcrireRetourDemandeIntervention(PrintWriter out, RetourCreationIntervention retour){
+    public static void EcrireRetourDemandeIntervention(PrintWriter out, RetourCreationIntervention retour){
         System.out.println("=== EcrireRetourDemandeIntervention ===");
         String codeRetour = "-1"; // ErreurBase
         
@@ -248,11 +248,25 @@ public class Serialisation {
         System.out.println("Json : " + json); 
      }
 
-     public static void Redirection(PrintWriter out, String redirection){
+    public static void Redirection(PrintWriter out, String redirection){
         System.out.println("=== Redirection ===");
   
         JsonObject reponseJson = new JsonObject();
         reponseJson.addProperty("redirection", redirection);
+        
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        String json = gson.toJson(reponseJson);
+        
+        out.println(json);
+        System.out.println("Json : " + json);
+    }
+
+    public static void EcrireTerminerIntervention(PrintWriter out, String retour){
+        
+        System.out.println("=== TERMINER INTERVENTION ===");
+  
+        JsonObject reponseJson = new JsonObject();
+        reponseJson.addProperty("retour", retour);
         
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         String json = gson.toJson(reponseJson);
