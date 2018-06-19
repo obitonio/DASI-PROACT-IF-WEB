@@ -88,6 +88,24 @@ function verifChampsInscription() {
     retourCorrect = 0;
   }
 
+  // Vérif email
+  var email = $('#champ-login').val();
+  var emailRegex = /^[a-z0-9._-]+@[a-z0-9._-]+\.[a-z]{2,6}$/;
+  if (email !== '' && !emailRegex.test(email)) {
+    $('#champ-login-message').html('L\'adresse email est invalide. Exemple : contact@proactif.fr');
+    $('#champ-login-message').css('display', 'block');
+    $('#champ-login').addClass('is-invalid');
+  }
+
+  // Vérif tel
+  var tel = $('#champ-telephone').val();
+  var telRegex = /^(0|(00|\+)33)[67][0-9]{8}$/;
+  if (tel !== '' && !telRegex.test(tel)) {
+    $('#champ-telephone-message').html('Le numéro est invalide. Exemple : 0689389502');
+    $('#champ-telephone-message').css('display', 'block');
+    $('#champ-telephone').addClass('is-invalid');
+  }
+
   return retourCorrect;
 }
 /**
@@ -225,6 +243,10 @@ function obtenirInterventions() {
         },
         dataType: 'json'
     }).done(function (data) {
+        if (data.redirection !== null) {
+          window.location = data.redirection;
+        }
+
         console.log("==== Retour obtenirInterventions:");
         console.log(data);
 
@@ -242,10 +264,10 @@ function obtenirInterventions() {
             etat = 'Terminé';
           else if (inter.etat === -1)
             etat = 'Non résolue';
-        
+
             if(data.infoUtilisateur.typeUtilisateur === 'client'){
                 contenuHtml += affichageListeInterventionsClients(inter, etat);
-            }      
+            }
             else if(data.infoUtilisateur.typeUtilisateur === 'employe'){
                 contenuHtml += affichageListeInterventionsEmployes(inter, etat);
             }
