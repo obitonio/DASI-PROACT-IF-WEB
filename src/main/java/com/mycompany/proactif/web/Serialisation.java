@@ -98,6 +98,8 @@ public class Serialisation {
         jsonInfosUtilisateur.addProperty("complementAdresse", utilisateur.getAdresse().getInformations());
         
         
+        
+        
         DateFormat formatDate = new SimpleDateFormat("dd/MM/yyyy");
         DateFormat formatDateHeurePassage = new SimpleDateFormat("dd/MM/yyyy - hh:mm");
         JsonArray jsonListeInterventions = new JsonArray();
@@ -112,6 +114,7 @@ public class Serialisation {
                     System.out.println(i.toString());
                 
                     JsonObject jsonIntervention = new JsonObject();
+                    JsonObject jsonClient = new JsonObject();
                     
                     jsonIntervention.addProperty("id",i.getId());
                     jsonIntervention.addProperty("date",formatDate.format(i.getDateDebut()));
@@ -138,7 +141,21 @@ public class Serialisation {
                         jsonIntervention.addProperty("entrepriseLivraison", ((Livraison) i).getEntreprise());
                     }
                     
+                    
                     jsonIntervention.addProperty("type", type);
+                    
+                    jsonClient.addProperty("civilite",i.getClient().getCivilite());
+                    jsonClient.addProperty("nom",i.getClient().getNom());
+                    jsonClient.addProperty("prenom",i.getClient().getPrenom());
+                    jsonClient.addProperty("telephone", i.getClient().getTelephone());
+                    
+                    jsonClient.addProperty("numeroRue", utilisateur.getAdresse().getNumero());
+                    jsonClient.addProperty("rue", utilisateur.getAdresse().getRue());
+                    jsonClient.addProperty("codePostal", utilisateur.getAdresse().getCodePostal());
+                    jsonClient.addProperty("ville", utilisateur.getAdresse().getVille());
+                    jsonClient.addProperty("complementAdresse", utilisateur.getAdresse().getInformations());
+                    
+                    jsonIntervention.add("infosClient", jsonClient);
                     jsonListeInterventions.add(jsonIntervention);
             }    
         }
