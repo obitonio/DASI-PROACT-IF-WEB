@@ -36,6 +36,22 @@ and open the template in the editor.
             <p class="margin-top-15">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vitae lorem odio.</p>
         </div>
 
+        <form>
+            <div class="form-control">
+                <label>Trier par</label>
+                <select class="form-control">
+                    <option>Date</option>
+                    <option>Type</option>
+                </select>
+            </div>
+            
+            <div class="form-control">
+                <input type="text" class="form-control" placeholder="">
+                <button class="btn btn-secondary">Rechercher</button>
+            </div>
+                 
+        </form>
+        
         <table class="table table-interventions" class="table">
           <thead class="thead-dark">
             <tr>
@@ -61,6 +77,8 @@ and open the template in the editor.
         </footer>
     </body>
 
+  
+    
     <!-- Fenêtre modal pour demander l'intervention -->
     <div id="demander-intervention" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-lg">

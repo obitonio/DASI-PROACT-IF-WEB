@@ -36,6 +36,22 @@ and open the template in the editor.
             <p class="margin-top-15">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vitae lorem odio.</p>
             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#demander-intervention">Demander une intervention</button>
         </div>
+        
+        <form>
+            <div class="form-control">
+                <label>Trier par</label>
+                <select class="form-control" id="modeTri">
+                    <option>Date</option>
+                    <option>Type</option>
+                </select>
+            </div>
+            
+            <div class="form-control">
+                <input type="text" class="form-control" placeholder="" id="recherche">
+                <button class="btn btn-secondary" id="bouton-recherche">Rechercher</button>
+            </div>
+                 
+        </form>
 
         <table class="table table-interventions" class="table">
           <thead class="thead-dark">
@@ -253,8 +269,11 @@ and open the template in the editor.
     </div>
 
     <script>
+        
+        
         $(document).ready(function () {
-          
+            
+            
             obtenirInterventions();
 
             $('#bouton-demander-intervention').click(function() {
@@ -262,6 +281,10 @@ and open the template in the editor.
 
                 demanderIntervention();
             });
+            /*$('#bouton-recherche').click(function() {
+                //TODO vérifier champs remplis
+                obtenirInterventions();
+            });*/
 
             $( "#champ-type" ).change(function() {
               var type = $(this).val();

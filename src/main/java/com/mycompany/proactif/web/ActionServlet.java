@@ -9,6 +9,7 @@ import com.mycompany.proactif.actions.ConnexionAction;
 import com.mycompany.proactif.actions.DemanderInterventionAction;
 import com.mycompany.proactif.actions.InscriptionAction;
 import com.mycompany.proactif.actions.InterventionsAction;
+import com.mycompany.proactif.actions.RechercherInterventionsAction;
 import com.mycompany.proactif.actions.TerminerInterventionAction;
 import com.mycompany.proactif.actions.modificationInformationClient;
 import com.mycompany.proactif.dao.JpaUtil;
@@ -79,6 +80,7 @@ public class ActionServlet extends HttpServlet {
                                 Serialisation.EcrireRetourDemandeIntervention(out, (RetourCreationIntervention)request.getAttribute("RetourCreerDemandeIntervention"));
                             }
                             break;
+                         
 
                         default :
                             try (PrintWriter out = response.getWriter()) {
@@ -105,8 +107,8 @@ public class ActionServlet extends HttpServlet {
                             try (PrintWriter out = response.getWriter()) {
                                 Serialisation.EcrireTerminerIntervention(out, request.getAttribute("RetourTerminerIntervention").toString());
                             }
-                            break;  
-                            
+                            break;
+                        
                             
                         default :
                             try (PrintWriter out = response.getWriter()) {
@@ -117,7 +119,7 @@ public class ActionServlet extends HttpServlet {
 
                 }
                 else{
-                    if(action== "deconnecter"){
+                    if(action == "deconnecter"){
                         maSession.invalidate();
                         try (PrintWriter out = response.getWriter()) {
                                 Serialisation.Redirection(out, "login.html");

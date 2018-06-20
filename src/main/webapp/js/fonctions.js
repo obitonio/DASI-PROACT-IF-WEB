@@ -234,12 +234,15 @@ function demanderIntervention() {
   Fonction pour obtenir les interventions
 */
 function obtenirInterventions() {
-  //console.log("Obtenir interventions");
-    $.ajax({
+    var champMotClef= $('#recherche').val();
+  console.log(champMotClef);
+  
+      $.ajax({
         url: './ActionServlet',
         method: 'POST',
         data: {
-            action: 'obtenirInterventions'
+            action: 'obtenirInterventions',
+            motClef: champMotClef
         },
         dataType: 'json'
     }).done(function (data) {
@@ -287,7 +290,8 @@ function obtenirInterventions() {
 
         // Remplir les infos utilisateurs pour le formulaire de demande d'intervention
         chargerUtilisateurDemandeIntervention(data.infoUtilisateur);
-    });
+    }); 
+    
 }
 
 function affichageListeInterventionsClients(intervention,etat) {

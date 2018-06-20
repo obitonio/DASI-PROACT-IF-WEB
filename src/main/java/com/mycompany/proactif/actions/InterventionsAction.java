@@ -33,17 +33,28 @@ public class InterventionsAction extends HttpServlet {
         catch(Exception e){
             DebugLogger.log("[InterventionsAction]", e);
         }
+        String motClef = request.getParameter("motClef");
+        
         if(utilisateurCourant instanceof Client){
             
             Client clientCourant = (Client) utilisateurCourant;
             Services.recupererToutesLesIntervention(clientCourant);
+            clientCourant.setListeDesInterventions(Services.rechercher(clientCourant.getListeDesInterventions(), motClef));
+            if(motClef.length()>0){
+                clientCourant.setListeDesInterventions(Services.rechercher(clientCourant.getListeDesInterventions(), motClef));
+            }
             request.setAttribute("utilisateur", clientCourant);
-        }
-        else if(utilisateurCourant instanceof Employe){
-            Employe employeCourant = (Employe) utilisateurCourant;
-            Services.recupererToutesLesIntervention(employeCourant);
-            request.setAttribute("utilisateur", employeCourant);
-        }  
+            }
+            else if(utilisateurCourant instanceof Employe){
+                Employe employeCourant = (Employe) utilisateurCourant;
+                Services.recupererToutesLesIntervention(employeCourant);
+                employeCourant.setListeDesInterventions(Services.rechercher(employeCourant.getListeDesInterventions(), motClef));
+                if(motClef.length()>0){
+                    employeCourant.setListeDesInterventions(Services.rechercher(employeCourant.getListeDesInterventions(), motClef));
+                }
+                request.setAttribute("utilisateur", employeCourant);
+            }
+        
     }
 
 }
