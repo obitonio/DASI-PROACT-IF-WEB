@@ -507,7 +507,7 @@ function creerModalConsulterIntervention(uneIntervention, unUtilisateur, unEtat,
                         </section>\
                       </div>\
                       <div class="modal-footer">\
-                        <button id="terminerIntervention" type="button" class="btn btn-secondary" data-dismiss="modal">Terminer</button>\
+                        <button id="bouton-terminerIntervention"  class="btn btn-secondary">Terminer</button>\
                       </div>\
                     </div>\
                   </div>\
@@ -628,6 +628,7 @@ function initMap() {
 }
 
 function terminerIntervention(){
+    console.log("Terminer Intervention");
   var commentaireClient = $('#commentaire').val('');
   var etatFinal = $('#etat').val('');
     $.ajax({
