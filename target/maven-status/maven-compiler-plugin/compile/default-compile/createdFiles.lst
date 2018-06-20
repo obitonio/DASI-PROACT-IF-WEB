@@ -1,14 +1,6 @@
-<<<<<<< HEAD
+com/mycompany/proactif/web/Util.class
 com/mycompany/proactif/web/ActionServlet.class
+com/mycompany/proactif/actions/InscriptionAction.class
+com/mycompany/proactif/actions/ConnexionAction.class
+com/mycompany/proactif/actions/modificationInformationClient.class
 com/mycompany/proactif/actions/DemanderInterventionAction.class
-=======
-com\mycompany\proactif\actions\InterventionsAction.class
-com\mycompany\proactif\actions\modificationInformationClient.class
-com\mycompany\proactif\actions\ConnexionAction.class
-com\mycompany\proactif\actions\InscriptionAction.class
-com\mycompany\proactif\web\Util.class
-com\mycompany\proactif\web\Serialisation.class
-com\mycompany\proactif\actions\TerminerInterventionAction.class
-com\mycompany\proactif\web\ActionServlet.class
-com\mycompany\proactif\actions\DemanderInterventionAction.class
->>>>>>> d6a351abf5813ecc215207ae5cafa05fa8b1a1b0

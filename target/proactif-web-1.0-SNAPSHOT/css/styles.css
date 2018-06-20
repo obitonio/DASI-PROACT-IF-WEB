@@ -1,0 +1,103 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/*
+    Created on : 14 juin 2018, 14:13:19
+    Author     : antoinemathat
+*/
+
+#form-connexion
+{
+  width: 500px;
+  display: block;
+  position: absolute;
+  z-index: 10;
+  left: 30%;
+  top: 50%;
+
+  background-color: white;
+  padding: 30px 30px 30px 30px;
+}
+
+#form-inscription
+{
+  width: 1000px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 100px;
+  margin-bottom: 100px;
+}
+
+#form-tri
+{
+  margin-top: 100px;
+  width: 80%;
+  margin-left: 10%;
+}
+
+.table-interventions
+{
+  width: 80%;
+  margin-left: 10%;
+  margin-top: 30px;
+  margin-bottom: 100px;
+}
+
+.entete-page
+{
+  width: 40%;
+  margin-left: 30%;
+  margin-top: 100px;
+  position: absolute;
+  top: 10%;
+  color: white;
+}
+
+footer
+{
+  padding-top: 15px;
+  padding-bottom: 15px;
+  background-color: #34495e;
+}
+
+#footer-text
+{
+  color: white;
+}
+
+/* Utils */
+
+.invisible
+{
+  display: none;
+  visibility: hidden;
+}
+
+.text-center
+{
+  text-align: center;
+}
+
+.margin-top-30
+{
+  margin-top: 30px;
+}
+
+.margin-top-15
+{
+  margin-top: 15px;
+}
+
+.img-width-100prct
+{
+  width: 100%;
+  height: auto;
+}
+
+#map {
+        height: 400px;  /* The height is 400 pixels */
+        width: 100%;  /* The width is the width of the web page */
+       }
