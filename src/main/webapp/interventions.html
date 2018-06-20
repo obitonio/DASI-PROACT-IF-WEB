@@ -37,6 +37,22 @@ and open the template in the editor.
             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#demander-intervention">Demander une intervention</button>
         </div>
 
+        <form>
+            <div class="form-control">
+                <label>Trier par</label>
+                <select class="form-control" id="filtreTri">
+                    <option>Date</option>
+                    <option>Intitule</option>
+                </select>
+            </div>
+
+            <div class="form-control">
+                <input type="text" class="form-control" placeholder="" id="recherche">
+                <button class="btn btn-secondary" id="bouton-recherche">Rechercher</button>
+            </div>
+
+        </form>
+
         <table class="table table-interventions" class="table">
           <thead class="thead-dark">
             <tr>
@@ -253,6 +269,8 @@ and open the template in the editor.
     </div>
 
     <script>
+
+
         $(document).ready(function () {
 
             obtenirInterventions();
@@ -261,6 +279,11 @@ and open the template in the editor.
                 //TODO vérifier champs remplis
 
                 demanderIntervention();
+            });
+            $('#bouton-recherche').click(function(e) {
+                //TODO vérifier champs remplis
+                e.preventDefault();
+                obtenirInterventions();
             });
 
             $( "#champ-type" ).change(function() {

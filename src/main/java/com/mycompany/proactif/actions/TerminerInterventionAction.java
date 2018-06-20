@@ -49,11 +49,7 @@ public class TerminerInterventionAction extends HttpServlet {
          String commentaire = request.getParameter("commentaire");
          int idIntervention = Integer.parseInt(request.getParameter("id"));
          
-         Intervention inter = new Intervention();
-         DAOIntervention daoInter = new DAOIntervention(inter);
-         daoInter.trouverParId(idIntervention);
-         
-        Services.RetourTerminerIntervention retour = Services.terminerIntervention(daoInter.getObjetLocal(), commentaire,etat);
+        Services.RetourTerminerIntervention retour = Services.terminerIntervention(idIntervention, commentaire,etat);
         request.setAttribute("RetourTerminerIntervention", retour);
          
     }

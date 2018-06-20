@@ -234,12 +234,18 @@ function demanderIntervention() {
   Fonction pour obtenir les interventions
 */
 function obtenirInterventions() {
-  //console.log("Obtenir interventions");
-    $.ajax({
+    var champMotClef= $('#recherche').val();
+    var champFiltre= $('#filtreTri').val();
+  console.log(champMotClef);
+  console.log(champFiltre);
+  
+      $.ajax({
         url: './ActionServlet',
         method: 'POST',
         data: {
-            action: 'obtenirInterventions'
+            action: 'obtenirInterventions',
+            motClef: champMotClef,
+            filtre: champFiltre
         },
         dataType: 'json'
     }).done(function (data) {
@@ -272,7 +278,7 @@ function obtenirInterventions() {
                 contenuHtml += affichageListeInterventionsEmployes(inter, etat);
             }
           // Création du modal pour l'intervention
-          lesModalHtml += creerModalConsulterIntervention(inter, inter.infosClient, etat);
+          lesModalHtml += creerModalConsulterIntervention(inter, inter.infosClient, etat,data.infoUtilisateur.typeUtilisateur);
         });
 
         // Mettre le nom de l'utilisateur sur la barre de navigation à droite
@@ -287,7 +293,8 @@ function obtenirInterventions() {
 
         // Remplir les infos utilisateurs pour le formulaire de demande d'intervention
         chargerUtilisateurDemandeIntervention(data.infoUtilisateur);
-    });
+    }); 
+    
 }
 
 function affichageListeInterventionsClients(intervention,etat) {
@@ -335,8 +342,9 @@ function chargerUtilisateurDemandeIntervention(unUtilisateur) {
 /**
   Créer une fenêtre modale de consultation pour une intervention
 */
-function creerModalConsulterIntervention(uneIntervention, unUtilisateur, unEtat) {
-
+function creerModalConsulterIntervention(uneIntervention, unUtilisateur, unEtat,typeUtilsiateur) {
+  console.log("creerModalConsulterIntervention");
+  console.log(uneIntervention);
   var complementAdresse = (unUtilisateur.complementAdresse === undefined)? '' : unUtilisateur.complementAdresse;
   var descriptionClient = (uneIntervention.descriptionClient === undefined)? '' : uneIntervention.descriptionClient;
 
@@ -480,28 +488,56 @@ function creerModalConsulterIntervention(uneIntervention, unUtilisateur, unEtat)
                 <textarea class="form-control" rows="3" disabled>' + descriptionClient + '</textarea>\
               </div>\
             </section>\
-            <!-- Retour intervention -->\
-            <section class="margin-top-30">\
-              <h2 class="text-center">Retour intervention</h2>\
-              <div class="form-group">\
-                <label>Etat</label>\
-                <select class="form-control" disabled>\
-                  <option>' + unEtat + '</option>\
-                </select>\
-              </div>\
-              <div class="form-group">\
-                <label>Commentaire</label>\
-                <textarea class="form-control" rows="3" disabled></textarea>\
-              </div>\
-            </section>\
-          </div>\
-          <div class="modal-footer">\
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>\
-          </div>\
-        </div>\
-      </div>\
-    </div>\
-    ';
+            ';
+            if((typeUtilsiateur.localeCompare('employe')===0) && uneIntervention.etat === 0){
+               contenuHtml+= '<!-- Retour intervention -->\
+                        <section class="margin-top-30">\
+                          <h2 class="text-center">Retour intervention</h2>\
+                          <div class="form-group">\
+                            <label>Etat</label>\
+                            <select id="etat" class="form-control">\
+                              <option>' + unEtat + '</option>\
+                            </select>\
+                          </div>\
+                          <div class="form-group">\
+                            <label>Commentaire</label>\
+                            <textarea id="commentaire" class="form-control" rows="3"></textarea>\
+                          </div>\
+                        </section>\
+                      </div>\
+                      <div class="modal-footer">\
+                        <button id="terminerIntervention" type="button" class="btn btn-secondary" data-dismiss="modal">Terminer</button>\
+                      </div>\
+                    </div>\
+                  </div>\
+                </div>\
+                ';
+            }
+            else{
+                contenuHtml+= '<!-- Retour intervention -->\
+                        <section class="margin-top-30">\
+                          <h2 class="text-center">Retour intervention</h2>\
+                          <div class="form-group">\
+                            <label>Etat</label>\
+                            <select id="etat" class="form-control" disabled>\
+                              <option>' + unEtat + '</option>\
+                            </select>\
+                          </div>\
+                          <div class="form-group">\
+                            <label>Commentaire</label>\
+                            <textarea id="commentaire"  class="form-control" rows="3" disabled></textarea>\
+                          </div>\
+                        </section>\
+                      </div>\
+                      <div class="modal-footer">\
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>\
+                      </div>\
+                    </div>\
+                  </div>\
+                </div>\
+                ';
+            }
+            
 
     return contenuHtml;
 }
@@ -528,12 +564,16 @@ function viderChampDemandeIntervention() {
 // Initialize and add the map
 function initMap() {
     console.log("Init Map Maggle");
+    var champMotClef= $('#recherche').val();
+    var champFiltre= $('#filtreTri').val();
 
     $.ajax({
         url: './ActionServlet',
         method: 'POST',
         data: {
-            action: 'obtenirInterventions'
+            action: 'obtenirInterventions',
+            motClef: champMotClef,
+            filtre: champFiltre
         },
         dataType: 'json'
     }).done(function (data){
@@ -548,8 +588,12 @@ function initMap() {
         interventions.forEach(function(inter) {
            console.log(inter);
            var dateTab = inter.date.split('/');
-           var dateDeLIntervention = new Date(dateTab[2]+"-"+dateTab[0]+"-"+dateTab[1]);
+           var dateDeLIntervention = new Date(dateTab[2]+"-"+dateTab[1]+"-"+dateTab[0]);
            var dateDuJour = new Date();
+           
+           var infowindow = new google.maps.InfoWindow({
+               content: '<p>' + inter.intitule +'</p>'
+        });
 
            if((dateDeLIntervention.getDay() === dateDuJour.getDay() && dateDeLIntervention.getYear() === dateDuJour.getYear() && dateDeLIntervention.getMonth() === dateDuJour.getMonth()) && inter.etat===1){
                var marker = new google.maps.Marker({
@@ -557,6 +601,8 @@ function initMap() {
                 map: map,
                 icon: './images/greenmarker.png',
                 title: inter.client});
+                
+
            }
            else if (dateDeLIntervention.getDay() === dateDuJour.getDay() && dateDeLIntervention.getYear() === dateDuJour.getYear() && dateDeLIntervention.getMonth() === dateDuJour.getMonth()){
                var marker = new google.maps.Marker({
@@ -571,9 +617,26 @@ function initMap() {
                 icon: './images/greymarker.png',
                 title: inter.client});
            }
-
+            marker.addListener('click', function() {
+                    infowindow.open(map, marker);
+                });
 
         });
         });
 
+}
+
+function terminerIntervention(){
+  var commentaireClient = $('#champ-intitule').val('');
+  var etatFinal = $('#champ-type').val('Incident');
+    $.ajax({
+        url: './ActionServlet',
+        method: 'POST',
+        data: {
+            action: 'terminerIntervention',
+            commentaire: commentaireClient,
+            etat: etatFinal
+        },
+        dataType: 'json'
+    }).done(function (data) {});
 }

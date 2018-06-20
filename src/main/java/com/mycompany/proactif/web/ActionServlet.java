@@ -15,7 +15,6 @@ import com.mycompany.proactif.dao.JpaUtil;
 import com.mycompany.proactif.entites.Client;
 import com.mycompany.proactif.entites.Employe;
 import com.mycompany.proactif.entites.Utilisateur;
-import com.mycompany.proactif.services.Services;
 import com.mycompany.proactif.services.Services.RetourCreationIntervention;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -54,16 +53,76 @@ public class ActionServlet extends HttpServlet {
         
         HttpSession maSession = request.getSession();
         Utilisateur utilisateurCourant = (Utilisateur) maSession.getAttribute("utilisateurCourant");
-        
-        if (utilisateurCourant != null) {
-            
-            if (utilisateurCourant instanceof Client) {
-                
-                switch (action) {
 
-                    case "modifierUtilisateur" :
-                        modificationInformationClient modifUtilAction = new modificationInformationClient();
-                        modifUtilAction.processRequest(request,response);
+            if(utilisateurCourant!=null){
+                if(utilisateurCourant instanceof Client){
+                    switch (action) {
+
+                        case "modifierUtilisateur" :
+                            modificationInformationClient modifUtilAction = new modificationInformationClient();
+                            modifUtilAction.processRequest(request,response);
+                            try (PrintWriter out = response.getWriter()) {
+                                Serialisation.EcrireModificationUtilisateur(out, (Utilisateur)request.getAttribute("utilisateur"));
+                            }
+                            break;
+
+                        case "obtenirInterventions" :
+                            InterventionsAction intervAction = new InterventionsAction();
+                            intervAction.processRequest(request,response);
+                            try (PrintWriter out = response.getWriter()) {
+                                Serialisation.EcrireListeDesInterventions(out, (Utilisateur)request.getAttribute("utilisateur"));
+                            }
+                            break;
+
+                        case "demanderIntervention" :
+                            DemanderInterventionAction demanderIntervention = new DemanderInterventionAction();
+                            demanderIntervention.processRequest(request,response);
+                            try (PrintWriter out = response.getWriter()) {
+                                Serialisation.EcrireRetourDemandeIntervention(out, (RetourCreationIntervention)request.getAttribute("RetourCreerDemandeIntervention"));
+                            }
+                            break;
+                         
+
+                        default :
+                            try (PrintWriter out = response.getWriter()) {
+                                Serialisation.Redirection(out, "interventions.html");
+                            }
+                            break;
+                    }
+                }
+                else if(utilisateurCourant instanceof Employe){
+
+                    switch(action){
+                        
+                        case "obtenirInterventions" :
+                            InterventionsAction intervAction = new InterventionsAction();
+                            intervAction.processRequest(request,response);
+                            try (PrintWriter out = response.getWriter()) {
+                                Serialisation.EcrireListeDesInterventions(out, (Utilisateur)request.getAttribute("utilisateur"));
+                            }
+                            break;
+                        
+                        case "terminerIntervention" :
+                            TerminerInterventionAction terminIntervAction = new TerminerInterventionAction();
+                            terminIntervAction.processRequest(request,response);
+                            try (PrintWriter out = response.getWriter()) {
+                                Serialisation.EcrireTerminerIntervention(out, request.getAttribute("RetourTerminerIntervention").toString());
+                            }
+                            break;
+                        
+                            
+                        default :
+                            try (PrintWriter out = response.getWriter()) {
+                                Serialisation.Redirection(out, "employe.html");
+                            }
+                            break;
+                    }
+
+                }
+                else{
+                    switch(action){
+                      case "deconnecter" :
+                        maSession.invalidate();
                         try (PrintWriter out = response.getWriter()) {
                             Serialisation.EcrireModificationUtilisateur(out, (Utilisateur)request.getAttribute("utilisateur"));
                         }
@@ -90,43 +149,6 @@ public class ActionServlet extends HttpServlet {
                             Serialisation.Redirection(out, "interventions.html");
                         }
                         break;
-                }
-            }
-            else if (utilisateurCourant instanceof Employe) {
-
-                switch(action){
-
-                    case "obtenirInterventions" :
-                        InterventionsAction intervAction = new InterventionsAction();
-                        intervAction.processRequest(request,response);
-                        try (PrintWriter out = response.getWriter()) {
-                            Serialisation.EcrireListeDesInterventions(out, (Utilisateur)request.getAttribute("utilisateur"));
-                        }
-                        break;
-
-                    case "terminerIntervention" :
-                        TerminerInterventionAction terminIntervAction = new TerminerInterventionAction();
-                        terminIntervAction.processRequest(request,response);
-                        try (PrintWriter out = response.getWriter()) {
-                            Serialisation.EcrireTerminerIntervention(out, request.getAttribute("RetourTerminerIntervention").toString());
-                        }
-                        break;  
-
-
-                    default :
-                        try (PrintWriter out = response.getWriter()) {
-                            Serialisation.Redirection(out, "employe.html");
-                        }
-                        break;
-                }
-
-            }
-            else {
-                if(action.equals("deconnecter")){
-                    maSession.invalidate();
-                    try (PrintWriter out = response.getWriter()) {
-                            Serialisation.Redirection(out, "login.html");
-                    }
                 }
             }
         }
