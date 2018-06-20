@@ -62,6 +62,11 @@ public class ActionServlet extends HttpServlet {
                         Serialisation.EcrireModificationUtilisateur(out, (Utilisateur)request.getAttribute("utilisateur"));
                     }
                 }
+                else if (action.equals("obtenirInformationsUtilisateur")) {
+                    try (PrintWriter out = response.getWriter()) {
+                        Serialisation.EcrireInformationsUtilisateur(out, (Utilisateur)request.getAttribute("utilisateur"));
+                    }     
+                }
                 
                 if(utilisateurCourant instanceof Client){
                     

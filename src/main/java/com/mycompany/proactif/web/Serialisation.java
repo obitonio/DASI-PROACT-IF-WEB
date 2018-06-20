@@ -276,4 +276,29 @@ public class Serialisation {
         out.println(json);
         System.out.println("Json : " + json);
     }
+    
+    public static void EcrireInformationsUtilisateur(PrintWriter out, Utilisateur utilisateur) {
+        System.out.println("=== EcrireInformationsUtilisateur ===");
+        
+        JsonObject reponseJson = new JsonObject();
+        //reponseJson.addProperty("retour", retour);
+        
+        reponseJson.addProperty("civilite", utilisateur.getCivilite());
+        reponseJson.addProperty("prenom", utilisateur.getPrenom());
+        reponseJson.addProperty("nom", utilisateur.getNom());
+        reponseJson.addProperty("telephone", utilisateur.getTelephone());
+        reponseJson.addProperty("dateNaissance", utilisateur.getDateNaissanceFormate());
+        
+        reponseJson.addProperty("numero", utilisateur.getAdresse().getNumero());
+        reponseJson.addProperty("rue", utilisateur.getAdresse().getRue());
+        reponseJson.addProperty("codePostal", utilisateur.getAdresse().getCodePostal());
+        reponseJson.addProperty("ville", utilisateur.getAdresse().getVille());
+        reponseJson.addProperty("complementAdresse", utilisateur.getAdresse().getInformations());
+        
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        String json = gson.toJson(reponseJson);
+        
+        out.println(json);
+        System.out.println("Json : " + json);
+    }
 }
