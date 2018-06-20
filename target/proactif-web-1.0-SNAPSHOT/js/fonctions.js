@@ -495,18 +495,18 @@ function creerModalConsulterIntervention(uneIntervention, unUtilisateur, unEtat,
                           <h2 class="text-center">Retour intervention</h2>\
                           <div class="form-group">\
                             <label>Etat</label>\
-                            <select class="form-control">\
+                            <select id="etat" class="form-control">\
                               <option>' + unEtat + '</option>\
                             </select>\
                           </div>\
                           <div class="form-group">\
                             <label>Commentaire</label>\
-                            <textarea class="form-control" rows="3"></textarea>\
+                            <textarea id="commentaire" class="form-control" rows="3"></textarea>\
                           </div>\
                         </section>\
                       </div>\
                       <div class="modal-footer">\
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>\
+                        <button id="terminerIntervention" type="button" class="btn btn-secondary" data-dismiss="modal">Terminer</button>\
                       </div>\
                     </div>\
                   </div>\
@@ -519,13 +519,13 @@ function creerModalConsulterIntervention(uneIntervention, unUtilisateur, unEtat,
                           <h2 class="text-center">Retour intervention</h2>\
                           <div class="form-group">\
                             <label>Etat</label>\
-                            <select class="form-control" disabled>\
+                            <select id="etat" class="form-control" disabled>\
                               <option>' + unEtat + '</option>\
                             </select>\
                           </div>\
                           <div class="form-group">\
                             <label>Commentaire</label>\
-                            <textarea class="form-control" rows="3" disabled></textarea>\
+                            <textarea id="commentaire"  class="form-control" rows="3" disabled></textarea>\
                           </div>\
                         </section>\
                       </div>\
@@ -590,6 +590,10 @@ function initMap() {
            var dateTab = inter.date.split('/');
            var dateDeLIntervention = new Date(dateTab[2]+"-"+dateTab[1]+"-"+dateTab[0]);
            var dateDuJour = new Date();
+           
+           var infowindow = new google.maps.InfoWindow({
+               content: '<p>' + inter.intitule +'</p>'
+        });
 
            if((dateDeLIntervention.getDay() === dateDuJour.getDay() && dateDeLIntervention.getYear() === dateDuJour.getYear() && dateDeLIntervention.getMonth() === dateDuJour.getMonth()) && inter.etat===1){
                var marker = new google.maps.Marker({
@@ -597,6 +601,8 @@ function initMap() {
                 map: map,
                 icon: './images/greenmarker.png',
                 title: inter.client});
+                
+
            }
            else if (dateDeLIntervention.getDay() === dateDuJour.getDay() && dateDeLIntervention.getYear() === dateDuJour.getYear() && dateDeLIntervention.getMonth() === dateDuJour.getMonth()){
                var marker = new google.maps.Marker({
@@ -611,9 +617,26 @@ function initMap() {
                 icon: './images/greymarker.png',
                 title: inter.client});
            }
-
+            marker.addListener('click', function() {
+                    infowindow.open(map, marker);
+                });
 
         });
         });
 
+}
+
+function terminerIntervention(){
+  var commentaireClient = $('#champ-intitule').val('');
+  var etatFinal = $('#champ-type').val('Incident');
+    $.ajax({
+        url: './ActionServlet',
+        method: 'POST',
+        data: {
+            action: 'terminerIntervention',
+            commentaire: commentaireClient,
+            etat: etatFinal
+        },
+        dataType: 'json'
+    }).done(function (data) {});
 }

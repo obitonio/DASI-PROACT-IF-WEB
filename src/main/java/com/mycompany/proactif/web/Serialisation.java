@@ -120,6 +120,7 @@ public class Serialisation {
                     jsonIntervention.addProperty("intitule",i.getIntitule());
                     jsonIntervention.addProperty("employe", i.getEmploye().getPrenom() + " " + i.getEmploye().getNom());
                     jsonIntervention.addProperty("etat", i.getEtat());
+                    jsonIntervention.addProperty("commentaireEmploye", i.getCommentaireEmploye());
                     jsonIntervention.addProperty("descriptionClient", i.getDescriptionClient());
                     
                     
@@ -173,6 +174,7 @@ public class Serialisation {
                     jsonIntervention.addProperty("intitule",i.getIntitule());
                     jsonIntervention.addProperty("client", i.getClient().getPrenom() + " " + i.getClient().getNom());
                     jsonIntervention.addProperty("etat", i.getEtat());
+                    jsonIntervention.addProperty("commentaireEmploye", i.getCommentaireEmploye());
                     jsonIntervention.addProperty("descriptionClient", i.getDescriptionClient());
                     jsonIntervention.addProperty("coordonneesLat", i.getClient().getAdresse().getCoordonneesGPS().lat);
                     jsonIntervention.addProperty("coordonneesLng", i.getClient().getAdresse().getCoordonneesGPS().lng);
