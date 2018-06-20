@@ -278,7 +278,7 @@ function obtenirInterventions() {
                 contenuHtml += affichageListeInterventionsEmployes(inter, etat);
             }
           // Création du modal pour l'intervention
-          lesModalHtml += creerModalConsulterIntervention(inter, inter.infosClient, etat);
+          lesModalHtml += creerModalConsulterIntervention(inter, inter.infosClient, etat,data.infoUtilisateur.typeUtilisateur);
         });
 
         // Mettre le nom de l'utilisateur sur la barre de navigation à droite
@@ -342,8 +342,9 @@ function chargerUtilisateurDemandeIntervention(unUtilisateur) {
 /**
   Créer une fenêtre modale de consultation pour une intervention
 */
-function creerModalConsulterIntervention(uneIntervention, unUtilisateur, unEtat) {
-
+function creerModalConsulterIntervention(uneIntervention, unUtilisateur, unEtat,typeUtilsiateur) {
+  console.log("creerModalConsulterIntervention");
+  console.log(uneIntervention);
   var complementAdresse = (unUtilisateur.complementAdresse === undefined)? '' : unUtilisateur.complementAdresse;
   var descriptionClient = (uneIntervention.descriptionClient === undefined)? '' : uneIntervention.descriptionClient;
 
@@ -487,28 +488,56 @@ function creerModalConsulterIntervention(uneIntervention, unUtilisateur, unEtat)
                 <textarea class="form-control" rows="3" disabled>' + descriptionClient + '</textarea>\
               </div>\
             </section>\
-            <!-- Retour intervention -->\
-            <section class="margin-top-30">\
-              <h2 class="text-center">Retour intervention</h2>\
-              <div class="form-group">\
-                <label>Etat</label>\
-                <select class="form-control" disabled>\
-                  <option>' + unEtat + '</option>\
-                </select>\
-              </div>\
-              <div class="form-group">\
-                <label>Commentaire</label>\
-                <textarea class="form-control" rows="3" disabled></textarea>\
-              </div>\
-            </section>\
-          </div>\
-          <div class="modal-footer">\
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>\
-          </div>\
-        </div>\
-      </div>\
-    </div>\
-    ';
+            ';
+            if((typeUtilsiateur.localeCompare('employe')===0) && uneIntervention.etat === 0){
+               contenuHtml+= '<!-- Retour intervention -->\
+                        <section class="margin-top-30">\
+                          <h2 class="text-center">Retour intervention</h2>\
+                          <div class="form-group">\
+                            <label>Etat</label>\
+                            <select class="form-control">\
+                              <option>' + unEtat + '</option>\
+                            </select>\
+                          </div>\
+                          <div class="form-group">\
+                            <label>Commentaire</label>\
+                            <textarea class="form-control" rows="3"></textarea>\
+                          </div>\
+                        </section>\
+                      </div>\
+                      <div class="modal-footer">\
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>\
+                      </div>\
+                    </div>\
+                  </div>\
+                </div>\
+                ';
+            }
+            else{
+                contenuHtml+= '<!-- Retour intervention -->\
+                        <section class="margin-top-30">\
+                          <h2 class="text-center">Retour intervention</h2>\
+                          <div class="form-group">\
+                            <label>Etat</label>\
+                            <select class="form-control" disabled>\
+                              <option>' + unEtat + '</option>\
+                            </select>\
+                          </div>\
+                          <div class="form-group">\
+                            <label>Commentaire</label>\
+                            <textarea class="form-control" rows="3" disabled></textarea>\
+                          </div>\
+                        </section>\
+                      </div>\
+                      <div class="modal-footer">\
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>\
+                      </div>\
+                    </div>\
+                  </div>\
+                </div>\
+                ';
+            }
+            
 
     return contenuHtml;
 }
