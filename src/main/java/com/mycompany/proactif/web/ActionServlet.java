@@ -15,7 +15,6 @@ import com.mycompany.proactif.dao.JpaUtil;
 import com.mycompany.proactif.entites.Client;
 import com.mycompany.proactif.entites.Employe;
 import com.mycompany.proactif.entites.Utilisateur;
-import com.mycompany.proactif.services.Services;
 import com.mycompany.proactif.services.Services.RetourCreationIntervention;
 import java.io.IOException;
 import java.io.PrintWriter;

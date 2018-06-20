@@ -235,14 +235,17 @@ function demanderIntervention() {
 */
 function obtenirInterventions() {
     var champMotClef= $('#recherche').val();
+    var champFiltre= $('#filtreTri').val();
   console.log(champMotClef);
+  console.log(champFiltre);
   
       $.ajax({
         url: './ActionServlet',
         method: 'POST',
         data: {
             action: 'obtenirInterventions',
-            motClef: champMotClef
+            motClef: champMotClef,
+            filtre: champFiltre
         },
         dataType: 'json'
     }).done(function (data) {

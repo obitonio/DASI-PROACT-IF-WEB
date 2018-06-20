@@ -40,9 +40,9 @@ and open the template in the editor.
         <form>
             <div class="form-control">
                 <label>Trier par</label>
-                <select class="form-control" id="modeTri">
+                <select class="form-control" id="filtreTri">
                     <option>Date</option>
-                    <option>Type</option>
+                    <option>Intitule</option>
                 </select>
             </div>
             
@@ -281,9 +281,10 @@ and open the template in the editor.
 
                 demanderIntervention();
             });
-            $('#bouton-recherche').click(function() {
+            $('#bouton-recherche').click(function(e) {
                 //TODO vérifier champs remplis
-                location.reload(); 
+                e.preventDefault();
+                obtenirInterventions();
             });
 
             $( "#champ-type" ).change(function() {

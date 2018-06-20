@@ -9,6 +9,7 @@ import com.mycompany.proactif.entites.Client;
 import com.mycompany.proactif.entites.Employe;
 import com.mycompany.proactif.entites.Utilisateur;
 import com.mycompany.proactif.services.Services;
+import com.mycompany.proactif.util.Comparateur;
 import com.mycompany.proactif.util.DebugLogger;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -34,15 +35,24 @@ public class InterventionsAction extends HttpServlet {
             DebugLogger.log("[InterventionsAction]", e);
         }
         String motClef = request.getParameter("motClef");
+        String filtre = request.getParameter("filtre");
         
         if(utilisateurCourant instanceof Client){
             
             Client clientCourant = (Client) utilisateurCourant;
             Services.recupererToutesLesIntervention(clientCourant);
             clientCourant.setListeDesInterventions(Services.rechercher(clientCourant.getListeDesInterventions(), motClef));
+            if(filtre.equals("Date")){
+                Services.trierListe(clientCourant.getListeDesInterventions(), Comparateur.FILTRES.DATE, true);
+            }
+            else if(filtre.equals("Intitule")){
+                Services.trierListe(clientCourant.getListeDesInterventions(), Comparateur.FILTRES.INTITULE, true);
+            }
+            
             if(motClef.length()>0){
                 clientCourant.setListeDesInterventions(Services.rechercher(clientCourant.getListeDesInterventions(), motClef));
             }
+            
             request.setAttribute("utilisateur", clientCourant);
             }
             else if(utilisateurCourant instanceof Employe){
@@ -51,6 +61,12 @@ public class InterventionsAction extends HttpServlet {
                 employeCourant.setListeDesInterventions(Services.rechercher(employeCourant.getListeDesInterventions(), motClef));
                 if(motClef.length()>0){
                     employeCourant.setListeDesInterventions(Services.rechercher(employeCourant.getListeDesInterventions(), motClef));
+                }
+                if(filtre.equals("Date")){
+                Services.trierListe(employeCourant.getListeDesInterventions(), Comparateur.FILTRES.DATE, true);
+                }
+                else if(filtre.equals("Intitule")){
+                    Services.trierListe(employeCourant.getListeDesInterventions(), Comparateur.FILTRES.INTITULE, true);
                 }
                 request.setAttribute("utilisateur", employeCourant);
             }

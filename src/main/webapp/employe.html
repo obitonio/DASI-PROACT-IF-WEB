@@ -39,15 +39,15 @@ and open the template in the editor.
         <form>
             <div class="form-control">
                 <label>Trier par</label>
-                <select class="form-control">
+                <select class="form-control" id="filtreTri">
                     <option>Date</option>
-                    <option>Type</option>
+                    <option>Intitule</option>
                 </select>
             </div>
             
             <div class="form-control">
-                <input type="text" class="form-control" placeholder="">
-                <button class="btn btn-secondary">Rechercher</button>
+                <input type="text" class="form-control" placeholder="" id="recherche">
+                <button class="btn btn-secondary" id="bouton-recherche">Rechercher</button>
             </div>
                  
         </form>
@@ -274,6 +274,12 @@ and open the template in the editor.
     <script>
         $(document).ready(function () {
             obtenirInterventions();
+            
+            $('#bouton-recherche').click(function(e) {
+                //TODO vérifier champs remplis
+                e.preventDefault();
+                obtenirInterventions();
+            });
         });
     </script>
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAklw96N9rLd93ubr-F04CN7qi2ryKayAc&callback=initMap">     
