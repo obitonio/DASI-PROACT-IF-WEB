@@ -48,7 +48,7 @@ public class ActionServlet extends HttpServlet {
             throws ServletException, IOException, ParseException {
         
         response.setContentType("application/json;charset=UTF-8");
-        String action = request.getParameter("action");
+            String action = request.getParameter("action");
         System.out.println("action = " + action);
         
         HttpSession maSession = request.getSession();

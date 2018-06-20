@@ -296,11 +296,21 @@ function obtenirInterventions() {
             }
           // Création du modal pour l'intervention
           lesModalHtml += creerModalConsulterIntervention(inter, inter.infosClient, etat,data.infoUtilisateur.typeUtilisateur);
+           $('#modals-consultation').html($('#modals-consultation').val() + lesModalHtml);
+           
+           if(data.infoUtilisateur.typeUtilisateur === 'employe'){
+                $('#bouton-terminerIntervention-'+ inter.id).click(function(e) {
+                    //TODO vérifier champs remplis
+                    terminerIntervention(inter.id);
+                });
+              }
         });
 
         // Mettre le nom de l'utilisateur sur la barre de navigation à droite
         $('#lesInterventions').html(contenuHtml);
-        $('#modals-consultation').html(lesModalHtml);
+       
+        
+        
 
         var civiliteUtilisateur = data.infoUtilisateur.civilite;
         var prenomUtilisateur = data.infoUtilisateur.prenom;
@@ -310,15 +320,6 @@ function obtenirInterventions() {
 
         // Remplir les infos utilisateurs pour le formulaire de demande d'intervention
         chargerUtilisateurDemandeIntervention(data.infoUtilisateur);
-
-        if(data.infoUtilisateur.typeUtilisateur === 'employe'){
-          $('#bouton-terminerIntervention').click(function(e) {
-              //TODO vérifier champs remplis
-
-              //e.preventDefault();
-              terminerIntervention();
-          });
-        }
     });
 
 }
@@ -521,19 +522,19 @@ function creerModalConsulterIntervention(uneIntervention, unUtilisateur, unEtat,
                           <h2 class="text-center">Retour intervention</h2>\
                           <div class="form-group">\
                             <label>Etat</label>\
-                            <select id="etat" class="form-control">\
+                            <select id="etat-' + uneIntervention.id + '" class="form-control">\
                               <option>Non resolue</option>\
                               <option>Terminee</option>\
                             </select>\
                           </div>\
                           <div class="form-group">\
                             <label>Commentaire</label>\
-                            <textarea id="commentaire" class="form-control" rows="3"></textarea>\
+                            <textarea id="commentaire-' + uneIntervention.id + '" class="form-control" rows="3">' + uneIntervention.commentaireEmploye +'</textarea>\
                           </div>\
                         </section>\
                       </div>\
                       <div class="modal-footer">\
-                        <button id="bouton-terminerIntervention"  class="btn btn-secondary">Terminer</button>\
+                        <button id="bouton-terminerIntervention-' + uneIntervention.id + '"  class="btn btn-secondary">Terminer</button>\
                       </div>\
                     </div>\
                   </div>\
@@ -552,7 +553,7 @@ function creerModalConsulterIntervention(uneIntervention, unUtilisateur, unEtat,
                           </div>\
                           <div class="form-group">\
                             <label>Commentaire</label>\
-                            <textarea id="commentaire"  class="form-control" rows="3" disabled></textarea>\
+                            <textarea id="commentaire"  class="form-control" rows="3" disabled>' + uneIntervention.commentaireEmploye +'</textarea>\
                           </div>\
                         </section>\
                       </div>\
@@ -653,20 +654,21 @@ function initMap() {
 
 }
 
-function terminerIntervention(){
+function terminerIntervention(idIntervention){
     console.log("Terminer Intervention");
-  var commentaireClient = $('#commentaire').val('');
-  var etatFinal = $('#etat').val('');
+  var commentaireEmploye = $('#commentaire-' + idIntervention).val();
+  var etatFinal = $('#etat-' + idIntervention).val();
     $.ajax({
         url: './ActionServlet',
         method: 'POST',
         data: {
             action: 'terminerIntervention',
-            commentaire: commentaireClient,
-            etat: etatFinal
+            commentaire: commentaireEmploye,
+            etat: etatFinal,
+            id: idIntervention
         },
         dataType: 'json'
     }).done(function (data) {
-      $('#demander-intervention').modal('toggle');
+     location.reload();
     });
 }

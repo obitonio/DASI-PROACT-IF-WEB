@@ -45,11 +45,19 @@ public class TerminerInterventionAction extends HttpServlet {
     public void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-         int etat = Integer.parseInt(request.getParameter("etat"));
+         String etat = request.getParameter("etat");
          String commentaire = request.getParameter("commentaire");
          int idIntervention = Integer.parseInt(request.getParameter("id"));
+         int etatToInt=0;
          
-        Services.RetourTerminerIntervention retour = Services.terminerIntervention(idIntervention, commentaire,etat);
+         if(etat.equals("Terminee")){
+             etatToInt=1;
+         }
+         else if(etat.equals("Non resolue")){
+             etatToInt=-1;
+         }
+         
+        Services.RetourTerminerIntervention retour = Services.terminerIntervention(idIntervention, commentaire,etatToInt);
         request.setAttribute("RetourTerminerIntervention", retour);
          
     }

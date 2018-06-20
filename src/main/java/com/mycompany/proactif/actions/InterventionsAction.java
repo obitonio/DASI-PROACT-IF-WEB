@@ -43,7 +43,7 @@ public class InterventionsAction extends HttpServlet {
             Services.recupererToutesLesIntervention(clientCourant);
             clientCourant.setListeDesInterventions(Services.rechercher(clientCourant.getListeDesInterventions(), motClef));
             if(filtre.equals("Date")){
-                Services.trierListe(clientCourant.getListeDesInterventions(), Comparateur.FILTRES.DATE, true);
+                Services.trierListe(clientCourant.getListeDesInterventions(), Comparateur.FILTRES.DATE, false);
             }
             else if(filtre.equals("Intitule")){
                 Services.trierListe(clientCourant.getListeDesInterventions(), Comparateur.FILTRES.INTITULE, true);
@@ -63,7 +63,7 @@ public class InterventionsAction extends HttpServlet {
                     employeCourant.setListeDesInterventions(Services.rechercher(employeCourant.getListeDesInterventions(), motClef));
                 }
                 if(filtre.equals("Date")){
-                Services.trierListe(employeCourant.getListeDesInterventions(), Comparateur.FILTRES.DATE, true);
+                Services.trierListe(employeCourant.getListeDesInterventions(), Comparateur.FILTRES.DATE, false);
                 }
                 else if(filtre.equals("Intitule")){
                     Services.trierListe(employeCourant.getListeDesInterventions(), Comparateur.FILTRES.INTITULE, true);
