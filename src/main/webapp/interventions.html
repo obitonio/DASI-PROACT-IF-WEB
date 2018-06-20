@@ -37,20 +37,25 @@ and open the template in the editor.
             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#demander-intervention">Demander une intervention</button>
         </div>
 
-        <form>
-            <div class="form-control">
+        <form id="form-tri">
+          <div class="row">
+            <div class="col-lg-2 col-md-2">
                 <label>Trier par</label>
+              </div>
+              <div class="col-lg-4 col-md-4">
                 <select class="form-control" id="filtreTri">
                     <option>Date</option>
                     <option>Intitule</option>
                 </select>
             </div>
 
-            <div class="form-control">
+            <div class="col-lg-4 col-md-4">
                 <input type="text" class="form-control" placeholder="" id="recherche">
+              </div>
+              <div class="col-lg-2 col-md-2">
                 <button class="btn btn-secondary" id="bouton-recherche">Rechercher</button>
             </div>
-
+          </div>
         </form>
 
         <table class="table table-interventions" class="table">
@@ -274,6 +279,10 @@ and open the template in the editor.
         $(document).ready(function () {
 
             obtenirInterventions();
+
+            $('#btn-deconnexion').click(function() {
+              deconnexion();
+            });
 
             $('#bouton-demander-intervention').click(function() {
                 //TODO vérifier champs remplis

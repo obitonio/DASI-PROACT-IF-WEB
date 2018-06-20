@@ -36,22 +36,27 @@ and open the template in the editor.
             <p class="margin-top-15">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vitae lorem odio.</p>
         </div>
 
-        <form>
-            <div class="form-control">
+        <form id="form-tri">
+          <div class="row">
+            <div class="col-lg-2 col-md-2">
                 <label>Trier par</label>
+              </div>
+              <div class="col-lg-4 col-md-4">
                 <select class="form-control" id="filtreTri">
                     <option>Date</option>
                     <option>Intitule</option>
                 </select>
             </div>
-            
-            <div class="form-control">
+
+            <div class="col-lg-4 col-md-4">
                 <input type="text" class="form-control" placeholder="" id="recherche">
+              </div>
+              <div class="col-lg-2 col-md-2">
                 <button class="btn btn-secondary" id="bouton-recherche">Rechercher</button>
             </div>
-                 
+          </div>
         </form>
-        
+
         <table class="table table-interventions" class="table">
           <thead class="thead-dark">
             <tr>
@@ -77,8 +82,8 @@ and open the template in the editor.
         </footer>
     </body>
 
-  
-    
+
+
     <!-- Fenêtre modal pour demander l'intervention -->
     <div id="demander-intervention" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-lg">
@@ -274,7 +279,7 @@ and open the template in the editor.
     <script>
         $(document).ready(function () {
             obtenirInterventions();
-            
+
             $('#bouton-recherche').click(function(e) {
                 //TODO vérifier champs remplis
                 e.preventDefault();
