@@ -55,7 +55,16 @@ public class ActionServlet extends HttpServlet {
         Utilisateur utilisateurCourant = (Utilisateur) maSession.getAttribute("utilisateurCourant");
 
             if(utilisateurCourant!=null){
+                
+                if (action.equals("deconnecter")) {
+                    maSession.invalidate();
+                    try (PrintWriter out = response.getWriter()) {
+                        Serialisation.EcrireModificationUtilisateur(out, (Utilisateur)request.getAttribute("utilisateur"));
+                    }
+                }
+                
                 if(utilisateurCourant instanceof Client){
+                    
                     switch (action) {
 
                         case "modifierUtilisateur" :

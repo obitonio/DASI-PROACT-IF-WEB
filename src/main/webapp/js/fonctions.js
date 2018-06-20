@@ -1,6 +1,23 @@
 /**
   Fonction de connexion
 */
+function deconnexion() {
+
+  $.ajax({
+      url: './ActionServlet',
+      method: 'POST',
+      data: {
+          action: 'deconnecter'
+      },
+      dataType: 'json'
+  }).done(function (data) {
+    window.location = "login.html";
+  });
+}
+
+/**
+  Fonction de connexion
+*/
 function connexion() {
     var champLogin = $('#champ-login').val();
     var champPassword = $('#champ-password').val();
@@ -238,7 +255,7 @@ function obtenirInterventions() {
     var champFiltre= $('#filtreTri').val();
   console.log(champMotClef);
   console.log(champFiltre);
-  
+
       $.ajax({
         url: './ActionServlet',
         method: 'POST',
@@ -293,8 +310,8 @@ function obtenirInterventions() {
 
         // Remplir les infos utilisateurs pour le formulaire de demande d'intervention
         chargerUtilisateurDemandeIntervention(data.infoUtilisateur);
-    }); 
-    
+    });
+
 }
 
 function affichageListeInterventionsClients(intervention,etat) {
@@ -538,7 +555,7 @@ function creerModalConsulterIntervention(uneIntervention, unUtilisateur, unEtat,
                 </div>\
                 ';
             }
-            
+
 
     return contenuHtml;
 }
@@ -591,7 +608,7 @@ function initMap() {
            var dateTab = inter.date.split('/');
            var dateDeLIntervention = new Date(dateTab[2]+"-"+dateTab[1]+"-"+dateTab[0]);
            var dateDuJour = new Date();
-           
+
            var infowindow = new google.maps.InfoWindow({
                content: '<p>' + inter.intitule +'</p>'
         });
@@ -602,7 +619,7 @@ function initMap() {
                 map: map,
                 icon: './images/greenmarker.png',
                 title: inter.client});
-                
+
 
            }
            else if (dateDeLIntervention.getDay() === dateDuJour.getDay() && dateDeLIntervention.getYear() === dateDuJour.getYear() && dateDeLIntervention.getMonth() === dateDuJour.getMonth()){
