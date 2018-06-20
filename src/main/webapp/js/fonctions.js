@@ -535,12 +535,16 @@ function viderChampDemandeIntervention() {
 // Initialize and add the map
 function initMap() {
     console.log("Init Map Maggle");
+    var champMotClef= $('#recherche').val();
+    var champFiltre= $('#filtreTri').val();
 
     $.ajax({
         url: './ActionServlet',
         method: 'POST',
         data: {
-            action: 'obtenirInterventions'
+            action: 'obtenirInterventions',
+            motClef: champMotClef,
+            filtre: champFiltre
         },
         dataType: 'json'
     }).done(function (data){
