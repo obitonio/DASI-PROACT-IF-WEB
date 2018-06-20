@@ -627,8 +627,8 @@ function initMap() {
 }
 
 function terminerIntervention(){
-  var commentaireClient = $('#champ-intitule').val('');
-  var etatFinal = $('#champ-type').val('Incident');
+  var commentaireClient = $('#commentaire').val('');
+  var etatFinal = $('#etat').val('');
     $.ajax({
         url: './ActionServlet',
         method: 'POST',
