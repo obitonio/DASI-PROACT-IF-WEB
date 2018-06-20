@@ -56,14 +56,14 @@ function connexion() {
     });
 }
 
-function verifChampsVide(champ) {
-  var retour = 1;
+function verifChampsVide(champ, retourInit) {
+  var retour = retourInit;
 
   if ($(champ).val() === '') {
     $(champ + '-message').html('Le champ est vide.');
     $(champ + '-message').css('display', 'block');
     $(champ).addClass('is-invalid');
-    retourCorrect = 0;
+    retour = 0;
   }
   else {
     $(champ + '-message').css('display', 'none');
@@ -73,7 +73,7 @@ function verifChampsVide(champ) {
   return retour;
 }
 
-function verifChampsInscription() {
+function verifChampsChangerDonnees(mode) {
   console.log("Verification champs");
   var retourCorrect = 1;
 
@@ -82,17 +82,24 @@ function verifChampsInscription() {
     retourCorrect = 0;
   }
 
-  retourCorrect = verifChampsVide('#champ-prenom');
-  retourCorrect = verifChampsVide('#champ-nom');
-  retourCorrect = verifChampsVide('#champ-datenaissance');
-  retourCorrect = verifChampsVide('#champ-telephone');
-  retourCorrect = verifChampsVide('#champ-login');
-  retourCorrect = verifChampsVide('#champ-pass1');
-  retourCorrect = verifChampsVide('#champ-pass2');
-  retourCorrect = verifChampsVide('#champ-num');
-  retourCorrect = verifChampsVide('#champ-rue');
-  retourCorrect = verifChampsVide('#champ-cp');
-  retourCorrect = verifChampsVide('#champ-ville');
+  retourCorrect = verifChampsVide('#champ-prenom', retourCorrect);
+  retourCorrect = verifChampsVide('#champ-nom', retourCorrect);
+  retourCorrect = verifChampsVide('#champ-datenaissance', retourCorrect);
+  retourCorrect = verifChampsVide('#champ-telephone', retourCorrect);
+  retourCorrect = verifChampsVide('#champ-login', retourCorrect);
+  if (mode == 1 &&
+  $('#champ-pass1').val() != '' || $('#champ-pass1').val() != '' ){
+    retourCorrect = verifChampsVide('#champ-pass1', retourCorrect);
+    retourCorrect = verifChampsVide('#champ-pass2', retourCorrect);
+  }
+  else if (mode == 0) {
+    retourCorrect = verifChampsVide('#champ-pass1', retourCorrect);
+    retourCorrect = verifChampsVide('#champ-pass2', retourCorrect);
+  }
+  retourCorrect = verifChampsVide('#champ-num', retourCorrect);
+  retourCorrect = verifChampsVide('#champ-rue', retourCorrect);
+  retourCorrect = verifChampsVide('#champ-cp', retourCorrect);
+  retourCorrect = verifChampsVide('#champ-ville', retourCorrect);
 
   // Verif si mots de passe correspondent
   if ($('#champ-pass1').val() !== '' && $('#champ-pass2').val() !== '' && $('#champ-pass1').val() !== $('#champ-pass2').val()) {
@@ -122,9 +129,10 @@ function verifChampsInscription() {
     $('#champ-telephone-message').css('display', 'block');
     $('#champ-telephone').addClass('is-invalid');
   }
-
+  console.log(retourCorrect);
   return retourCorrect;
 }
+
 /**
   Fonction d'inscription
 */
@@ -142,8 +150,6 @@ function inscription() {
     var champCodePostal = $('#champ-cp').val();
     var champVille = $('#champ-ville').val();
     var champComplement = $('#champ-complement').val();
-
-    console.log(champDateNaissance);
 
     $.ajax({
         url: './ActionServlet',
@@ -183,6 +189,93 @@ function inscription() {
 
 
     });
+}
+
+/**
+  Fonction modifierInformationsUtilisateur
+*/
+function modifierInformationsUtilisateur() {
+    console.log("=== ModifierInformationsUtilisateur ===");
+    var champId = $('#champ-id').val();
+    var champCivilite = $('#champ-civilite').val();
+    var champPrenom = $('#champ-prenom').val();
+    var champNom = $('#champ-nom').val();
+    var champDateNaissance = $('#champ-datenaissance').val();
+    var champTelephone = $('#champ-telephone').val();
+    var champLogin = $('#champ-login').val();
+    var champPassword = $('#champ-pass1').val();
+    var champNumero = $('#champ-num').val();
+    var champRue = $('#champ-rue').val();
+    var champCodePostal = $('#champ-cp').val();
+    var champVille = $('#champ-ville').val();
+    var champComplement = $('#champ-complement').val();
+
+    $.ajax({
+        url: './ActionServlet',
+        method: 'POST',
+        data: {
+            action: 'modifierUtilisateur',
+            id: champId,
+            civilite: champCivilite,
+            prenom: champPrenom,
+            nom: champNom,
+            dateNaissance: champDateNaissance,
+            telephone: champTelephone,
+            mail: champLogin,
+            mdp: champPassword,
+            numero: champNumero,
+            rue: champRue,
+            codePostal: champCodePostal,
+            ville: champVille,
+            infosSuppAdresse: champComplement
+        },
+        dataType: 'json'
+    }).done(function (data) {
+        console.log(data);
+
+        var retour = data.retourModification;
+        console.log(retour);
+
+        // si connexion ok, aller sur la page suivante :
+        if (retour.localeCompare('ok') == 0) {
+            console.log("ok");
+            $('#modalModifDonneesSucces').toggle();
+        }
+        else if (retour.localeCompare('nok') == 0) {
+          // Message erreur
+        }
+    });
+}
+
+
+function obtenirInformationsUtilisateur() {
+
+  console.log("=== ObtenirInformationsUtilisateur ===");
+  $.ajax({
+      url: './ActionServlet',
+      method: 'POST',
+      data: {
+          action: 'obtenirInformationsUtilisateur'
+      },
+      dataType: 'json'
+  }).done(function (data) {
+    console.log(data);
+
+    if (data.redirection !== undefined) {
+      window.location = data.redirection;
+    }
+
+    var civiliteUtilisateur = data.civilite;
+    var prenomUtilisateur = data.prenom;
+    var nomUtilisateur = data.nom;
+
+    $('#utilisateur-connecte').html(civiliteUtilisateur + ' ' + prenomUtilisateur + ' ' + nomUtilisateur);
+
+    chargerUtilisateurDemandeIntervention(data, 'value');
+    $('#champ-id').val(data.id);
+    $('#champ-datenaissance').val(data.dateNaissance);
+    $('#champ-login').val(data.email);
+  });
 }
 
 /**
@@ -297,7 +390,7 @@ function obtenirInterventions() {
           // Création du modal pour l'intervention
           lesModalHtml += creerModalConsulterIntervention(inter, inter.infosClient, etat,data.infoUtilisateur.typeUtilisateur);
            $('#modals-consultation').html($('#modals-consultation').val() + lesModalHtml);
-           
+
            if(data.infoUtilisateur.typeUtilisateur === 'employe'){
                 $('#bouton-terminerIntervention-'+ inter.id).click(function(e) {
                     //TODO vérifier champs remplis
@@ -308,9 +401,9 @@ function obtenirInterventions() {
 
         // Mettre le nom de l'utilisateur sur la barre de navigation à droite
         $('#lesInterventions').html(contenuHtml);
-       
-        
-        
+
+
+
 
         var civiliteUtilisateur = data.infoUtilisateur.civilite;
         var prenomUtilisateur = data.infoUtilisateur.prenom;
@@ -319,7 +412,7 @@ function obtenirInterventions() {
         $('#utilisateur-connecte').html(civiliteUtilisateur + ' ' + prenomUtilisateur + ' ' + nomUtilisateur);
 
         // Remplir les infos utilisateurs pour le formulaire de demande d'intervention
-        chargerUtilisateurDemandeIntervention(data.infoUtilisateur);
+        chargerUtilisateurDemandeIntervention(data.infoUtilisateur, 'placeholder');
     });
 
 }
@@ -353,17 +446,17 @@ function affichageListeInterventionsEmployes(intervention,etat) {
 /**
   Charge les informations utilisateur dans le formulaire de demande d'intervention
 */
-function chargerUtilisateurDemandeIntervention(unUtilisateur) {
+function chargerUtilisateurDemandeIntervention(unUtilisateur, attribut) {
 
-  $('#champ-civilite').attr('placeholder', (unUtilisateur.civilite == 'M') ? 'Monsieur' : 'Madame');
-  $('#champ-prenom').attr('placeholder', unUtilisateur.prenom);
-  $('#champ-nom').attr('placeholder', unUtilisateur.nom);
-  $('#champ-telephone').attr('placeholder', unUtilisateur.telephone);
-  $('#champ-num').attr('placeholder', unUtilisateur.numeroRue);
-  $('#champ-rue').attr('placeholder', unUtilisateur.rue);
-  $('#champ-cp').attr('placeholder', unUtilisateur.codePostal);
-  $('#champ-ville').attr('placeholder', unUtilisateur.ville);
-  $('#champ-complement').attr('placeholder', unUtilisateur.complementAdresse);
+  $('#champ-civilite').attr(attribut, (unUtilisateur.civilite == 'M') ? 'Monsieur' : 'Madame');
+  $('#champ-prenom').attr(attribut, unUtilisateur.prenom);
+  $('#champ-nom').attr(attribut, unUtilisateur.nom);
+  $('#champ-telephone').attr(attribut, unUtilisateur.telephone);
+  $('#champ-num').attr(attribut, unUtilisateur.numeroRue);
+  $('#champ-rue').attr(attribut, unUtilisateur.rue);
+  $('#champ-cp').attr(attribut, unUtilisateur.codePostal);
+  $('#champ-ville').attr(attribut, unUtilisateur.ville);
+  $('#champ-complement').attr(attribut, unUtilisateur.complementAdresse);
 }
 
 /**
@@ -374,6 +467,8 @@ function creerModalConsulterIntervention(uneIntervention, unUtilisateur, unEtat,
   console.log(uneIntervention);
   var complementAdresse = (unUtilisateur.complementAdresse === undefined)? '' : unUtilisateur.complementAdresse;
   var descriptionClient = (uneIntervention.descriptionClient === undefined)? '' : uneIntervention.descriptionClient;
+  var descriptionClient = (uneIntervention.descriptionClient === undefined)? '' : uneIntervention.descriptionClient;
+
 
   var detailsType = '';
   if (uneIntervention.type.localeCompare('Animal') == 0) {
@@ -395,7 +490,7 @@ function creerModalConsulterIntervention(uneIntervention, unUtilisateur, unEtat,
     var heureLivraison = (uneIntervention.heureLivraison === undefined)? '' : uneIntervention.heureLivraison;
     var typeLivraison = (uneIntervention.typeLivraison === undefined)? '' : uneIntervention.typeLivraison;
     var codeLivraison = (uneIntervention.codeLivraison === undefined)? '' : uneIntervention.codeLivraison;
-    var entrepriseLivraison = (uneIntervention.entrepriseLivraison === undefined)? '' : uneIntervention.entrepriseLivraison;
+    var commentaireEmploye = (uneIntervention.commentaireEmploye === undefined)? '' : uneIntervention.commentaireEmploye;
 
     detailsType = '\
     <div class="row">\
@@ -529,7 +624,7 @@ function creerModalConsulterIntervention(uneIntervention, unUtilisateur, unEtat,
                           </div>\
                           <div class="form-group">\
                             <label>Commentaire</label>\
-                            <textarea id="commentaire-' + uneIntervention.id + '" class="form-control" rows="3">' + uneIntervention.commentaireEmploye +'</textarea>\
+                            <textarea id="commentaire-' + uneIntervention.id + '" class="form-control" rows="3">' + commentaireEmploye +'</textarea>\
                           </div>\
                         </section>\
                       </div>\
@@ -553,7 +648,7 @@ function creerModalConsulterIntervention(uneIntervention, unUtilisateur, unEtat,
                           </div>\
                           <div class="form-group">\
                             <label>Commentaire</label>\
-                            <textarea id="commentaire"  class="form-control" rows="3" disabled>' + uneIntervention.commentaireEmploye +'</textarea>\
+                            <textarea id="commentaire"  class="form-control" rows="3" disabled>' + commentaireEmploye +'</textarea>\
                           </div>\
                         </section>\
                       </div>\

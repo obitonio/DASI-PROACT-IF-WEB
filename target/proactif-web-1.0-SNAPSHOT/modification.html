@@ -25,7 +25,7 @@ and open the template in the editor.
          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
            <a class="dropdown-item" href="interventions.html">Mes interventions</a>
            <a class="dropdown-item" href="modification.html">Mes données personnelles</a>
-           <a class="dropdown-item" href="#">Se déconnecter</a>
+           <a id="btn-deconnexion" class="dropdown-item" href="#">Se déconnecter</a>
          </div>
         </form>
       </nav>
@@ -44,6 +44,8 @@ and open the template in the editor.
           <!-- Partie informations personnelles -->
           <section class="margin-top-30">
             <h3>Mes informations personnelles</h3>
+
+            <input id="champ-id" type="text" value="" class="invisible">
             <div class="row">
               <div class="col-lg-2 col-md-2">
                 <div class="form-group">
@@ -90,13 +92,13 @@ and open the template in the editor.
             </div>
 
             <div class="form-group">
-              <label for="champ-pass1">Mot de passe</label>
+              <label for="champ-pass1">Mot de passe <span class="text-secondary">(Laisser vide si vous ne souhaitez pas le changer)</span></label>
               <input  id="champ-pass1" type="password" class="form-control" placeholder="Votre mot de passe">
               <div id="champ-pass1-message" class="invalid-feedback"></div>
             </div>
 
             <div class="form-group">
-              <label for="champ-pass2">Retaper votre mot de passe</label>
+              <label for="champ-pass2">Retaper votre mot de passe <span class="text-secondary">(Laisser vide si vous ne souhaitez pas le changer)</span></label>
               <input  id="champ-pass2" type="password" class="form-control" placeholder="Votre mot de passe">
               <div id="champ-pass2-message" class="invalid-feedback"></div>
             </div>
@@ -153,5 +155,48 @@ and open the template in the editor.
             <span>PROACT'IF 2018 Copyright</span>
           </div>
         </footer>
+
+        <div id="modalModifDonneesSucces" class="modal" tabindex="-1" role="dialog">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">Modification des données personnelles</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <p>Les modifications se sont effectuées avec succès, vous allez être redirigé vers votre tableau de bord.</p>
+              </div>
+              <div class="modal-footer">
+                <button id="fermerModal" type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <script>
+
+
+            $(document).ready(function () {
+
+                obtenirInformationsUtilisateur();
+
+                $('#btn-deconnexion').click(function() {
+                  deconnexion();
+                });
+
+                $('#bouton-inscription').click(function(e) {
+                  e.preventDefault();
+                  if (verifChampsChangerDonnees(1) == 1) {
+                    modifierInformationsUtilisateur();
+                  }
+                });
+
+                $('#fermerModal').click(function() {
+                  window.location = "interventions.html";
+                });
+            });
+        </script>
     </body>
 </html>

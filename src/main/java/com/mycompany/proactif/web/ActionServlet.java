@@ -10,7 +10,7 @@ import com.mycompany.proactif.actions.DemanderInterventionAction;
 import com.mycompany.proactif.actions.InscriptionAction;
 import com.mycompany.proactif.actions.InterventionsAction;
 import com.mycompany.proactif.actions.TerminerInterventionAction;
-import com.mycompany.proactif.actions.modificationInformationClient;
+import com.mycompany.proactif.actions.ModificationInformationUtilisateur;
 import com.mycompany.proactif.dao.JpaUtil;
 import com.mycompany.proactif.entites.Client;
 import com.mycompany.proactif.entites.Employe;
@@ -64,7 +64,7 @@ public class ActionServlet extends HttpServlet {
                 }
                 else if (action.equals("obtenirInformationsUtilisateur")) {
                     try (PrintWriter out = response.getWriter()) {
-                        Serialisation.EcrireInformationsUtilisateur(out, (Utilisateur)request.getAttribute("utilisateur"));
+                        Serialisation.EcrireInformationsUtilisateur(out, utilisateurCourant);
                     }     
                 }
                 
@@ -73,7 +73,7 @@ public class ActionServlet extends HttpServlet {
                     switch (action) {
 
                         case "modifierUtilisateur" :
-                            modificationInformationClient modifUtilAction = new modificationInformationClient();
+                            ModificationInformationUtilisateur modifUtilAction = new ModificationInformationUtilisateur();
                             modifUtilAction.processRequest(request,response);
                             try (PrintWriter out = response.getWriter()) {
                                 Serialisation.EcrireModificationUtilisateur(out, (Utilisateur)request.getAttribute("utilisateur"));

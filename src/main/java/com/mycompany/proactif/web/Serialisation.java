@@ -280,16 +280,19 @@ public class Serialisation {
     public static void EcrireInformationsUtilisateur(PrintWriter out, Utilisateur utilisateur) {
         System.out.println("=== EcrireInformationsUtilisateur ===");
         
-        JsonObject reponseJson = new JsonObject();
-        //reponseJson.addProperty("retour", retour);
+        DateFormat formatDate = new SimpleDateFormat("yyyy-MM-dd");
         
+        JsonObject reponseJson = new JsonObject();
+        
+        reponseJson.addProperty("id", utilisateur.getId());
         reponseJson.addProperty("civilite", utilisateur.getCivilite());
         reponseJson.addProperty("prenom", utilisateur.getPrenom());
         reponseJson.addProperty("nom", utilisateur.getNom());
         reponseJson.addProperty("telephone", utilisateur.getTelephone());
-        reponseJson.addProperty("dateNaissance", utilisateur.getDateNaissanceFormate());
+        reponseJson.addProperty("dateNaissance", formatDate.format(utilisateur.getDateNaissance()));
+        reponseJson.addProperty("email", utilisateur.getEmail());
         
-        reponseJson.addProperty("numero", utilisateur.getAdresse().getNumero());
+        reponseJson.addProperty("numeroRue", utilisateur.getAdresse().getNumero());
         reponseJson.addProperty("rue", utilisateur.getAdresse().getRue());
         reponseJson.addProperty("codePostal", utilisateur.getAdresse().getCodePostal());
         reponseJson.addProperty("ville", utilisateur.getAdresse().getVille());
