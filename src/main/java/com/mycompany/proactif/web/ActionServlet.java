@@ -9,7 +9,6 @@ import com.mycompany.proactif.actions.ConnexionAction;
 import com.mycompany.proactif.actions.DemanderInterventionAction;
 import com.mycompany.proactif.actions.InscriptionAction;
 import com.mycompany.proactif.actions.InterventionsAction;
-import com.mycompany.proactif.actions.RechercherInterventionsAction;
 import com.mycompany.proactif.actions.TerminerInterventionAction;
 import com.mycompany.proactif.actions.modificationInformationClient;
 import com.mycompany.proactif.dao.JpaUtil;

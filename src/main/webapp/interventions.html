@@ -281,10 +281,10 @@ and open the template in the editor.
 
                 demanderIntervention();
             });
-            /*$('#bouton-recherche').click(function() {
+            $('#bouton-recherche').click(function() {
                 //TODO vérifier champs remplis
-                obtenirInterventions();
-            });*/
+                location.reload(); 
+            });
 
             $( "#champ-type" ).change(function() {
               var type = $(this).val();
