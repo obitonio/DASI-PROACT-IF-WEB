@@ -310,6 +310,15 @@ function obtenirInterventions() {
 
         // Remplir les infos utilisateurs pour le formulaire de demande d'intervention
         chargerUtilisateurDemandeIntervention(data.infoUtilisateur);
+
+        if(data.infoUtilisateur.typeUtilisateur === 'employe'){
+          $('#bouton-terminerIntervention').click(function(e) {
+              //TODO vérifier champs remplis
+
+              //e.preventDefault();
+              terminerIntervention();
+          });
+        }
     });
 
 }
@@ -657,5 +666,7 @@ function terminerIntervention(){
             etat: etatFinal
         },
         dataType: 'json'
-    }).done(function (data) {});
+    }).done(function (data) {
+      $('#demander-intervention').modal('toggle');
+    });
 }

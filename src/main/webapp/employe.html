@@ -280,17 +280,14 @@ and open the template in the editor.
         $(document).ready(function () {
             obtenirInterventions();
 
+            $('#btn-deconnexion').click(function() {
+              deconnexion();
+            });
+
             $('#bouton-recherche').click(function(e) {
                 //TODO vérifier champs remplis
                 e.preventDefault();
                 obtenirInterventions();
-            });
-            
-            $('#bouton-terminerIntervention').click(function(e) {
-                //TODO vérifier champs remplis
-                console.log("NIQUE TA MERE ANTOINE");
-                e.preventDefault();
-                terminerIntervention();
             });
         });
     </script>
