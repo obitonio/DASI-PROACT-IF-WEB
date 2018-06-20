@@ -496,7 +496,8 @@ function creerModalConsulterIntervention(uneIntervention, unUtilisateur, unEtat,
                           <div class="form-group">\
                             <label>Etat</label>\
                             <select id="etat" class="form-control">\
-                              <option>' + unEtat + '</option>\
+                              <option>Non resolue</option>\
+                              <option>Terminee</option>\
                             </select>\
                           </div>\
                           <div class="form-group">\
@@ -627,8 +628,8 @@ function initMap() {
 }
 
 function terminerIntervention(){
-  var commentaireClient = $('#champ-intitule').val('');
-  var etatFinal = $('#champ-type').val('Incident');
+  var commentaireClient = $('#commentaire').val('');
+  var etatFinal = $('#etat').val('');
     $.ajax({
         url: './ActionServlet',
         method: 'POST',
