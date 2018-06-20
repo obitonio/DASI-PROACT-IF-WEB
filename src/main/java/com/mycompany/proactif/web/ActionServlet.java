@@ -47,113 +47,118 @@ public class ActionServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, ParseException {
+        
         response.setContentType("application/json;charset=UTF-8");
         String action = request.getParameter("action");
         System.out.println("action = " + action);
         
         HttpSession maSession = request.getSession();
-            if(maSession.getAttribute("utilisateurCourant")!=null){
-                if(maSession.getAttribute("utilisateurCourant") instanceof Client){
-                    switch (action) {
-
-                        case "modifierUtilisateur" :
-                            modificationInformationClient modifUtilAction = new modificationInformationClient();
-                            modifUtilAction.processRequest(request,response);
-                            try (PrintWriter out = response.getWriter()) {
-                                Serialisation.EcrireModificationUtilisateur(out, (Utilisateur)request.getAttribute("utilisateur"));
-                            }
-                            break;
-
-                        case "obtenirInterventions" :
-                            InterventionsAction intervAction = new InterventionsAction();
-                            intervAction.processRequest(request,response);
-                            try (PrintWriter out = response.getWriter()) {
-                                Serialisation.EcrireListeDesInterventions(out, (Utilisateur)request.getAttribute("utilisateur"));
-                            }
-                            break;
-
-                        case "demanderIntervention" :
-                            DemanderInterventionAction demanderIntervention = new DemanderInterventionAction();
-                            demanderIntervention.processRequest(request,response);
-                            try (PrintWriter out = response.getWriter()) {
-                                Serialisation.EcrireRetourDemandeIntervention(out, (RetourCreationIntervention)request.getAttribute("RetourCreerDemandeIntervention"));
-                            }
-                            break;
-
-                        default :
-                            try (PrintWriter out = response.getWriter()) {
-                                Serialisation.Redirection(out, "interventions.html");
-                            }
-                            break;
-                    }
-                }
-                else if(maSession.getAttribute("utilisateurCourant") instanceof Employe){
-
-                    switch(action){
-                        
-                        case "obtenirInterventions" :
-                            InterventionsAction intervAction = new InterventionsAction();
-                            intervAction.processRequest(request,response);
-                            try (PrintWriter out = response.getWriter()) {
-                                Serialisation.EcrireListeDesInterventions(out, (Utilisateur)request.getAttribute("utilisateur"));
-                            }
-                            break;
-                        
-                        case "terminerIntervention" :
-                            TerminerInterventionAction terminIntervAction = new TerminerInterventionAction();
-                            terminIntervAction.processRequest(request,response);
-                            try (PrintWriter out = response.getWriter()) {
-                                Serialisation.EcrireTerminerIntervention(out, request.getAttribute("RetourTerminerIntervention").toString());
-                            }
-                            break;  
-                            
-                            
-                        default :
-                            try (PrintWriter out = response.getWriter()) {
-                                Serialisation.Redirection(out, "employe.html");
-                            }
-                            break;
-                    }
-
-                }
-                else{
-                    if(action== "deconnecter"){
-                        maSession.invalidate();
-                        try (PrintWriter out = response.getWriter()) {
-                                Serialisation.Redirection(out, "login.html");
-                            }
-                    }
-                }
-            }
-            else{
+        Utilisateur utilisateurCourant = (Utilisateur) maSession.getAttribute("utilisateurCourant");
+        
+        if (utilisateurCourant != null) {
+            
+            if (utilisateurCourant instanceof Client) {
+                
                 switch (action) {
-                    case "inscrire" :
 
-                       System.out.println("Insription");
-                        InscriptionAction inscAction = new InscriptionAction();
-                        inscAction.processRequest(request,response);
+                    case "modifierUtilisateur" :
+                        modificationInformationClient modifUtilAction = new modificationInformationClient();
+                        modifUtilAction.processRequest(request,response);
                         try (PrintWriter out = response.getWriter()) {
-                            Serialisation.EcrireInscriptionUtilisateur(out, (Utilisateur)request.getAttribute("utilisateur"));
+                            Serialisation.EcrireModificationUtilisateur(out, (Utilisateur)request.getAttribute("utilisateur"));
                         }
-
                         break;
-                    case "connecter" :
 
-                        ConnexionAction cnxAction = new ConnexionAction();
-                        cnxAction.processRequest(request,response);
+                    case "obtenirInterventions" :
+                        InterventionsAction intervAction = new InterventionsAction();
+                        intervAction.processRequest(request,response);
                         try (PrintWriter out = response.getWriter()) {
-                            Serialisation.EcrireConnexionUtilisateur(out, (Utilisateur)request.getAttribute("utilisateur"));
+                            Serialisation.EcrireListeDesInterventions(out, (Utilisateur)request.getAttribute("utilisateur"));
+                        }
+                        break;
+
+                    case "demanderIntervention" :
+                        DemanderInterventionAction demanderIntervention = new DemanderInterventionAction();
+                        demanderIntervention.processRequest(request,response);
+                        try (PrintWriter out = response.getWriter()) {
+                            Serialisation.EcrireRetourDemandeIntervention(out, (RetourCreationIntervention)request.getAttribute("RetourCreerDemandeIntervention"));
                         }
                         break;
 
                     default :
-                            try (PrintWriter out = response.getWriter()) {
-                                Serialisation.Redirection(out, "login.html");
-                            }
-                            break;
-                }                 
-            }                       
-        }   
+                        try (PrintWriter out = response.getWriter()) {
+                            Serialisation.Redirection(out, "interventions.html");
+                        }
+                        break;
+                }
+            }
+            else if (utilisateurCourant instanceof Employe) {
+
+                switch(action){
+
+                    case "obtenirInterventions" :
+                        InterventionsAction intervAction = new InterventionsAction();
+                        intervAction.processRequest(request,response);
+                        try (PrintWriter out = response.getWriter()) {
+                            Serialisation.EcrireListeDesInterventions(out, (Utilisateur)request.getAttribute("utilisateur"));
+                        }
+                        break;
+
+                    case "terminerIntervention" :
+                        TerminerInterventionAction terminIntervAction = new TerminerInterventionAction();
+                        terminIntervAction.processRequest(request,response);
+                        try (PrintWriter out = response.getWriter()) {
+                            Serialisation.EcrireTerminerIntervention(out, request.getAttribute("RetourTerminerIntervention").toString());
+                        }
+                        break;  
+
+
+                    default :
+                        try (PrintWriter out = response.getWriter()) {
+                            Serialisation.Redirection(out, "employe.html");
+                        }
+                        break;
+                }
+
+            }
+            else {
+                if(action.equals("deconnecter")){
+                    maSession.invalidate();
+                    try (PrintWriter out = response.getWriter()) {
+                            Serialisation.Redirection(out, "login.html");
+                    }
+                }
+            }
+        }
+        else {
+            switch (action) {
+                case "inscrire" :
+
+                   System.out.println("Insription");
+                    InscriptionAction inscAction = new InscriptionAction();
+                    inscAction.processRequest(request,response);
+                    try (PrintWriter out = response.getWriter()) {
+                        Serialisation.EcrireInscriptionUtilisateur(out, (Utilisateur)request.getAttribute("utilisateur"));
+                    }
+
+                    break;
+                case "connecter" :
+
+                    ConnexionAction cnxAction = new ConnexionAction();
+                    cnxAction.processRequest(request,response);
+                    try (PrintWriter out = response.getWriter()) {
+                        Serialisation.EcrireConnexionUtilisateur(out, (Utilisateur)request.getAttribute("utilisateur"));
+                    }
+                    break;
+
+                default :
+                        try (PrintWriter out = response.getWriter()) {
+                            Serialisation.Redirection(out, "login.html");
+                        }
+                        break;
+            }                 
+        }                       
+    }   
    
 
     @Override
