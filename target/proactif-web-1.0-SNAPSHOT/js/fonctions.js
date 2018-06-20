@@ -275,6 +275,10 @@ function obtenirInformationsUtilisateur() {
     $('#champ-id').val(data.id);
     $('#champ-datenaissance').val(data.dateNaissance);
     $('#champ-login').val(data.email);
+
+    if(data.typeUtilisateur === 'Employe') {
+      $('#btn-tdb').attr('href', 'employe.html');
+    }
   });
 }
 
@@ -344,6 +348,7 @@ function demanderIntervention() {
   Fonction pour obtenir les interventions
 */
 function obtenirInterventions() {
+  console.log('=== obtenirInterventions ===');
     var champMotClef= $('#recherche').val();
     var champFiltre= $('#filtreTri').val();
   console.log(champMotClef);
@@ -405,7 +410,9 @@ function obtenirInterventions() {
         $('#lesInterventions').html(contenuHtml);
 
 
-
+        if(data.infoUtilisateur.typeUtilisateur === 'employe') {
+          $('#btn-tdb').attr('href', 'employe.html');
+        }
 
         var civiliteUtilisateur = data.infoUtilisateur.civilite;
         var prenomUtilisateur = data.infoUtilisateur.prenom;
@@ -469,8 +476,7 @@ function creerModalConsulterIntervention(uneIntervention, unUtilisateur, unEtat,
   console.log(uneIntervention);
   var complementAdresse = (unUtilisateur.complementAdresse === undefined)? '' : unUtilisateur.complementAdresse;
   var descriptionClient = (uneIntervention.descriptionClient === undefined)? '' : uneIntervention.descriptionClient;
-  var descriptionClient = (uneIntervention.descriptionClient === undefined)? '' : uneIntervention.descriptionClient;
-
+  var commentaireEmploye = (uneIntervention.commentaireEmploye === undefined)? '' : uneIntervention.commentaireEmploye;
 
   var detailsType = '';
   if (uneIntervention.type.localeCompare('Animal') == 0) {
@@ -492,7 +498,6 @@ function creerModalConsulterIntervention(uneIntervention, unUtilisateur, unEtat,
     var heureLivraison = (uneIntervention.heureLivraison === undefined)? '' : uneIntervention.heureLivraison;
     var typeLivraison = (uneIntervention.typeLivraison === undefined)? '' : uneIntervention.typeLivraison;
     var codeLivraison = (uneIntervention.codeLivraison === undefined)? '' : uneIntervention.codeLivraison;
-    var commentaireEmploye = (uneIntervention.commentaireEmploye === undefined)? '' : uneIntervention.commentaireEmploye;
 
     detailsType = '\
     <div class="row">\

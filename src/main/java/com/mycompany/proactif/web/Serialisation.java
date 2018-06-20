@@ -298,6 +298,8 @@ public class Serialisation {
         reponseJson.addProperty("ville", utilisateur.getAdresse().getVille());
         reponseJson.addProperty("complementAdresse", utilisateur.getAdresse().getInformations());
         
+        reponseJson.addProperty("typeUtilisateur", utilisateur.getClass().getSimpleName());
+        
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         String json = gson.toJson(reponseJson);
         
