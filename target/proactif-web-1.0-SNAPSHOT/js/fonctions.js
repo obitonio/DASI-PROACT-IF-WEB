@@ -559,7 +559,7 @@ function initMap() {
         interventions.forEach(function(inter) {
            console.log(inter);
            var dateTab = inter.date.split('/');
-           var dateDeLIntervention = new Date(dateTab[2]+"-"+dateTab[0]+"-"+dateTab[1]);
+           var dateDeLIntervention = new Date(dateTab[2]+"-"+dateTab[1]+"-"+dateTab[0]);
            var dateDuJour = new Date();
 
            if((dateDeLIntervention.getDay() === dateDuJour.getDay() && dateDeLIntervention.getYear() === dateDuJour.getYear() && dateDeLIntervention.getMonth() === dateDuJour.getMonth()) && inter.etat===1){
