@@ -391,8 +391,10 @@ function obtenirInterventions() {
           lesModalHtml += creerModalConsulterIntervention(inter, inter.infosClient, etat,data.infoUtilisateur.typeUtilisateur);
            $('#modals-consultation').html($('#modals-consultation').val() + lesModalHtml);
 
+
            if(data.infoUtilisateur.typeUtilisateur === 'employe'){
-                $('#bouton-terminerIntervention-'+ inter.id).click(function(e) {
+               console.log('Créer onCLick pour ' + inter.id);
+                $(document).on('click','#bouton-terminerIntervention-'+ inter.id, function() {
                     //TODO vérifier champs remplis
                     terminerIntervention(inter.id);
                 });
