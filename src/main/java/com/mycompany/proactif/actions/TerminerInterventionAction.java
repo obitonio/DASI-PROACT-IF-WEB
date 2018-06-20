@@ -6,6 +6,7 @@ package com.mycompany.proactif.actions;
  * and open the template in the editor.
  */
 
+import com.mycompany.proactif.dao.DAOIntervention;
 import com.mycompany.proactif.entites.Animal;
 import com.mycompany.proactif.entites.Client;
 import com.mycompany.proactif.entites.Incident;
@@ -48,8 +49,7 @@ public class TerminerInterventionAction extends HttpServlet {
          String commentaire = request.getParameter("commentaire");
          int idIntervention = Integer.parseInt(request.getParameter("id"));
          
-         
-        Services.RetourTerminerIntervention retour = Services.terminerIntervention(idIntervention,commentaire,etat);
+        Services.RetourTerminerIntervention retour = Services.terminerIntervention(idIntervention, commentaire,etat);
         request.setAttribute("RetourTerminerIntervention", retour);
          
     }
