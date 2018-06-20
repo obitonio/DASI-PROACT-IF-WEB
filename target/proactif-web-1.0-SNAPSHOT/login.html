@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>PROACT'IF - Connexion</title>
+        <meta charset="UTF-8">
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <script src="js/fonctions.js"></script>
+        <link rel="stylesheet" href="css/bootstrap.min.css" />
+        <link rel="stylesheet" href="css/styles.css" />
+    </head>
+    <body>
+      <nav class="navbar navbar-light bg-light justify-content-between">
+        <a class="navbar-brand">PROACT'IF</a>
+        <div class="form-inline my-2 my-lg-0">
+          <a href="inscription.html" class="btn btn-outline-primary my-2 my-sm-0">S'inscrire</a>
+        </div>
+      </nav>
+
+      <img class="img-width-100prct" src="images/fond-login-flou.jpeg">
+
+        <form id="form-connexion">
+
+          <h1>Connexion</h1>
+
+          <div class="form-group">
+            <label for="exampleInputEmail1">Adresse email</label>
+            <input  id="champ-login" type="email" class="form-control" placeholder="Votre adresse mail">
+            <small id="emailHelp" class="form-text text-muted">Vos informations restent confidentielles.</small>
+          </div>
+          <div class="form-group">
+            <label for="exampleInputPassword1">Mot de passe</label>
+            <input id="champ-password" type="password" class="form-control" placeholder="Mot de passe">
+          </div>
+          <div class="row">
+            <div class="col-lg-4 col-md-4">
+              <button id="bouton-connexion" class="btn btn-primary">Se connecter</button>
+            </div>
+            <div class="col-lg-8 col-md-8">
+              <a id="lien-inscription" href="inscription.html">S'inscrire</a>
+              <div id="message" class="invalid-feedback"></div>
+            </div>
+          </div>
+        </form>
+
+        <footer>
+          <div id="footer-text" class="text-center">
+            <span>PROACT'IF 2018 Copyright</span>
+          </div>
+        </footer>
+
+        <script>
+            $(document).ready(function () {
+                // ajout d'un "handler" sur le clic du bouton de connexion
+                $('#bouton-connexion').on('click', function (e) {
+                    e.preventDefault();
+                    // affichage pour debugage dans la console javascript du navigateur
+                    console.log('Click sur le bouton "Se Connecter"');
+                    // appel de la fonction connexion
+                    connexion();
+                });
+            });
+        </script>
+    </body>
+</html>

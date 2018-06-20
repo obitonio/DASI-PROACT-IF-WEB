@@ -496,7 +496,8 @@ function creerModalConsulterIntervention(uneIntervention, unUtilisateur, unEtat,
                           <div class="form-group">\
                             <label>Etat</label>\
                             <select id="etat" class="form-control">\
-                              <option>' + unEtat + '</option>\
+                              <option>Non resolue</option>\
+                              <option>Terminee</option>\
                             </select>\
                           </div>\
                           <div class="form-group">\
