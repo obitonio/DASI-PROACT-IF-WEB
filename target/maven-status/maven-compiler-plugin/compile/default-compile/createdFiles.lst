@@ -1,9 +1,3 @@
-com/mycompany/proactif/web/Util.class
-com/mycompany/proactif/web/ActionServlet.class
-com/mycompany/proactif/actions/InterventionsAction.class
-com/mycompany/proactif/actions/InscriptionAction.class
-com/mycompany/proactif/actions/ModificationInformationUtilisateur.class
-com/mycompany/proactif/actions/ConnexionAction.class
-com/mycompany/proactif/actions/TerminerInterventionAction.class
-com/mycompany/proactif/web/Serialisation.class
-com/mycompany/proactif/actions/DemanderInterventionAction.class
+com\mycompany\proactif\web\Serialisation.class
+com\mycompany\proactif\actions\InterventionsAction.class
+com\mycompany\proactif\actions\DemanderInterventionAction.class

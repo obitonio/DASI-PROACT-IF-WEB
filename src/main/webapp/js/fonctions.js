@@ -498,7 +498,7 @@ function creerModalConsulterIntervention(uneIntervention, unUtilisateur, unEtat,
     var heureLivraison = (uneIntervention.heureLivraison === undefined)? '' : uneIntervention.heureLivraison;
     var typeLivraison = (uneIntervention.typeLivraison === undefined)? '' : uneIntervention.typeLivraison;
     var codeLivraison = (uneIntervention.codeLivraison === undefined)? '' : uneIntervention.codeLivraison;
-
+    var entrepriseLivraison = (uneIntervention.codeLivraison === undefined)? '' : uneIntervention.entrepriseLivraison;
     detailsType = '\
     <div class="row">\
       <div class="col-lg-4 col-md-4">\
