@@ -7,6 +7,7 @@ package com.mycompany.proactif.actions;
 
 import com.mycompany.proactif.entites.Adresse;
 import com.mycompany.proactif.entites.Client;
+import com.mycompany.proactif.entites.Employe;
 import com.mycompany.proactif.entites.Utilisateur;
 import com.mycompany.proactif.services.Services;
 import java.io.IOException;
@@ -53,10 +54,15 @@ public class ModificationInformationUtilisateur extends HttpServlet {
         String ville = request.getParameter("ville");
         String infosSuppAddresse = request.getParameter("infosSuppAdresse");
         
-        Utilisateur unUtilisateur = Services.obtenirUtilisateur(id);
+        String type = request.getParameter("typeUtilisateur");
+        Utilisateur typeUtilisateur = (type.equals(Employe.class.getSimpleName().toString())) ? new Employe() : new Client();
+        
+        Utilisateur unUtilisateur = Services.obtenirUtilisateur(id, typeUtilisateur);
         
         unUtilisateur.setEmail(mail);
-        unUtilisateur.setMotDePasse(mdp);
+        if (!mdp.isEmpty()) {
+            unUtilisateur.setMotDePasse(mdp);
+        }
         unUtilisateur.setNom(nom);
         unUtilisateur.setPrenom(prenom);
         unUtilisateur.setCivilite(civilite);

@@ -209,6 +209,7 @@ function modifierInformationsUtilisateur() {
     var champCodePostal = $('#champ-cp').val();
     var champVille = $('#champ-ville').val();
     var champComplement = $('#champ-complement').val();
+    var champTypeUtilisateur = $('#champ-typeUtilisateur').val();
 
     $.ajax({
         url: './ActionServlet',
@@ -227,7 +228,8 @@ function modifierInformationsUtilisateur() {
             rue: champRue,
             codePostal: champCodePostal,
             ville: champVille,
-            infosSuppAdresse: champComplement
+            infosSuppAdresse: champComplement,
+            typeUtilisateur : champTypeUtilisateur
         },
         dataType: 'json'
     }).done(function (data) {
@@ -240,6 +242,9 @@ function modifierInformationsUtilisateur() {
         if (retour.localeCompare('ok') == 0) {
             console.log("ok");
             $('#modalModifDonneesSucces').toggle();
+            $('#fermerModal').click(function() {
+              window.location = (champTypeUtilisateur === "Employe")? "employe.html" : "interventions.html";
+            });
         }
         else if (retour.localeCompare('nok') == 0) {
           // Message erreur
@@ -275,6 +280,7 @@ function obtenirInformationsUtilisateur() {
     $('#champ-id').val(data.id);
     $('#champ-datenaissance').val(data.dateNaissance);
     $('#champ-login').val(data.email);
+    $('#champ-typeUtilisateur').val(data.typeUtilisateur);
 
     if(data.typeUtilisateur === 'Employe') {
       $('#btn-tdb').attr('href', 'employe.html');

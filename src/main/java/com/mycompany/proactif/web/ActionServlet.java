@@ -67,18 +67,17 @@ public class ActionServlet extends HttpServlet {
                         Serialisation.EcrireInformationsUtilisateur(out, utilisateurCourant);
                     }     
                 }
-                
+                else if (action.equals("modifierUtilisateur")) {
+                      ModificationInformationUtilisateur modifUtilAction = new ModificationInformationUtilisateur();
+                      modifUtilAction.processRequest(request,response);
+                      try (PrintWriter out = response.getWriter()) {
+                          Serialisation.EcrireModificationUtilisateur(out, (Utilisateur)request.getAttribute("utilisateur"));
+                      }
+                }
+                      
                 if(utilisateurCourant instanceof Client){
                     
                     switch (action) {
-
-                        case "modifierUtilisateur" :
-                            ModificationInformationUtilisateur modifUtilAction = new ModificationInformationUtilisateur();
-                            modifUtilAction.processRequest(request,response);
-                            try (PrintWriter out = response.getWriter()) {
-                                Serialisation.EcrireModificationUtilisateur(out, (Utilisateur)request.getAttribute("utilisateur"));
-                            }
-                            break;
 
                         case "obtenirInterventions" :
                             InterventionsAction intervAction = new InterventionsAction();

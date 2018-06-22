@@ -46,6 +46,8 @@ and open the template in the editor.
             <h3>Mes informations personnelles</h3>
 
             <input id="champ-id" type="text" value="" class="invisible">
+            <input id="champ-typeUtilisateur" type="text" value="" class="invisible">
+
             <div class="row">
               <div class="col-lg-2 col-md-2">
                 <div class="form-group">
@@ -191,10 +193,6 @@ and open the template in the editor.
                   if (verifChampsChangerDonnees(1) == 1) {
                     modifierInformationsUtilisateur();
                   }
-                });
-
-                $('#fermerModal').click(function() {
-                  window.location = "interventions.html";
                 });
             });
         </script>
